@@ -1,16 +1,29 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 @layer base {
-  @import '01-base/font.scss';
-  @import '01-base/document.scss';
-  @import '01-base/headings.scss';
+  @import "01-base/font.scss";
+  @import "01-base/document.scss";
+  @import "01-base/headings.scss";
 }
 
 @layer components {
-  @import '02-components/link.scss';
+  @import "02-components/link.scss";
 }
 
 @layer utilities {
+}
+
+.pannel-snack-error {
+  color: rgb(33 59 112);
+  background: #f1eaea;
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+}
+
+.pannel-snack-success {
+  color: rgb(33 59 112);
+  background: #0caa5b;
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
 }

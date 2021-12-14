@@ -14,6 +14,11 @@ export const ROUTER_UTILS = {
       passwordResetFailed: 'password-reset-failed',
       passwordResetSucceeded: 'password-reset-succeeded',
     },
+    employee: {
+      root: 'employee',
+      list: 'list',
+      information: 'inform',
+    },
     settings: {
       root: 'settings',
       account: 'account',

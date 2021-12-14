@@ -40,6 +40,12 @@ const APP_ROUTES: Routes = [
     canLoad: [AuthGuard],
   },
   {
+    path: ROUTER_UTILS.config.employee.root,
+    loadChildren: async () =>
+      (await import('@pages/employee/employee.module')).EmployeeModule,
+    canLoad: [AuthGuard],
+  },
+  {
     path: '**',
     loadChildren: async () =>
       (await import('@shell/ui/not-found/not-found.module')).NotFoundModule,
@@ -64,4 +70,4 @@ const APP_ROUTES: Routes = [
     NotFoundModule,
   ],
 })
-export class WebShellModule {}
+export class WebShellModule { }
