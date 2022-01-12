@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     private seoService: SeoService,
     private themeService: ThemeService,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn$;

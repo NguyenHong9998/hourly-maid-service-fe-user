@@ -1,0 +1,178 @@
+<div class="border-b-orange-600" id="title">
+    <h1 mat-dialog-title class="text-center">Chi tiết công việc
+    </h1>
+</div>
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="border-t border-gray-200"></div>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="border-t border-gray-200">
+        <dl>
+            <div class="bg-gray-50 px-4 py-5 sm:grid
+                sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium
+                    text-gray-500">
+                    Tên khách hàng
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900
+                    sm:mt-0 sm:col-span-2">
+                    {{task_detail.user_name}}
+                </dd>
+            </div>
+            <div class="bg-white px-4 py-5 sm:grid
+                sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium
+                    text-gray-500">
+                    Số điện thoại
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900
+                    sm:mt-0 sm:col-span-2">
+                    {{task_detail.user_phone}}
+                </dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid
+                sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium
+                    text-gray-500">
+                    Địa chỉ làm việc
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900
+                    sm:mt-0 sm:col-span-2">
+                    {{task_detail.address.address}} -
+                    {{task_detail.address.type.name}}
+                </dd>
+            </div>
+            <div class="bg-white px-4 py-5 sm:grid
+                sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium
+                    text-gray-500">
+                    Thời gian
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900
+                    sm:mt-0 sm:col-span-2">
+                    <span>
+                        Bắt đầu : {{task_detail.startTime}}
+                    </span>
+                    <br>
+                    <br>
+                    <span>
+                        Kết thúc :
+                        {{task_detail.endTime}}
+                    </span>
+                </dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid
+                sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium
+                    text-gray-500">
+                    Ghi chú
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900
+                    sm:mt-0 sm:col-span-2">
+                    {{task_detail.note}}
+                </dd>
+            </div>
+
+            <div class="bg-white px-4 py-5 sm:grid
+                sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium
+                    text-gray-500">
+                    Dịch vụ sử dụng
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900
+                    sm:mt-0 sm:col-span-2">
+                    <ul role="list" class="border
+                        border-gray-200 rounded-md divide-y
+                        divide-gray-200">
+                        <li class="pl-3 pr-4 py-3 flex
+                            items-center justify-between
+                            text-sm" *ngFor="let item of task_detail.service">
+                            <div class="w-0 flex-1 flex
+                                items-center">
+                                <span class="ml-2 flex-1
+                                    w-0 truncate">
+                                    {{item.name}}
+                                </span>
+                            </div>
+                            <div class="ml-4
+                                flex-shrink-0">
+                                <span>{{item.price}}</span>
+                            </div>
+                        </li>
+
+
+                        <li class="pl-3 pr-4 py-3 flex
+                            items-center justify-between
+                            text-sm">
+                            <div class="w-0 flex-1 flex
+                                items-center">
+
+                                <span class="ml-2
+                                    flex-1 w-0
+                                    truncate font-bold">
+                                    Tổng cộng:
+                                </span>
+                            </div>
+                            <div class="ml-4
+                                flex-shrink-0">
+                                <span *ngIf="task_detail.is_paid"
+                                    class="italic">
+                                    (Đã thanh
+                                    toán)</span>
+                                <span class="font-bold">
+                                    {{task_detail.total_money}}
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </dd>
+            </div>
+
+            <div class="bg-gray-50 px-4 py-5 sm:grid
+                sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium
+                    text-gray-500">
+                    Nhân viên thực hiện
+                </dt>
+                <dd class="mt-1 text-sm text-gray-900
+                    sm:mt-0 sm:col-span-2">
+                    <ul role="list" class="border
+                        border-gray-200 rounded-md divide-y
+                        divide-gray-200">
+                        <li class="pl-3 pr-4 py-3 flex
+                            items-center justify-between
+                            text-sm" *ngFor="let item of task_detail.employees">
+                            <div class="w-0 flex-1 flex
+                                items-center">
+                                <span class="ml-2 flex-1
+                                    w-0 truncate">
+                                    {{item.name}}
+                                </span>
+                            </div>
+                            <div class="ml-4
+                                flex-shrink-0">
+                                <span>{{item.phone}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </dd>
+            </div>
+
+
+        </dl>
+    </div>
+</mat-dialog-content>
+
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+</div>
+<div mat-dialog-actions class="flex flex-row-reverse">
+
+    <button mat-button (click)="onNoClick()" class="bg-white
+        hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4
+        border
+        border-gray-400 rounded shadow">Thoát</button>
+
+</div>

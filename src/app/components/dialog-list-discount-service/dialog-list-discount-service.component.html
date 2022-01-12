@@ -1,0 +1,106 @@
+<h1 mat-dialog-title class="text-center">
+    Chương trình giảm giá cho dịch vụ {{service_name}}
+</h1>
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="border-t border-gray-200"></div>
+</div>
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+        (matSortChange)="sortData($event)">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+                text-xs text-gray-900
+                uppercase tracking-wider" mat-sort-header="name"> Chương trình
+                giảm
+                giá
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+                element">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                        <img class="h-10 w-10 rounded-full"
+                            [src]="element.banner"
+                            alt="">
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-sm font-medium
+                            text-gray-900">
+                            {{element.discount_name}}
+                        </div>
+
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="start">
+            <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+                text-xs text-gray-900
+                uppercase tracking-wider" mat-sort-header="start_date"> Bắt đầu
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+                element">
+                <div class="text-sm text-gray-900">{{element.date_start}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="end">
+            <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+                text-xs text-gray-900
+                uppercase tracking-wider" mat-sort-header="role"> Kết thúc </th>
+            <td class="px-6 py-4 whitespace-nowrap text-xm
+                text-gray-500" mat-cell *matCellDef="let element">
+                {{element.date_end}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="percent">
+            <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+                text-xs text-gray-900
+                uppercase tracking-wider" mat-sort-header="percent"> Phần trăm
+                giảm
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap text-xm
+                text-gray-500" mat-cell *matCellDef="let element">
+                {{element.percentage}}
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+                text-xs text-gray-900
+                uppercase tracking-wider" mat-sort-header="status"> Trạng thái
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+                element">
+                <span
+                    class="{{element.status == 'Đang diễn ra' ? 'px-2
+                    inline-flex
+                    text-xs
+                    leading-5 font-semibold rounded-full
+                    bg-green-100 text-green-800' : 'px-2 inline-flex text-xs
+                    leading-5 font-semibold rounded-full
+                    bg-red-200 text-green-800' }}">
+                    {{element.status}}
+                </span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+    </table>
+</div>
+
+
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="border-t border-gray-200"></div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="bg-blue-500 hover:bg-blue-700
+        text-white font-bold py-2 px-4 border border-blue-700 rounded">
+        Thoát
+    </button>
+</mat-dialog-actions>

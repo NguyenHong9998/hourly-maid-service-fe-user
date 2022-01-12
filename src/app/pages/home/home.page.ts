@@ -10,7 +10,7 @@ export class HomePage {
   path = ROUTER_UTILS.config;
   theme = ThemeList;
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private themeService: ThemeService) { }
 
   onClickChangeTheme(theme: ThemeList): void {
     this.themeService.setTheme(theme);

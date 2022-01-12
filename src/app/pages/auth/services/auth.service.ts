@@ -1,77 +1,72 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getItem, setItem, StorageItem } from '@core/utils';
+import { StorageItem } from '@core/utils';
 import { environment } from '@env/environment';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+const AUTH_API = 'http://localhost:5000/api/public/';
 
 
-const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'auth-user';
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root'
 })
-
 export class AuthService {
-  isLoggedIn$ = new BehaviorSubject<boolean>(!!getItem(StorageItem.Auth));
-  constructor(private http: HttpClient) {
+    httpOptions: any;
+    isLoggedIn$ = new BehaviorSubject<boolean>(!!localStorage.getItem(StorageItem.Auth));
 
-  }
-  get isLoggedIn(): boolean {
-    return this.isLoggedIn$.getValue();
-  }
-
-  signInHttp(loginForm: any) {
-    console.log(loginForm);
-    return this.http.post(environment.apiUrl + "/auth/login", loginForm).pipe(
-      tap((result: any) => {
-        setItem(StorageItem.Auth, result.data.access_token);
-        this.isLoggedIn$.next(true)
-      })
-    )
-  }
-
-
-  signOut() {
-    window.localStorage.clear();
-    window.sessionStorage.clear();
-  }
-
-  public saveTokenLocal(token: string) {
-    window.localStorage.removeItem(TOKEN_KEY);
-    window.localStorage.setItem(TOKEN_KEY, token);
-  }
-
-  public saveTokenSession(token: string) {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
-  }
-
-  public getToken(): any {
-    if (localStorage.getItem(TOKEN_KEY) !== null) {
-      return localStorage.getItem(TOKEN_KEY);
-    } else {
-      return sessionStorage.getItem(TOKEN_KEY);
+    constructor(private http: HttpClient) {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+            'Access-Control-Allow-Origin': 'http://localhost:4200',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+        };
     }
-  }
 
-  public saveUserLocal(user: any) {
-    window.localStorage.removeItem(USER_KEY);
-    window.localStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-  public saveUserSession(user: any) {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-
-  public getUser() {
-    if (localStorage.getItem(USER_KEY) !== null) {
-      const user = localStorage.getItem(USER_KEY);
-      return JSON.parse(user == null ? "" : user);
-    } else {
-      const user = sessionStorage.getItem(USER_KEY);
-      return JSON.parse(user == null ? "" : user);
+    login(loginForm: any): Observable<any> {
+        console.log("objetc: " + loginForm);
+        return this.http.post(environment.apiUrl + "/auth/login", loginForm, this.httpOptions);
     }
-  }
 
+    register(obj: any): Observable<any> {
+        console.log(obj);
+        return this.http.post(AUTH_API + 'signup', {
+            bookId: obj.book_id,
+            name: obj.name,
+            gender: obj.gender,
+            dateOfBirth: obj.dateOfBirth,
+            guardian: obj.guardian,
+            address: obj.address,
+            phone: obj.phone,
+            email: obj.email,
+            password: obj.password,
+        }, this.httpOptions);
+    }
+
+    verify(code: string): Observable<any> {
+        console.log(code);
+        return this.http.post(AUTH_API + 'verify', {
+            code: code
+        }, this.httpOptions);
+    }
+
+    verifyPassword(code: string): Observable<any> {
+        return this.http.post(AUTH_API + 'verify-password', {
+            code: code
+        }, this.httpOptions);
+    }
+
+    resetPassword(username: string): Observable<any> {
+        return this.http.post(AUTH_API + 'reset-password', {
+            username: username,
+        }, this.httpOptions);
+    }
+
+    doResetPassword(password: string, code: string): Observable<any> {
+        return this.http.post(AUTH_API + 'do-reset-password', {
+            password: password,
+            code: code
+        }, this.httpOptions);
+    }
 }

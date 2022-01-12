@@ -1,6 +1,8 @@
 export enum StorageItem {
   Auth = 'App/auth',
   Theme = 'App/theme',
+  User = "App/user",
+  HeaderINdex = "App/header_index"
 }
 
 export const getItem = (itemName: StorageItem): unknown | null => {

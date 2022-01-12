@@ -1,1 +1,170 @@
-<p>clean-service works!</p>
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="px-4 pt-6 sm:px-6 flex flex-col md:flex-row">
+    <div class="h-32 md:h-auto md:w-1/2">
+        <h2 class="text-lg font-extrabold text-3xl text-gray-900">
+            Danh sách dịch vụ
+        </h2>
+    </div>
+    <div class="h-32 md:h-auto md:w-2/3">
+        <a
+            href="/service/list"
+            matTooltip="Tải lại trang"
+            mat-stroked-button
+            class="btn-white btn-square bg-white ml-4">
+            <mat-icon>sync</mat-icon>
+        </a>
+
+        <button
+            matTooltip="Thêm mới dịch vụ"
+            id="addButton"
+            (click)="openDialogCreateService()"
+            mat-stroked-button
+            class="btn-white btn-square bg-white ml-4">
+            <mat-icon>playlist_add</mat-icon>
+        </button>
+
+        <button
+            matTooltip="Xóa dịch vụ"
+            [disabled]="!selection.hasValue()"
+            mat-stroked-button
+            id="deleteButton"
+            class="btn-white btn-square bg-white ml-3.5">
+            <mat-icon>delete_outline</mat-icon> </button>
+    </div>
+    <div class="flex justify-center h-2/4">
+        <div class="flex border-2 rounded">
+            <input type="text" class="px-4 py-2 w-80" placeholder="Search...">
+            <button class="flex items-center justify-center px-4 border-l
+                hover:bg-gray-300 focus:outline-none focus:ring-2
+                focus:ring-offset-2 focus:ring-indigo-500">
+                <svg
+                    class="w-6 h-6 text-gray-600"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42
+                        1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12
+                        6 6 0 0 0 0 12z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+</div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+    (matSortChange)="sortData($event)">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="name"> Tên dịch vụ
+        </th>
+        <!-- <td mat-cell *matCellDef="let element"> {{element.name}} </td> -->
+        <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+            element">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10">
+                    <img class="h-10 w-10 rounded-full"
+                        [src]="element.banner"
+                        alt="">
+                </div>
+                <div class="ml-4">
+                    <div class="text-sm font-medium
+                        text-gray-900">
+                        {{element.name}}
+                    </div>
+
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="email"> Mức giá </th>
+        <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+            element">
+            <div class="text-sm text-gray-900">{{element.price}}</div>
+            <!-- <div class="text-sm text-gray-500 pt-1">{{element.verify}}</div> -->
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="status"> Ghi chú
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+            element">
+            {{element.note}}
+        </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="createDate">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="role"> Ngày tạo </th>
+        <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="detail">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider">Chi tiết</th>
+        <td mat-cell *matCellDef="let element">
+            <button
+                mat-icon-button
+                [matMenuTriggerFor]="editMenu"
+                #menuTrigger="matMenuTrigger"
+                (click)="menuTrigger.openMenu()"
+                (mouseenter)="menuTrigger.openMenu()">
+                <mat-icon class="white-icon">edit</mat-icon>
+
+            </button>
+            <mat-menu #editMenu="matMenu" xPosition="before"
+                [overlapTrigger]="true">
+                <span>
+                    <a
+                        mat-menu-item (click)="openDialogEditService(element.id,
+                        element.name)">
+                        Chỉnh sửa thông tin
+                    </a>
+                    <a mat-menu-item (click)="openDialogListEmployee(element.id,
+                        element.name)">
+                        Xem danh sách nhân viên
+                    </a>
+                    <a mat-menu-item (click)="openDialoglistDiscountService(element.id,
+                        element.name)">
+                        Xem chương trình giảm giá
+                    </a>
+                </span>
+            </mat-menu>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+</table>
+
+<mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]"
+    aria-label="Chọn trang">
+</mat-paginator>

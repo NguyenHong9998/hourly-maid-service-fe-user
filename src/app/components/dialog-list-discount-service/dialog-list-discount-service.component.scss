@@ -1,0 +1,26 @@
+.example-container {
+    height: 400px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+}
+
+example-container::-webkit-scrollbar {
+    display: none;
+}
+
+.mat-table {
+    .mat-cell,
+    .mat-header-cell {
+        padding: 0px 40px;
+        white-space: nowrap;
+        vertical-align: middle;
+        text-align: center;
+    }
+}
+
+.example-container::-webkit-scrollbar {
+    display: none;
+}

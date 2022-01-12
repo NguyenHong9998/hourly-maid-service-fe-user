@@ -20,6 +20,8 @@ const APP_ROUTES: Routes = [
     path: ROUTER_UTILS.config.base.home,
     loadChildren: async () =>
       (await import('@pages/home/home.module')).HomeModule,
+    canLoad: [AuthGuard],
+
   },
   {
     path: ROUTER_UTILS.config.base.dashboard,
@@ -43,6 +45,24 @@ const APP_ROUTES: Routes = [
     path: ROUTER_UTILS.config.employee.root,
     loadChildren: async () =>
       (await import('@pages/employee/employee.module')).EmployeeModule,
+    canLoad: [AuthGuard],
+  },
+  {
+    path: ROUTER_UTILS.config.clean_service.root,
+    loadChildren: async () =>
+      (await import('@pages/clean-service/clean-service.module')).CleanServiceModule,
+    canLoad: [AuthGuard],
+  },
+  {
+    path: ROUTER_UTILS.config.discount_service.root,
+    loadChildren: async () =>
+      (await import('@pages/discount-service/discount-service.module')).DiscountServiceModule,
+    canLoad: [AuthGuard],
+  },
+  {
+    path: ROUTER_UTILS.config.task.root,
+    loadChildren: async () =>
+      (await import('@pages/task/task.module')).TaskModule,
     canLoad: [AuthGuard],
   },
   {

@@ -1,5 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UserInforComponent } from '@pages/user/component/user-infor/user-infor.component';
+import { Component, OnInit } from '@angular/core';
 import { EmployeeInforDomain } from './employee-infor-domain';
 
 @Component({
@@ -8,7 +7,6 @@ import { EmployeeInforDomain } from './employee-infor-domain';
   styleUrls: ['./employee-infor.component.scss']
 })
 export class EmployeeInforComponent implements OnInit {
-  @ViewChild(UserInforComponent) employee_infor: ElementRef;
   employees: Array<EmployeeInforDomain> = [];
 
   constructor() {
@@ -17,8 +15,8 @@ export class EmployeeInforComponent implements OnInit {
 
   ngOnInit(): void {
     this.employees = this.getEmployees();
-
   }
+
   getEmployees(): Array<EmployeeInforDomain> {
     const domain = new EmployeeInforDomain("Douglas  Pace", 123, "jane.cooper@example.com", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60");
     const peoples = Array<EmployeeInforDomain>();

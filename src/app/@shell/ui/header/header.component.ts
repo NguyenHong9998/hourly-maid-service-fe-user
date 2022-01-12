@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ROUTER_UTILS } from '@core/utils/router.utils';
-import { AuthService } from '@pages/auth/services/auth.service';
+import { ShareService } from '@pages/auth/services/share.service';
+import { TokenStorageService } from '@pages/auth/services/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -10,23 +11,22 @@ import { AuthService } from '@pages/auth/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-  activeIndex: boolean;
-  isLoggedIn = false;
+  activeIndex: number = 1;
+  isLoggedIn: boolean = false;
   currentUser = "";
   avatar = "";
   userRole = "";
-  isHover: boolean;
-
   path = ROUTER_UTILS.config;
 
   constructor(
     private router: Router,
-    private authService: AuthService) {
-    this.activeIndex = false;
-    this.isHover = false;
-    // this.isLoggedIn = authService.getToken() != null;
-    // console.log("login: " + this.isLoggedIn);
-    // console.log("access_token: " + this.authService.getToken())
+    private shareService: ShareService,
+    private tokenStorageService: TokenStorageService,
+  ) {
+    this.shareService.getClickEvent().subscribe(() => {
+      this.loadHeader();
+    })
+
   }
 
 
@@ -34,10 +34,9 @@ export class HeaderComponent implements OnInit {
     this.loadHeader();
   }
   onClickSignOut(): void {
-    console.log("log out");
-    this.authService.signOut();
-    const { root, signIn } = ROUTER_UTILS.config.auth;
-    this.router.navigate(['/', root, signIn]);
+    this.tokenStorageService.signOut();
+    this.router.navigateByUrl('/');
+    this.ngOnInit();
   }
 
   onCLikSignIn(): void {
@@ -46,22 +45,23 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/', root, signIn]);
   }
 
-  setActiveNumber() {
-    this.activeIndex = !this.activeIndex;
-
+  setActiveNumber(number: any) {
+    this.tokenStorageService.saveActiveIndexHeader(number);
+    this.activeIndex = number;
   }
 
   loadHeader(): void {
-    if (this.authService.getToken()) {
-      this.currentUser = this.authService.getUser().username;
-      this.userRole = this.authService.getUser().roles[0];
+    if (this.tokenStorageService.getToken()) {
+      this.currentUser = this.tokenStorageService.getUser().username;
     }
-    this.isLoggedIn = this.authService.isLoggedIn;
+    this.isLoggedIn = this.tokenStorageService.getToken() != null;
+    var indexActive = this.tokenStorageService.getActiveIndexHeader();
+    this.activeIndex = indexActive;
+    this.getUsernameAccount();
   }
-
-  setHover() {
-    this.isHover = !this.isHover;
-    console.log(this.isHover);
+  getUsernameAccount() {
+    if (this.tokenStorageService.getToken()) {
+      this.currentUser = this.tokenStorageService.getUser().full_name;
+    }
   }
-
 }

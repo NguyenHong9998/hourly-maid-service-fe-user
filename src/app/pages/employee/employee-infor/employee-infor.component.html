@@ -1,29 +1,46 @@
-<div class="flex flex-no-wrap "  >
-    <div  class="w-80 absolute sm:relative bg-white shadow  flex-col justify-between hidden sm:flex  " id="left-col">
+<div class="flex flex-no-wrap">
+    <div class="w-80 absolute sm:relative bg-white shadow flex-col
+        justify-between hidden sm:flex"id="left-col">
         <div class="px-8">
             <div class="flex border-2 border-gray-400 rounded mt-4">
-                <input type="text" class=" py-2 w-80" placeholder="  Tìm kiếm theo email...">
-                <button class="flex items-center justify-center px-4 border-l hover:bg-gray-300	 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <input type="text" class="py-2 w-80" placeholder="Tìm kiếm theo
+                    email...">
+                <button class="flex items-center justify-center px-4 border-l
+                    hover:bg-gray-300 focus:outline-none focus:ring-2
+                    focus:ring-offset-2 focus:ring-indigo-500">
                     <svg
                         class="w-6 h-6 text-gray-600"
                         fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                    >
-                        <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
-                    </svg>
-                </button>
-            </div>
-            <ul class="mt-10 border-t-2 border-gray-900" id="body" >
-                <br>
-                    <li class="flex w-full justify-between text-gray-300 cursor-pointer items-center mb-6" *ngFor="let person of employees">
-                        <a href="javascript:void(0)" class="flex items-center focus:outline-none focus:ring-2 focus:ring-white">
+                        viewBox="0 0 24 24">
+                        <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42
+                            1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0
+                            0-12 6 6 0 0 0 0 12z" />
+                        </svg>
+                    </button>
+                </div>
+                <ul class="mt-10 border-t-2 border-gray-900" id="body">
+                    <br>
+                    <li class="flex w-full justify-between text-gray-300
+                        cursor-pointer items-center mb-6"*ngFor="let person of
+                        employees">
+                        <a href="javascript:void(0)" class="flex items-center
+                            dark-mode:hover:bg-gray-600
+                            dark-mode:focus:bg-gray-600
+                            dark-mode:focus:text-white
+                            dark-mode:hover:text-white dark-mode:text-gray-200
+                            hover:text-gray-900 focus:text-gray-900
+                            hover:bg-gray-200 focus:bg-gray-200
+                            focus:outline-none focus:shadow-outline">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
+                                    <img class="h-10 w-10 rounded-full"
+                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60"
+                                        alt="">
                                 </div>
                                 <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">
+                                    <div class="text-sm font-medium
+                                        text-gray-900">
                                         Jane Cooper
                                     </div>
                                     <div class="text-sm text-gray-500">
@@ -33,14 +50,12 @@
                             </div>
                         </a>
                     </li>
-                    
-               
-            </ul>
-           
+                </ul>
+
+            </div>
+
         </div>
+
         <app-user-infor></app-user-infor>
 
     </div>
-    
-   
-</div>

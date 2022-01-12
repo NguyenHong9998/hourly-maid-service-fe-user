@@ -1,0 +1,67 @@
+ <h1 mat-dialog-title class="text-center">
+    {{ service_name }}
+</h1>
+
+
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+        matSort
+        (matSortChange)="sortData($event)">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+                text-xs text-gray-900
+                uppercase tracking-wider" mat-sort-header="name"> Nhân viên
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap" mat-cell
+                *matCellDef="let
+                element">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                        <img class="h-10 w-10 rounded-full"
+                            [src]="element.employee_avatar"
+                            alt="">
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-sm font-medium
+                            text-gray-900">
+                            {{element.employee_name}}
+                        </div>
+
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+                text-xs text-gray-900
+                uppercase tracking-wider" mat-sort-header="status"> Mức kinh
+                nghiệm
+            </th>
+            <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+                element">
+                <div class="flex">
+                    <div *ngFor="let star of stars">
+                        <mat-icon *ngIf="stars.indexOf(star) <element.level">stars</mat-icon>
+                    </div>
+
+                </div>
+
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky :true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+
+        </table>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close class="bg-blue-500 hover:bg-blue-700
+            text-white font-bold py-2 px-4 border border-blue-700 rounded">
+            Thoát
+        </button>
+
+
+    </mat-dialog-actions>

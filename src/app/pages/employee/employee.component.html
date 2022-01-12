@@ -1,265 +1,160 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="px-4 pt-6 sm:px-6 flex flex-col md:flex-row">
     <div class="h-32 md:h-auto md:w-1/2">
-        <h2 class="text-lg  font-extrabold text-3xl text-gray-900">
+        <h2 class="text-lg font-extrabold text-3xl text-gray-900">
             Danh sách Nhân viên
         </h2>
     </div>
-    <div class="flex  justify-center h-2/4 ">
+    <div class="h-32 md:h-auto md:w-2/3">
+        <a
+            href="/employee/list"
+            matTooltip="Tải lại trang"
+            mat-stroked-button
+            class="btn-white btn-square bg-white">
+            <mat-icon>sync</mat-icon>
+        </a>
+        <button
+            id="addButton"
+            matTooltip="Thêm mới nhân viên"
+            mat-stroked-button
+            class="btn-white btn-square bg-white ml-3.5"
+            (click)="openDialogCreateEmployee()">
+            <mat-icon>person_add</mat-icon>
+        </button>
+        <button
+            matTooltip="Xóa nhân viên"
+            [disabled]="!selection.hasValue()"
+            mat-stroked-button
+            class="btn-white btn-square bg-white ml-3.5">
+            <mat-icon>delete_outline</mat-icon> </button>
+    </div>
+    <div class="flex justify-center h-2/4">
         <div class="flex border-2 rounded">
-            <input type="text" class="px-4 py-2 w-80" placeholder="Search...">
-            <button class="flex items-center justify-center px-4 border-l hover:bg-gray-300	 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <input type="text" class="px-4 py-2 w-80"
+                placeholder="Search...">
+            <button class="flex items-center justify-center px-4 border-l
+                hover:bg-gray-300 focus:outline-none focus:ring-2
+                focus:ring-offset-2 focus:ring-indigo-500">
                 <svg
                     class="w-6 h-6 text-gray-600"
                     fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+                    viewBox="0 0 24 24">
+                    <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42
+                        1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0
+                        0-12
+                        6 6 0 0 0 0 12z"></path>
                 </svg>
             </button>
         </div>
     </div>
+
 </div>
-<div class="flex flex-col py-2">
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-extrabold text-gray-900 uppercase tracking-wider">
-                                Họ tên
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-extrabold text-gray-900 uppercase tracking-wider">
-                                Email
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-extrabold text-gray-900 uppercase tracking-wider">
-                                Trạng thái
-                            </th>
-                            <th scope="col" class=" px-6 py-3 text-left text-xs font-extrabold text-gray-900 uppercase tracking-wider">
-                                Chức vụ
-                            </th>
-                            <th scope="col" class="flex px-6 py-3 text-left text-xs font-extrabold text-gray-900 uppercase tracking-wider">
-                                Chi tiết
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            Jane Cooper
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            jane.cooper@example.com
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                                <div class="text-sm text-gray-500">Optimization</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Admin
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                        <!-- More people... -->
-                    </tbody>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            Jane Cooper
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            jane.cooper@example.com
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                                <div class="text-sm text-gray-500">Optimization</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Admin
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                        <!-- More people... -->
-                    </tbody>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            Jane Cooper
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            jane.cooper@example.com
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                                <div class="text-sm text-gray-500">Optimization</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Admin
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                        <!-- More people... -->
-                    </tbody>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            Jane Cooper
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            jane.cooper@example.com
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                                <div class="text-sm text-gray-500">Optimization</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Admin
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm ">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                        <!-- More people... -->
-                    </tbody>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            Jane Cooper
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            jane.cooper@example.com
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                                <div class="text-sm text-gray-500">Optimization</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Admin
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm ">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                        <!-- More people... -->
-                    </tbody>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="">
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            Jane Cooper
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            jane.cooper@example.com
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                                <div class="text-sm text-gray-500">Optimization</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                Admin
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap  text-sm ">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            </td>
-                        </tr>
-                        <!-- More people... -->
-                    </tbody>
-                </table>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+    (matSortChange)="sortData($event)">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="name"> Họ và tên
+        </th>
+        <!-- <td mat-cell *matCellDef="let element"> {{element.name}} </td> -->
+        <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+            element">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10">
+                    <img class="h-10 w-10 rounded-full"
+                        [src]="element.avatar"
+                        alt="">
+                </div>
+                <div class="ml-4">
+                    <div class="text-sm font-medium
+                        text-gray-900">
+                        {{element.name}}
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="py-5">
-    <app-pagination></app-pagination>
-</div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="email"> Email </th>
+        <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+            element">
+            <div class="text-sm text-gray-900">{{element.email}}</div>
+            <div class="text-sm text-gray-500 pt-1">{{element.verify}}</div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="status"> Trạng thái
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
+            element">
+            <span
+                class="{{element.status == 'Hoạt động' ? 'px-2 inline-flex
+                text-xs
+                leading-5 font-semibold rounded-full
+                bg-green-100 text-green-800' : 'px-2 inline-flex text-xs
+                leading-5 font-semibold rounded-full
+                bg-red-200 text-green-800' }}">
+                {{element.status}}
+            </span>
+        </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider" mat-sort-header="role"> Chức vụ </th>
+        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+        <td class="px-6 py-4 whitespace-nowrap text-xm
+            text-gray-500" mat-cell *matCellDef="let element">
+            {{element.role}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="detail">
+        <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
+            text-xs text-gray-900
+            uppercase tracking-wider">Chi tiết</th>
+        <td mat-cell *matCellDef="let element">
+            <button
+                mat-icon-button (click)="openDialogEmployeeInfor(element.id,
+                element.name)">
+                <mat-icon class="white-icon">edit</mat-icon>
+            </button>
+
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+</table>
+
+<mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]"
+    aria-label="Chọn trang">
+</mat-paginator>

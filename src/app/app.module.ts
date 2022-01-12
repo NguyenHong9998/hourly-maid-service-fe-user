@@ -5,12 +5,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ShareModule } from '@components/component.module';
 import { AuthModule } from '@pages/auth/auth.module';
+import { CleanServiceModule } from '@pages/clean-service/clean-service.module';
+import { DiscountServiceModule } from '@pages/discount-service/discount-service.module';
 import { EmployeeModule } from '@pages/employee/employee.module';
+import { TaskModule } from '@pages/task/task.module';
+import { UserModule } from '@pages/user/user.module';
 import { WebShellModule } from '@shell/ft/web-shell.module';
 import { CoreModule } from './@core/core.module';
 import { AppComponent } from './app.component';
 import { MaterialExampleModule } from './material.module';
-
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,8 +26,12 @@ import { MaterialExampleModule } from './material.module';
     ShareModule,
     EmployeeModule,
     MatNativeDateModule,
+    UserModule,
     MaterialExampleModule,
     ReactiveFormsModule,
+    CleanServiceModule,
+    DiscountServiceModule,
+    TaskModule
   ],
   bootstrap: [AppComponent],
 })

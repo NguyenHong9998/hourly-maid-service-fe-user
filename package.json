@@ -14,6 +14,7 @@
     "analyze": "webpack-bundle-analyzer dist/angular-boilerplate/stats.json"
   },
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^7.0.1",
     "@angular/animations": "~12.2.0",
     "@angular/cdk": "^13.0.3",
     "@angular/common": "~12.2.0",
@@ -27,6 +28,7 @@
     "@headlessui/vue": "^1.4.2",
     "@popperjs/core": "2.9.1",
     "lodash-es": "^4.17.21",
+    "ng-pick-datetime": "^7.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

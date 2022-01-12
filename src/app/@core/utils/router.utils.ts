@@ -14,10 +14,29 @@ export const ROUTER_UTILS = {
       passwordResetFailed: 'password-reset-failed',
       passwordResetSucceeded: 'password-reset-succeeded',
     },
+    user: {
+      root: 'users',
+      overview: 'overview',
+      profile: 'username',
+      calendar: 'calendar',
+
+    },
     employee: {
       root: 'employee',
       list: 'list',
       information: 'inform',
+    },
+    clean_service: {
+      root: 'service',
+      list: 'list',
+    },
+    discount_service: {
+      root: 'discount',
+      list: 'list',
+    },
+    task: {
+      root: 'task',
+      list: 'list',
     },
     settings: {
       root: 'settings',
@@ -29,11 +48,11 @@ export const ROUTER_UTILS = {
       security: 'security',
       securityLog: 'security-log',
     },
-    user: {
-      root: 'users',
-      overview: 'overview',
-      profile: ':username',
+
+    notify: {
+      root
     },
+
     errorResponse: {
       notFound: '404',
     },
