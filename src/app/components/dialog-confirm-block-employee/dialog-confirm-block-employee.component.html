@@ -1,0 +1,76 @@
+<div class="border-b-orange-600" id="title">
+    <h1 mat-dialog-title class="text-center">Thay đổi trạng thái hoạt động của nhân viên
+    </h1>
+</div>
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="border-t border-gray-200"></div>
+</div>
+
+<div mat-dialog-content>
+    <div class="flex font-sans mt-5">
+        <div class="flex-none w-48 relative">
+            <img [src]="employee.avatar" class="absolute inset-0 w-full h-full object-cover" />
+        </div>
+        <form class="flex-auto pl-6">
+            <div>
+                <span class="text-lg font-semibold text-slate-900">
+                    {{employee.name}}
+                </span>
+                <label for="last-name" class="block
+                            text-sm font-bold text-gray-700 pt-6">Trạng thái</label>
+                <div class="flex space-x-4 mb-6 text-sm font-medium">
+
+                    <label class="inline-flex items-center
+                            pt-3">
+                        <input type="radio" class="form-radio" [checked]="employee.status ==
+                                'Hoạt động'" name="accountType" value="personal">
+                        <span class="ml-2 px-2 inline-flex
+                        text-xs
+                        leading-5 font-semibold rounded-full
+                        bg-green-100 text-green-800">Hoạt động </span>
+                    </label>
+                    <label class="inline-flex items-center
+                            ml-6 pt-3">
+                        <input type="radio" class="form-radio" [checked]="employee.status ===
+                                'Tạm khoá'" name="accountType" value="busines">
+                        <span class="ml-2 px-2 inline-flex text-xs
+                        leading-5 font-semibold rounded-full
+                        bg-red-200 text-green-800">Tạm khoá</span>
+                    </label>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="pt-6">
+        <mat-checkbox class="example-margin" #confirm>
+            <span id="spanNote" class="mt-3">
+                Hãy đảm bảo việc thay đổi trạng thái hoạt động nhận viên của bạn vì nó sẽ
+                ảnh hưởng đến sự tương tác của
+                nhân viên đó với hệ thống.
+            </span>
+        </mat-checkbox>
+    </div>
+</div>
+
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+</div>
+<div mat-dialog-actions class="flex flex-row-reverse">
+    <!-- <button class="bg-transparent hover:bg-blue-500 text-blue-700
+            font-semibold hover:text-white py-2 px-4 border
+            border-blue-500
+            hover:border-transparent rounded" id="saveButton" disabled>
+        Lưu
+    </button> -->
+
+    <button mat-raised-button color="accent" [disabled]="!confirm.checked" id="saveButton">Lưu</button>
+
+    <button mat-button (click)="onNoClick()" class="bg-white
+            hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4
+            border
+            border-gray-400 rounded shadow">Thoát</button>
+
+</div>

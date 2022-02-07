@@ -7,12 +7,14 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ROUTER_UTILS } from '@core/utils/router.utils';
 import { AuthService } from '@pages/auth/services/auth.service';
 import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 import { TokenStorageService } from '@pages/auth/services/token-storage.service';
 import isArray from 'lodash-es/isArray';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { CodeError } from 'src/app/constant/error-code';
 
 @Injectable()
 export class ServerErrorInterceptor implements HttpInterceptor {
@@ -45,6 +47,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
           } else {
             if (isArray(error.error.errors)) {
               codeError = error.error.errors[0].code;
+              this.handleCodeError(codeError);
               errorMessage = error.error.errors[0].default_message;
             } else {
               codeError = error.error.errors.code;
@@ -59,19 +62,22 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     );
   }
 
-  // handleCodeError(codeError: string) {
-  //   switch (codeError) {
-  //     case CodeError.TokenInvalid:
-  //       this.redirectToLogin();
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+  handleCodeError(codeError: string) {
+    switch (codeError) {
+      case CodeError.TokenInvalid:
+        this.redirectToLogin();
+        break;
+      default:
+        break;
+    }
+  }
 
-  // private redirectToLogin() {
-  //   this.tokenStorageService.signOut();
-  //   this.router.navigateByUrl('/auth/login');
-  // }
+  private redirectToLogin() {
+    this.tokenStorageService.signOut();
+    // this.router.navigateByUrl('/auth/login');
+    const { root, signIn } = ROUTER_UTILS.config.auth;
+    this.router.navigate(['/', root, signIn]);
+    window.location.reload();
+  }
 
 }

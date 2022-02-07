@@ -1,0 +1,115 @@
+<div class="border-b-orange-600" id="title">
+    <h1 mat-dialog-title class="text-center">{{title}}
+    </h1>
+</div>
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="border-t border-gray-200"></div>
+</div>
+<div class=" px-4 " mat-dialog-content>
+    <div class="px-4 py-4 mb-1 tracking-wide">
+        <h2 class="mt-1 font-semibold text-gray-800">106 khách hàng đã đánh giá</h2>
+        <div class="px-8 pb-3 -mx-8 border-b">
+            <div class="flex items-center mt-1">
+                <div class="w-1/5 tracking-tighter text-gray-500">
+                    <span>5 star</span>
+                </div>
+                <div class="w-3/5">
+                    <div class="w-full h-2 bg-gray-300 rounded-lg">
+                        <div class="w-7/12 h-2 bg-yellow-600 rounded-lg"></div>
+                    </div>
+                </div>
+                <div class="w-1/5 pl-3 text-gray-700">
+                    <span class="text-sm">51%</span>
+                </div>
+            </div>
+            <div class="flex items-center mt-1">
+                <div class="w-1/5 tracking-tighter text-gray-500">
+                    <span>4 star</span>
+                </div>
+                <div class="w-3/5">
+                    <div class="w-full h-2 bg-gray-300 rounded-lg">
+                        <div class="w-1/5 h-2 bg-yellow-600 rounded-lg"></div>
+                    </div>
+                </div>
+                <div class="w-1/5 pl-3 text-gray-700">
+                    <span class="text-sm">17%</span>
+                </div>
+            </div>
+            <div class="flex items-center mt-1">
+                <div class="w-1/5 tracking-tighter text-gray-500">
+                    <span>3 star</span>
+                </div>
+                <div class="w-3/5">
+                    <div class="w-full h-2 bg-gray-300 rounded-lg">
+                        <div class="w-3/12 h-2 bg-yellow-600 rounded-lg"></div>
+                    </div>
+                </div>
+                <div class="w-1/5 pl-3 text-gray-700">
+                    <span class="text-sm">19%</span>
+                </div>
+            </div>
+            <div class="flex items-center mt-1">
+                <div class="w-1/5 tracking-tighter text-gray-500">
+                    <span>2 star</span>
+                </div>
+                <div class="w-3/5">
+                    <div class="w-full h-2 bg-gray-300 rounded-lg">
+                        <div class="w-1/5 h-2 bg-yellow-600 rounded-lg"></div>
+                    </div>
+                </div>
+                <div class="w-1/5 pl-3 text-gray-700">
+                    <span class="text-sm">8%</span>
+                </div>
+            </div>
+            <div class="flex items-center mt-1">
+                <div class="w-1/5 tracking-tighter text-gray-500">
+                    <span>1 star</span>
+                </div>
+                <div class="w-3/5">
+                    <div class="w-full h-2 bg-gray-300 rounded-lg">
+                        <div class="w-2/12 h-2 bg-yellow-600 rounded-lg"></div>
+                    </div>
+                </div>
+                <div class="w-1/5 pl-3 text-gray-700">
+                    <span class="text-sm">5%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-full px-4 py-4">
+        <h3 class="font-medium tracking-tight">Góp ý nhân viên</h3>
+        <div class="flex">
+            <div class="w-12 h-12 mt-5">
+                <img class="inline object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/2589653/pexels-photo-2589653.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Profile image"/>
+            </div>
+            <div class="ml-3 flex-1">
+                <ul class="flex items-center gap-x-1">
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-300" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        </svg>
+                    </li>
+                    
+                </ul>
+                <p class="py-1 text-sm text-gray-700">Plz Give your star rating 1 to 5.Plz Give your star rating 1 to 5.Plz Give your star rating 1 to 5.Plz Give your star rating 1 to 5.Plz Give your star rating 1 to 5.Plz Give your star rating 1 to 5.Plz Give your star rating 1 to 5.Plz Give your star rating 1 to 5.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+</div>
+<div mat-dialog-actions class="flex flex-row-reverse">
+
+    <button mat-button (click)="onNoClick()" class="bg-white
+            hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4
+            border
+            border-gray-400 rounded shadow">Thoát</button>
+
+</div>

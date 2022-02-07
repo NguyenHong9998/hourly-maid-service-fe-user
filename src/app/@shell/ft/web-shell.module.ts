@@ -19,7 +19,7 @@ const APP_ROUTES: Routes = [
   {
     path: ROUTER_UTILS.config.base.home,
     loadChildren: async () =>
-      (await import('@pages/home/home.module')).HomeModule,
+    (await import('@pages/dashboard/dashboard.module')).DashboardModule,
     canLoad: [AuthGuard],
 
   },
@@ -63,6 +63,18 @@ const APP_ROUTES: Routes = [
     path: ROUTER_UTILS.config.task.root,
     loadChildren: async () =>
       (await import('@pages/task/task.module')).TaskModule,
+    canLoad: [AuthGuard],
+  },
+  {
+    path: ROUTER_UTILS.config.notify.root,
+    loadChildren: async () =>
+      (await import('@pages/notify/notify.module')).NotifyModule,
+    canLoad: [AuthGuard],
+  },
+  {
+    path: ROUTER_UTILS.config.calendar.root,
+    loadChildren: async () =>
+      (await import('@pages/calendar/calendar.module')).CalendarModule,
     canLoad: [AuthGuard],
   },
   {

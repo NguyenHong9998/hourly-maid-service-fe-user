@@ -1,0 +1,37 @@
+/** No CSS for this example */
+.mat-calendar-body-cell.selected
+{
+  background-color:rgb(71, 236, 98)!important;
+  border-radius: 50%
+}
+
+.mat-calendar-body-cell.current
+{
+  background-color:rgb(230, 39, 48)!important;
+  border-radius: 50%
+}
+.drop-calendar
+{
+  width:30rem
+}
+
+::ng-deep .mat-paginator {
+  margin-bottom: 1cm;
+}
+table {
+  width: 100%;
+}
+
+.mat-row,
+.mat-footer-row {
+  height: 68px;
+}
+
+.white-icon {
+  color: rgb(37, 233, 70);
+}
+
+#deleteButton{
+margin-left: 0.3cm;
+}
+

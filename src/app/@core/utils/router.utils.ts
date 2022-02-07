@@ -18,8 +18,6 @@ export const ROUTER_UTILS = {
       root: 'users',
       overview: 'overview',
       profile: 'username',
-      calendar: 'calendar',
-
     },
     employee: {
       root: 'employee',
@@ -50,9 +48,14 @@ export const ROUTER_UTILS = {
     },
 
     notify: {
-      root
+      root : 'notify',
+      list: 'list'
     },
 
+    calendar : {
+      root : 'calendar',
+      list: 'list'
+    },
     errorResponse: {
       notFound: '404',
     },

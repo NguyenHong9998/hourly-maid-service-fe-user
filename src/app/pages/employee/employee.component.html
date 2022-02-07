@@ -6,39 +6,25 @@
         </h2>
     </div>
     <div class="h-32 md:h-auto md:w-2/3">
-        <a
-            href="/employee/list"
-            matTooltip="Tải lại trang"
-            mat-stroked-button
-            class="btn-white btn-square bg-white">
+        <a href="/employee/list" matTooltip="Tải lại trang" mat-stroked-button class="btn-white btn-square bg-white">
             <mat-icon>sync</mat-icon>
         </a>
-        <button
-            id="addButton"
-            matTooltip="Thêm mới nhân viên"
-            mat-stroked-button
-            class="btn-white btn-square bg-white ml-3.5"
-            (click)="openDialogCreateEmployee()">
+        <button id="addButton" matTooltip="Thêm mới nhân viên" mat-stroked-button
+            class="btn-white btn-square bg-white ml-3.5" (click)="openDialogCreateEmployee()">
             <mat-icon>person_add</mat-icon>
         </button>
-        <button
-            matTooltip="Xóa nhân viên"
-            [disabled]="!selection.hasValue()"
-            mat-stroked-button
+        <button matTooltip="Xóa nhân viên" [disabled]="!selection.hasValue()" mat-stroked-button
             class="btn-white btn-square bg-white ml-3.5">
-            <mat-icon>delete_outline</mat-icon> </button>
+            <mat-icon>delete_outline</mat-icon>
+        </button>
     </div>
     <div class="flex justify-center h-2/4">
         <div class="flex border-2 rounded">
-            <input type="text" class="px-4 py-2 w-80"
-                placeholder="Search...">
+            <input type="text" class="px-4 py-2 w-80" placeholder="Search...">
             <button class="flex items-center justify-center px-4 border-l
                 hover:bg-gray-300 focus:outline-none focus:ring-2
                 focus:ring-offset-2 focus:ring-indigo-500">
-                <svg
-                    class="w-6 h-6 text-gray-600"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
+                <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24">
                     <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42
                         1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0
@@ -50,20 +36,17 @@
     </div>
 
 </div>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
-    (matSortChange)="sortData($event)">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null"
-                [checked]="selection.hasValue() && isAllSelected()"
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()">
             </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-            <mat-checkbox (click)="$event.stopPropagation()"
-                (change)="$event ? selection.toggle(row) : null"
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
                 [checked]="selection.isSelected(row)">
             </mat-checkbox>
         </td>
@@ -80,9 +63,7 @@
             element">
             <div class="flex items-center">
                 <div class="flex-shrink-0 h-10 w-10">
-                    <img class="h-10 w-10 rounded-full"
-                        [src]="element.avatar"
-                        alt="">
+                    <img class="h-10 w-10 rounded-full" [src]="element.avatar" alt="">
                 </div>
                 <div class="ml-4">
                     <div class="text-sm font-medium
@@ -113,13 +94,15 @@
         </th>
         <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
             element">
-            <span
-                class="{{element.status == 'Hoạt động' ? 'px-2 inline-flex
+            <span class="{{element.status == 'Hoạt động' ? 'px-2 inline-flex
                 text-xs
                 leading-5 font-semibold rounded-full
                 bg-green-100 text-green-800' : 'px-2 inline-flex text-xs
                 leading-5 font-semibold rounded-full
-                bg-red-200 text-green-800' }}">
+                bg-red-200 text-green-800' }}"
+                (click) = "openDialogBlockEmployee(element.id,
+                element.name, element.avatar, element.status)"
+                >
                 {{element.status}}
             </span>
         </td>
@@ -142,12 +125,25 @@
             text-xs text-gray-900
             uppercase tracking-wider">Chi tiết</th>
         <td mat-cell *matCellDef="let element">
-            <button
-                mat-icon-button (click)="openDialogEmployeeInfor(element.id,
-                element.name)">
+            
+            <button mat-icon-button [matMenuTriggerFor]="editMenu" #menuTrigger="matMenuTrigger"
+                (click)="menuTrigger.openMenu()" (mouseenter)="menuTrigger.openMenu()">
                 <mat-icon class="white-icon">edit</mat-icon>
-            </button>
 
+            </button>
+            <mat-menu #editMenu="matMenu" xPosition="before" [overlapTrigger]="true">
+                <span>
+                    <a mat-menu-item (click)="openDialogEmployeeInfor(element.id,
+                    element.name)">
+                        Chỉnh sửa thông tin
+                    </a>
+                    <a mat-menu-item (click)="openDialogFeedbackOfEmployee(element.id,
+                    element.name)">
+                        Xem phản hồi người dùng
+                    </a>
+                    
+                </span>
+            </mat-menu>
         </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -155,6 +151,5 @@
     </tr>
 </table>
 
-<mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]"
-    aria-label="Chọn trang">
+<mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" aria-label="Chọn trang">
 </mat-paginator>

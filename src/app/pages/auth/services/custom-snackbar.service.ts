@@ -8,7 +8,7 @@ import { SnackBarComponent } from '@components/snack-bar/snack-bar.component';
 export class CustomSnackbarService {
   // horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  autoHide = 3000;
+  autoHide = 5000;
 
   constructor(public snackbar: MatSnackBar, public zone: NgZone) { }
 

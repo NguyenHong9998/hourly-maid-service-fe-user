@@ -35,10 +35,9 @@ export class SignInPage {
   oncLickSignIn() {
     this.authService.login(this.loginForm.value).subscribe(
       data => {
-        console.log("USER: " + data);
         if (this.loginForm.value.remember_me) {
           this.tokenStorageService.saveTokenLocal(data.data.access_token);
-          this.tokenStorageService.saveUserLocal(data);
+          this.tokenStorageService.saveUserLocal(data.data);
         } else {
           this.tokenStorageService.saveTokenSession(data.data.access_token);
           this.tokenStorageService.saveUserLocal(data.data);

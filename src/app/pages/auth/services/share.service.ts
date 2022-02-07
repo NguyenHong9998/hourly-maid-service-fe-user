@@ -5,7 +5,6 @@ import { Observable, Subject } from "rxjs";
     providedIn: 'root'
 })
 export class ShareService {
-
     constructor() { }
 
     private subject = new Subject<any>();

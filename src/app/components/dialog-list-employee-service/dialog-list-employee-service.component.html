@@ -44,9 +44,8 @@
                 element">
                 <div class="flex">
                     <div *ngFor="let star of stars">
-                        <mat-icon *ngIf="stars.indexOf(star) <element.level">stars</mat-icon>
+                        <mat-icon *ngIf="stars.indexOf(star) < element.level" class="star">star</mat-icon>
                     </div>
-
                 </div>
 
             </td>

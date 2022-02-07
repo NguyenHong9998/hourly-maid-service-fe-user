@@ -1,0 +1,19 @@
+::ng-deep .mat-paginator {
+    margin-bottom: 1cm;
+}
+table {
+    width: 100%;
+}
+
+.mat-row,
+.mat-footer-row {
+    height: 68px;
+}
+.white-icon {
+    color: rgb(37, 233, 70);
+}
+
+#deleteButton,
+#addButton {
+    margin-left: 15px;
+}

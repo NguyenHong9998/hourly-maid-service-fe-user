@@ -4,80 +4,59 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <img class="h-8 w-8"
-                            src="../../../../assets/img/logo_color.png"
-                            alt="Workflow">
+                        <img class="h-8 w-8" src="../../../../assets/img/logo_color.png" alt="Workflow">
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="/"
-                                aria-current="page"
-                                [ngClass]="(activeIndex ==1 )? 'bg-gray-900
+                            <a href="/" aria-current="page" [ngClass]="(activeIndex ==1 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'"
-                                (click)="setActiveNumber(1)">Trang
+                                font-medium'" (click)="setActiveNumber(1)">Trang
                                 chủ</a>
-                            <a
-                                href="/employee/list"
-                                [ngClass]="(activeIndex ==2 )? 'bg-gray-900
+                            <a href="/employee/list" [ngClass]="(activeIndex ==2 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
                                 font-medium'" (click)="setActiveNumber(2)">Nhân
                                 viên</a>
-                            <a
-                                href="/service/list"
-                                [ngClass]="(activeIndex == 3 )? 'bg-gray-900
+                            <a href="/service/list" [ngClass]="(activeIndex == 3 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
                                 font-medium'" (click)="setActiveNumber(3)">Dịch
                                 vụ</a>
-                            <a
-                                href="/discount/list"
-                                [ngClass]="(activeIndex == 4 )? 'bg-gray-900
+                            <a href="/discount/list" [ngClass]="(activeIndex == 4 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
                                 font-medium'" (click)="setActiveNumber(4)">Chương
                                 trình</a>
-                            <a
-                                href="/task/list"
-                                [ngClass]="(activeIndex == 5 )? 'bg-gray-900
+                            <a href="/task/list" [ngClass]="(activeIndex == 5 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
                                 font-medium'" (click)="setActiveNumber(5)">Công
                                 việc</a>
-                            <a [ngClass]="(activeIndex == 6 )? 'bg-gray-900
+                            <a href="/calendar/list" [ngClass]="(activeIndex == 6 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
                                 font-medium'" (click)="setActiveNumber(6)">Lịch
                                 làm</a>
-                            <a [ngClass]="(activeIndex == 7)? 'bg-gray-900
+                            
+                            <a href="/notify/list" [ngClass]="(activeIndex == 7)? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(7)">Phản
-                                hồi</a>
-                            <a
-                                href="/notify/list"
-                                [ngClass]="(activeIndex == 8)? 'bg-gray-900
-                                text-white px-3 py-2
-                                rounded-md text-sm font-medium' : 'text-gray-300
-                                hover:bg-gray-700
-                                hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(8)">Thông
+                                font-medium'" (click)="setActiveNumber(7)">Thông
                                 báo</a>
                         </div>
                     </div>
@@ -87,35 +66,25 @@
 
                         <div class="ml-3 relative">
                             <div>
-                                <button
-                                    type="button"
-                                    [matMenuTriggerFor]="menu"
-                                    class="max-w-xs bg-gray-800 rounded-full
+                                <button 
+                                type="button" [matMenuTriggerFor]="menu" class="max-w-xs bg-gray-800 rounded-full
                                     flex items-center text-sm
                                     focus:outline-none focus:ring-2
                                     focus:ring-offset-2
                                     focus:ring-offset-gray-800
-                                    focus:ring-white"
-                                    id="user-menu-button"
-                                    aria-expanded="false"
-                                    aria-haspopup="true">
+                                    focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <img class="h-8 w-8 rounded-full"
                                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                         alt="">
                                 </button>
                                 <mat-menu #menu="matMenu" xPosition="before">
-                                    <button mat-menu-item>
+                                    <button mat-menu-item (click) = "onClickProfile()">
                                         <mat-icon>perm_contact_calendar</mat-icon>
                                         <span class="text-sm text-gray-700">Tài
                                             khoản</span>
                                     </button>
-                                    <button mat-menu-item>
-                                        <mat-icon> vpn_key</mat-icon>
-                                        <span class="text-sm text-gray-700">Đổi
-                                            mật khẩu</span>
-                                    </button>
-                                    <button mat-menu-item
-                                        (click)="onClickSignOut()">
+                                    
+                                    <button mat-menu-item (click)="onClickSignOut()">
                                         <mat-icon>clear</mat-icon>
                                         <span class="text-sm text-gray-700">Đăng
                                             xuất</span>
@@ -129,14 +98,13 @@
 
                 <div class="hidden md:flex items-center justify-end
                     md:flex-1 lg:w-0" *ngIf="!isLoggedIn">
-                    <button href="#" class="whitespace-nowrap
+                    <button (click)="onCLikSignUp();" class="whitespace-nowrap
                         text-white
                         font-medium text-white hover:bg-gray-700
                         hover:text-white px-3 py-2">
                         Đăng kí
                     </button>
-                    <button (click)="onCLikSignIn();"
-                        class="ml-8 whitespace-nowrap inline-flex
+                    <button (click)="onCLikSignIn();" class="ml-8 whitespace-nowrap inline-flex
                         items-center justify-center px-4 py-2 border
                         border-transparent rounded-md shadow-sm
                         text-base

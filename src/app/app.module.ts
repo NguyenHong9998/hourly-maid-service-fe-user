@@ -5,9 +5,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ShareModule } from '@components/component.module';
 import { AuthModule } from '@pages/auth/auth.module';
+import { CalendarModule } from '@pages/calendar/calendar.module';
 import { CleanServiceModule } from '@pages/clean-service/clean-service.module';
 import { DiscountServiceModule } from '@pages/discount-service/discount-service.module';
 import { EmployeeModule } from '@pages/employee/employee.module';
+import { NotifyModule } from '@pages/notify/notify.module';
 import { TaskModule } from '@pages/task/task.module';
 import { UserModule } from '@pages/user/user.module';
 import { WebShellModule } from '@shell/ft/web-shell.module';
@@ -31,7 +33,9 @@ import { MaterialExampleModule } from './material.module';
     ReactiveFormsModule,
     CleanServiceModule,
     DiscountServiceModule,
-    TaskModule
+    TaskModule,
+    NotifyModule,
+    CalendarModule
   ],
   bootstrap: [AppComponent],
 })

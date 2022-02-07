@@ -1,17 +1,324 @@
-<div class="grid mt-24 place-items-center">
-  <h1 class="text-3xl md:text-6xl lg:text-7xl">
-    <span
-      class="hidden text-xl text-center md:text-3xl lg:text-6xl md:inline-block"
-    >
-      🎉🎉🎉
-    </span>
-    dashboard works!
-    <span class="text-xl text-center md:text-3xl lg:text-6xl"> 🎉🎉🎉 </span>
-  </h1>
-  <a
-    [routerLink]="[path.home]"
-    class="inline-block h-12 px-6 py-3 mb-12 font-semibold text-white bg-blue-600 rounded-lg  hover:bg-blue-500 focus:ring-4 focus:ring-offset-blue-600 focus:outline-none"
-  >
-    Back to home
-  </a>
+<div class="section section-users users-management-page container pt-5">
+  <h3 class="box-title">Thống kê theo công việc </h3>
+  <div class="analytics-info section-content f-d-col pl-5">
+    <div class="grid grid-cols-3 gap-4">
+      <div class="box box-1 bg-white pl-5 ">
+        <div class="pt-5 box-content f-d-col">
+          <h4>Tổng số công việc</h4>
+          <div class="grid grid-cols-2 gap-20">
+            <div>
+              <h4>1234</h4>
+            </div>
+            <div class="pl-10">
+              <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box box-1 bg-white pl-5">
+        <div class="pt-5
+         box-content f-d-col">
+          <h4>Tổng số công việc đã huỷ</h4>
+          <div class="grid grid-cols-2 gap-20">
+            <div>
+              <h4>1234</h4>
+            </div>
+            <div class="pl-10">
+              <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box box-1 bg-white pl-5">
+        <div class="pt-5 box-content f-d-col">
+          <h4>Tổng số công việc hoàn thành</h4>
+          <div class="grid grid-cols-2 gap-20">
+            <div>
+              <h4>1234</h4>
+            </div>
+            <div class="pl-10">
+              <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="analytics-chart pb-5">
+      <div class="box box-1 ">
+        <div class="pt-5 box-content f-d-col">
+          <div class="box-tools bg-white py-5 px-3">
+            <div class="grid grid-cols-2 gap-4 ">
+              <div>
+                <h4 class="box-title">Sơ đồ số lượng công việc theo thời gian</h4>
+              </div>
+              <div class="flex">
+                <mat-form-field appearance="fill">
+                  <mat-label>Chọn khoảng thời gian</mat-label>
+                  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+
+                  <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date
+                  </mat-error>
+                  <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+
+                <div class="pt-2 pl-5">
+                  <button
+                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    Xác nhận
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <div class="pt-6 chart-box  ">
+              <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+                [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                [chartType]="lineChartType" [plugins]="lineChartPlugins">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class=" pt-5 ">
+
+    <h3 class="box-title">Thống kê theo dịch vụ </h3>
+    <div class="grid grid-cols-3 gap-4 pl-5">
+      <div class="box box-1 bg-white pl-5 ">
+        <div class="pt-5 box-content f-d-col">
+          <h4>Tổng số dịch vụ</h4>
+          <div class="grid grid-cols-2 gap-20">
+            <div>
+              <h4>1234</h4>
+            </div>
+            <div class="pl-10">
+              <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box box-1 bg-white pl-5">
+        <div class="pt-5
+         box-content f-d-col">
+          <h4>Dịch vụ được sử dụng nhiều nhất</h4>
+          <div class="grid grid-cols-2 gap-20">
+            <div>
+              <h4>1234</h4>
+            </div>
+            <div class="pl-10">
+              <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box box-1 bg-white pl-5">
+        <div class="pt-5 box-content f-d-col">
+          <h4>Dịch vụ được sử dụng ít nhất</h4>
+          <div class="grid grid-cols-2 gap-20">
+            <div>
+              <h4>1234</h4>
+            </div>
+            <div class="pl-10">
+              <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="analytics-chart pb-5 pl-5">
+      <div class="box box-1 ">
+        <div class="pt-5 box-content f-d-col">
+          <div class="box-tools bg-white py-5 px-3">
+            <div class="grid grid-cols-2 gap-4 ">
+              <div>
+                <h4 class="box-title">Sơ đồ số công việc của mỗi dịch vụ theo thời gian</h4>
+              </div>
+              <div class="flex">
+                <mat-form-field appearance="fill">
+                  <mat-label>Chọn khoảng thời gian</mat-label>
+                  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+
+                  <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date
+                  </mat-error>
+                  <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+
+                <div class="pt-2 pl-5">
+                  <button
+                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    Xác nhận
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <div class="chart-wrapper">
+              <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType"
+                [colors]="barChartColors">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class=" pt-5 ">
+    <h3 class="box-title">Thống kê theo phản hồi của khách hàng </h3>
+    <div class="grid grid-cols-3 gap-4 pl-5">
+      <div class="box box-1 bg-white pl-5 ">
+        <div class="pt-5 box-content f-d-col">
+          <h4>Tổng số khách hàng đánh giá</h4>
+          <div class="grid grid-cols-2 gap-20">
+            <div>
+              <h4>1234</h4>
+            </div>
+            <div class="pl-10">
+              <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box box-1 bg-white pl-5">
+        <div class="pt-5
+         box-content f-d-col">
+          <h4>Nhân viên có mức đánh giá cao nhất</h4>
+          <div class="grid grid-cols-2 gap-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <img class="h-10 w-10 rounded-full"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="">
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium
+                      text-gray-900">
+                  Nguyễn Văn A
+                </div>
+
+              </div>
+            </div>
+            <div class="pl-10 pt-2">
+              <!-- <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span> -->
+              <ul class="flex items-center gap-x-1">
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box box-1 bg-white pl-5">
+        <div class="pt-5 box-content f-d-col">
+          <h4>Nhân viên có mức đánh giá thấp nhất</h4>
+          <div class="grid grid-cols-2 gap-5">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <img class="h-10 w-10 rounded-full"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="">
+              </div>
+              <div class="ml-4">
+                <div class="text-sm font-medium
+                      text-gray-900">
+                  Nguyễn Văn A
+                </div>
+
+              </div>
+            </div>
+            <div class="pl-10 pt-2">
+              <!-- <span class="pb-1 txt-danger">-1% <mat-icon>arrow_upward</mat-icon>
+              </span> -->
+              <ul class="flex items-center gap-x-1">
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-300" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                  </svg>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="analytics-chart pb-5 pl-5">
+      <div class="box box-1 ">
+        <div class="pt-5 box-content f-d-col">
+          <div class="box-tools bg-white py-5 px-3">
+            <div class="grid grid-cols-2 gap-4 ">
+              <div>
+                <h4 class="box-title">Sơ đồ mức đánh giá của khách hàng đối với nhân viên</h4>
+              </div>
+              <div class="flex">
+                <mat-form-field appearance="fill">
+                  <mat-label>Chọn khoảng thời gian</mat-label>
+                  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+
+                  <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date
+                  </mat-error>
+                  <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                </mat-form-field>
+
+                <div class="pt-2 pl-5">
+                  <button
+                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    Xác nhận
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <div class="chart-wrapper">
+              <canvas baseChart [datasets]="bubbleChartData" [options]="bubbleChartOptions" [colors]="bubbleChartColors"
+                [legend]="bubbleChartLegend" [chartType]="bubbleChartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

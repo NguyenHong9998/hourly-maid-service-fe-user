@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DialogConfirmBlockEmployeeComponent } from '@components/dialog-confirm-block-employee/dialog-confirm-block-employee.component';
 import { DialogCreateEmployeeComponent } from '@components/dialog-create-employee/dialog-create-employee.component';
 import { DialogEditEmployeeInforComponent } from '@components/dialog-edit-employee-infor/dialog-edit-employee-infor.component';
+import { DialogFeedbackOfEmployeeComponent } from '@components/dialog-feedback-of-employee/dialog-feedback-of-employee.component';
 import { EmployeeListDomain } from './employee-list.domain';
 
 @Component({
@@ -80,5 +82,23 @@ export class EmployeeComponent {
     dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
     });
+  }
+
+  openDialogFeedbackOfEmployee(employeeId: string, elementName: string) {
+    const data = { employeeId, elementName };
+
+    const dialogRef = this.dialog.open(DialogFeedbackOfEmployeeComponent, { data });
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDialogBlockEmployee(employeeId: number, elementName: string, elementAvatar : string, elementStatus : string) {
+    const data = {employeeId, elementName, elementAvatar, elementStatus}
+    const dialogRef = this.dialog.open(DialogConfirmBlockEmployeeComponent, {data});
+    dialogRef.afterClosed().subscribe(() => {
+
+    })
   }
 }

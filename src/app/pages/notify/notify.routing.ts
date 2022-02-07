@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ROUTER_UTILS } from '@core/utils/router.utils';
-import { NotifyComponent } from '@pages/user/pages/notify/notify.component';
+import { NotifyComponent } from './notify.component';
 
 const routes: Routes = [
     {
-        path: ROUTER_UTILS.config.notify.root,
+        path: ROUTER_UTILS.config.notify.list,
         component: NotifyComponent,
     },
 ];
@@ -14,4 +14,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class NotifykRouting { }
+export class NotifyRouting { }

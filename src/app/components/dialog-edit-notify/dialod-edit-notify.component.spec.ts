@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotifyComponent } from './notify.component';
+import { DialodEditNotifyComponent } from './dialod-edit-notify.component';
 
-describe('NotifyComponent', () => {
-  let component: NotifyComponent;
-  let fixture: ComponentFixture<NotifyComponent>;
+describe('DialodEditNotifyComponent', () => {
+  let component: DialodEditNotifyComponent;
+  let fixture: ComponentFixture<DialodEditNotifyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotifyComponent ]
+      declarations: [ DialodEditNotifyComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotifyComponent);
+    fixture = TestBed.createComponent(DialodEditNotifyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

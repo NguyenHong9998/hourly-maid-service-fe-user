@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { NotifyComponent } from '@pages/user/pages/notify/notify.component';
 import { MaterialExampleModule } from 'src/app/material.module';
+import { NotifyComponent } from './notify.component';
+import { NotifyRouting } from './notify.routing';
 
 @NgModule({
     declarations: [
-        NotifyComponent
-    ],
-    imports: [
-        CommonModule, , MaterialExampleModule
-    ]
+        NotifyComponent 
+      ],
+      imports: [
+        CommonModule, NotifyRouting, MaterialExampleModule
+      ]
 })
 export class NotifyModule { }
