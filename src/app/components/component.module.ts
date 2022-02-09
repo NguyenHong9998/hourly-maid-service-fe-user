@@ -20,6 +20,7 @@ import { SnackBarComponent } from "./snack-bar/snack-bar.component";
 import { DialogCreateLeaveDateComponent } from './dialog-create-leave-date/dialog-create-leave-date.component';
 import { DialogFeedbackOfEmployeeComponent } from './dialog-feedback-of-employee/dialog-feedback-of-employee.component';
 import { DialogConfirmBlockEmployeeComponent } from './dialog-confirm-block-employee/dialog-confirm-block-employee.component';
+import { DialogChangeStatusNotifyComponent } from './dialog-change-status-notify/dialog-change-status-notify.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { DialogConfirmBlockEmployeeComponent } from './dialog-confirm-block-empl
         DialogCreateLeaveDateComponent,
         DialogFeedbackOfEmployeeComponent,
         DialogConfirmBlockEmployeeComponent,
+        DialogChangeStatusNotifyComponent,
     ],
     imports: [
         MatSnackBarModule,

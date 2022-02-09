@@ -11,13 +11,13 @@ export class NotifyListDomain {
         title: string,
         content: string,
         type: string,
-        publish_date: string
+        status: string
     ) {
         this.id = id;
         this.position = position;
         this.title = title;
         this.content = content;
         this.type = type;
-        this.status = publish_date;
+        this.status = status;
     }
 }

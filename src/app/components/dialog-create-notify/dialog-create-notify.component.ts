@@ -1,5 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { environment } from '@env/environment';
+import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 
 interface Type {
   code: number;
@@ -14,29 +18,51 @@ interface Type {
 
 export class DialogCreateNotifyComponent implements OnInit {
 
-  types : Type[] = [
+  types: Type[] = [
+
     {
       code: 1,
-      name : "Nhân viên"
+      name: "Tất cả"
+    },
+    {
+      code: 2,
+      name: "Nhân viên"
     }
     ,
     {
-      code : 2,
-      name : "Khách hàng"
+      code: 3,
+      name: "Khách hàng"
     },
 
-    {
-      code : 3,
-      name : "Tất cả"
-    }
   ]
-  constructor(public dialogRef: MatDialogRef<DialogCreateNotifyComponent>) { }
+  notifyForm = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    content: new FormControl('', [Validators.required]),
+  })
+  selectedType = this.types[0].name;
+
+
+  constructor(public dialogRef: MatDialogRef<DialogCreateNotifyComponent>, public http: HttpClient, public customSnackbarService: CustomSnackbarService) { }
 
   ngOnInit(): void {
   }
 
-  onNoClick(){
+  onNoClick() {
     this.dialogRef.close();
+  }
+
+  saveNotify() {
+    const data = {
+      title: this.notifyForm.get('title')?.value,
+      content: this.notifyForm.get('content')?.value,
+      type: this.selectedType
+    }
+
+    this.http.post(environment.apiUrl + "/notify", data).subscribe(data => {
+      this.customSnackbarService.success("Thêm mới thông báo thành công")
+      this.dialogRef.close();
+    })
+
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="border-b-orange-600" id="title">
-    <h1 mat-dialog-title class="text-center">{{title}}
+    <h1 mat-dialog-title class="text-center">Nội dung thông báo
     </h1>
 </div>
 <div class="hidden sm:block" aria-hidden="true">
@@ -8,7 +8,7 @@
 
 <div mat-dialog-content>
     <div class="mt-5 md:mt-0 md:col-span-2">
-        <form action="#" method="POST">
+        <form [formGroup]="notifyForm">
             <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                     <div class="grid grid-cols-3 gap-6">
@@ -23,8 +23,7 @@
                                     border
                                     rounded-md focus:border-blue-400
                                     focus:outline-none focus:ring-1
-                                    focus:ring-blue-600" 
-                                    value="{{entity.title}}">
+                                    focus:ring-blue-600" formControlName="title" [disabled]="status == 'Đã gửi'">
                             </div>
                         </div>
                     </div>
@@ -36,26 +35,36 @@
                         <div class="mt-1">
                             <textarea id="about" name="about" rows="3" class="shadow-sm focus:ring-indigo-500
                                 focus:border-indigo-500 mt-1 block
-                                w-full sm:text-sm border border-gray-300
-                                rounded-md"
-                                
-                                value = "{{entity.content}}"></textarea>
+                                w-full sm:text-sm border border-gray-300 py-2 px-4
+                                rounded-md" formControlName="content" [disabled]="status == 'Đã gửi'"></textarea>
                         </div>
 
                     </div>
-                    <div >
-                        <label for="about" class="block text-sm
+                    <div class="grid grid-cols-2 gap-5">
+                        <div>
+                            <label for="about" class="block text-sm
                             font-medium text-gray-700 pb-3">
-                            Đối tượng nhận thông báo:
-                        </label>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Người nhận</mat-label>
-                            <mat-select name="type">
-                                <mat-option *ngFor="let type of types" [value]="type.name">
-                                    {{type.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                                Đối tượng nhận thông báo:
+                            </label>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Người nhận</mat-label>
+                                <mat-select name="type" [(value)]="selectedType">
+                                    <mat-option *ngFor="let type of types" [value]="type.name" [disabled]="status =='Đã gửi'">
+                                        {{type.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="ml-5" *ngIf="status == 'Đã gửi'">
+                            <label for="about" class="block text-sm
+                            font-medium text-gray-700 pb-3">
+                                Thời gian gửi:
+                            </label>
+                            <div class=" w-full h-full">
+                                <span class="pt-4 inline-block align-middle">{{date}}</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -65,15 +74,16 @@
 </div>
 
 <div class="hidden sm:block" aria-hidden="true">
-    <div class="py-5">
+    <div class="pb-5">
         <div class="border-t border-gray-200"></div>
     </div>
 </div>
 <div mat-dialog-actions class="flex flex-row-reverse">
+   
     <button class="bg-transparent hover:bg-blue-500 text-blue-700
             font-semibold hover:text-white py-2 px-4 border
             border-blue-500
-            hover:border-transparent rounded" id="saveButton">
+            hover:border-transparent rounded" id="saveButton" *ngIf="status == 'Đã tạo'" (click) = "editNotify()">  
         Lưu
     </button>
     <button mat-button (click)="onNoClick()" class="bg-white

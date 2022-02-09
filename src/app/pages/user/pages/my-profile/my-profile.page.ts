@@ -112,7 +112,7 @@ export class MyProfilePage {
   }
 
   onItemChange(event: any) {
-    this.personalInform.get('gender')?.setValue( event.target.value);
+    this.personalInform.get('gender')?.setValue(event.target.value);
   }
   saveCommonInform() {
     let avatar = this.avatar as string;
@@ -128,6 +128,7 @@ export class MyProfilePage {
           status: this.status
         }
         this.http.put(environment.apiUrl + "/user/common-inform", body).subscribe(data => {
+          this.customSnackbarService.success("Cập nhật thành công!")
         })
       })
     } else {
