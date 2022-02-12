@@ -19,20 +19,16 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form action="#" method="POST">
+                <form>
                     <div class="shadow sm:rounded-md sm:overflow-hidden">
                         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-3">
                                     <div class="flex-shrink-0 h-56 w-56">
-                                        <img class="h-56 w-56 rounded-full"
-                                            [src]="infor.avatar"
-                                            alt="User avatar">
-                                        <input #fileInput type="file"
-                                            (change)="onFileChange($event)"
-                                            (click)="fileInput.value= ''"
-                                            hidden accept="image/jpge,
-                                            image/png">
+                                        <img class="h-56 w-56 rounded-full" [src]="avatar" alt="User avatar">
+                                        <input #fileInput type="file" (change)="onFileChange($event)"
+                                            (click)="fileInput.value= ''" hidden accept="image/jpge,
+                                         image/png">
                                     </div>
                                     <!-- "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" -->
                                 </div>
@@ -40,26 +36,20 @@
                                     <br><br>
                                     <div>
                                         <label for="last-name" class="block
-                                            text-sm font-bold text-gray-700">Chức
+                                         text-sm font-bold text-gray-700">Chức
                                             vụ</label>
                                         <label class="inline-flex items-center
-                                            pt-3">
-                                            <input type="radio"
-                                                class="form-radio"
-                                                [checked]="infor.role ==
-                                                'MANAGER'"
-                                                name="accountType"
-                                                value="personal">
+                                         pt-3">
+                                            <input type="radio" class="form-radio" [checked]="role ==
+                                             'MANAGER'" name="accountType" (change)="onRoleChange($event)"
+                                                value="Quản lý">
                                             <span class="ml-2">Quản lý</span>
                                         </label>
                                         <label class="inline-flex items-center
-                                            ml-6">
-                                            <input type="radio"
-                                                class="form-radio"
-                                                [checked]="infor.role ===
-                                                'EMPLOYEE'"
-                                                name="accountType"
-                                                value="busines">
+                                         ml-6">
+                                            <input type="radio" class="form-radio" [checked]="role ===
+                                             'EMPLOYEE'" name="accountType" (change)="onRoleChange($event)"
+                                                value="Nhân viên">
                                             <span class="ml-2">Nhân viên</span>
                                         </label>
 
@@ -67,33 +57,31 @@
                                     <br>
                                     <div class="flex">
                                         <label for="region" class="block text-sm
-                                            font-bold text-gray-700 pr-5">Trạng
+                                         font-bold text-gray-700 pr-5">Trạng
                                             thái</label>
                                         <span class="px-2 inline-flex text-xs
-                                            leading-5 font-semibold rounded-full
-                                            bg-green-100 text-green-800">
-                                            {{infor.status}}
+                                         leading-5 font-semibold rounded-full
+                                         bg-green-100 text-green-800">
+                                            {{status}}
                                         </span>
                                     </div>
                                     <br>
                                     <button type="button" class="ml-5 bg-white
-                                        py-2 px-3 border border-gray-300
-                                        rounded-md shadow-sm text-sm leading-4
-                                        font-medium text-gray-700
-                                        hover:bg-gray-50 focus:outline-none
-                                        focus:ring-2 focus:ring-offset-2
-                                        focus:ring-indigo-500" (click)=
-                                        'fileInput.click()'>
+                                     py-2 px-3 border border-gray-300
+                                     rounded-md shadow-sm text-sm leading-4
+                                     font-medium text-gray-700
+                                     hover:bg-gray-50 focus:outline-none
+                                     focus:ring-2 focus:ring-offset-2
+                                     focus:ring-indigo-500" (click)='fileInput.click()'>
                                         Đổi ảnh
                                     </button>
                                     <button type="button" class="ml-5 bg-white
-                                        py-2 px-3 border border-gray-300
-                                        rounded-md shadow-sm text-sm leading-4
-                                        font-medium text-gray-700
-                                        hover:bg-gray-50 focus:outline-none
-                                        focus:ring-2 focus:ring-offset-2
-                                        focus:ring-indigo-500" (click)=
-                                        'onRemoveAvatar()'>
+                                     py-2 px-3 border border-gray-300
+                                     rounded-md shadow-sm text-sm leading-4
+                                     font-medium text-gray-700
+                                     hover:bg-gray-50 focus:outline-none
+                                     focus:ring-2 focus:ring-offset-2
+                                     focus:ring-indigo-500" (click)='onRemoveAvatar()'>
                                         Xóa ảnh
                                     </button>
                                 </div>
@@ -102,14 +90,14 @@
 
                         </div>
                         <div class="px-4 py-1 bg-gray-50 text-right sm:px-6">
-                            <button type="submit" class="inline-flex
-                                justify-center py-1 px-4 border
-                                border-transparent shadow-sm text-sm font-medium
-                                rounded-md text-white bg-indigo-600
-                                hover:bg-indigo-700 focus:outline-none
-                                focus:ring-2 focus:ring-offset-2
-                                focus:ring-indigo-500">
-                                Save
+                            <button (click)="saveCommonInform()" type="submit" class="inline-flex
+                             justify-center py-1 px-4 border
+                             border-transparent shadow-sm text-sm font-medium
+                             rounded-md text-white bg-indigo-600
+                             hover:bg-indigo-700 focus:outline-none
+                             focus:ring-2 focus:ring-offset-2
+                             focus:ring-indigo-500">
+                                Lưu
                             </button>
                         </div>
                     </div>
@@ -135,136 +123,104 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form action="#" method="POST">
+                <form [formGroup]="personalInform">
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="first-name" class="block
-                                        leading-6 text-sm font-bold
-                                        text-gray-900">Họ và tên</label>
-                                    <input
-                                        type="text"
-                                        name="first-name"
-                                        id="first-name"
-                                        autocomplete="given-name"
-                                        value= {{infor.name}}
-                                        class="w-full px-4 py-2 text-sm border
-                                        rounded-md focus:border-blue-400
-                                        focus:outline-none focus:ring-1
-                                        focus:ring-blue-600">
+                                     leading-6 text-sm font-bold
+                                     text-gray-900">Họ và tên</label>
+                                    <input formControlName="name" type="text" name="first-name" id="first-name"
+                                        autocomplete="given-name" class="w-full px-4 py-2 text-sm border
+                                     rounded-md focus:border-blue-400
+                                     focus:outline-none focus:ring-1
+                                     focus:ring-blue-600">
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="last-name" class="block text-sm
-                                        font-bold text-gray-700">Giới tính</label>
+                                     font-bold text-gray-700">Giới tính</label>
                                     <label class="inline-flex items-center
-                                        pt-3">
-                                        <input type="radio" class="form-radio"
-                                            name="accountType" value="personal"
-                                            [checked]="infor.gender == 'Nam'">
+                                     pt-3">
+                                        <input type="radio" class="form-radio" name="accountType" value="Nam"
+                                            checked="gender == 'Nam'" (change)="onItemChange($event)">
                                         <span class="ml-2">Nam</span>
                                     </label>
                                     <label class="inline-flex items-center
-                                        ml-6">
-                                        <input type="radio" class="form-radio"
-                                            name="accountType" value="busines"
-                                            [checked]="infor.gender == 'Nữ'">
+                                     ml-6">
+                                        <input type="radio" class="form-radio" name="accountType" value="Nữ"
+                                            (change)="onItemChange($event)" checked="gender == 'Nữ'">
                                         <span class="ml-2">Nữ</span>
                                     </label>
                                     <label class="inline-flex items-center
-                                        ml-6">
-                                        <input type="radio" class="form-radio"
-                                            name="accountType" value="busines"
-                                            [checked]="infor.gender == 'Khác'">
+                                     ml-6">
+                                        <input type="radio" class="form-radio" name="accountType" value="Khác"
+                                            (change)="onItemChange($event)" checked="gender == 'Khác'">
                                         <span class="ml-2">Khác</span>
                                     </label>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="email-address" class="block
-                                        text-sm font-bold text-gray-700">Email</label>
-                                    <input
-                                        type="text"
-                                        name="email-address"
-                                        id="email-address"
-                                        value={{infor.email}}
-                                        autocomplete="email"
-                                        class="w-full px-4 py-2 text-sm border
-                                        rounded-md focus:border-blue-400
-                                        focus:outline-none focus:ring-1
-                                        focus:ring-blue-600">
+                                     text-sm font-bold text-gray-700">Email</label>
+                                    <input formControlName="email" type="text" name="email-address" id="email-address"
+                                        autocomplete="email" class="w-full px-4 py-2 text-sm border
+                                     rounded-md focus:border-blue-400
+                                     focus:outline-none focus:ring-1
+                                     focus:ring-blue-600">
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="country" class="block text-sm
-                                        font-bold text-gray-700">Ngày sinh</label>
+                                     font-bold text-gray-700">Ngày sinh</label>
                                     <div class="flex">
                                         <mat-form-field class="mr-sm-20">
-                                            <input matInput
-                                                [matDatepicker]="picker"
-                                                [formControl]="infor.dateOfBirth"
+                                            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth"
                                                 class="w-full px-4 py-2
-                                                text-sm">
-                                            <mat-datepicker-toggle matSuffix
-                                                [for]="picker"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker
-                                                [startAt]="infor.dateOfBirth"></mat-datepicker>
+                                             text-sm">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker startAt="dateOfBirth"></mat-datepicker>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="city" class="block text-sm
-                                        font-bold text-gray-700">Số điện thoại</label>
-                                    <input
-                                        type="text"
-                                        name="city"
-                                        id="city"
-                                        value={{infor.phone}}
-                                        autocomplete="address-level2"
-                                        class="w-full px-4 py-2 text-sm border
-                                        rounded-md focus:border-blue-400
-                                        focus:outline-none focus:ring-1
-                                        focus:ring-blue-600">
+                                     font-bold text-gray-700">Số điện thoại</label>
+                                    <input type="text" name="city" id="city" formControlName="phone"
+                                        autocomplete="address-level2" class="w-full px-4 py-2 text-sm border
+                                     rounded-md focus:border-blue-400
+                                     focus:outline-none focus:ring-1
+                                     focus:ring-blue-600">
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="region" class="block text-sm
-                                        font-bold text-gray-700">Số CCCD</label>
-                                    <input
-                                        type="text"
-                                        name="region"
-                                        id="region"
-                                        value={{infor.idCard}}
-                                        autocomplete="address-level1"
-                                        class="w-full px-4 py-2 text-sm border
-                                        rounded-md focus:border-blue-400
-                                        focus:outline-none focus:ring-1
-                                        focus:ring-blue-600">
+                                     font-bold text-gray-700">Số CCCD</label>
+                                    <input type="text" name="region" id="region" formControlName="idCard"
+                                        autocomplete="address-level1" class="w-full px-4 py-2 text-sm border
+                                     rounded-md focus:border-blue-400
+                                     focus:outline-none focus:ring-1
+                                     focus:ring-blue-600">
                                 </div>
 
                                 <div class="col-span-6">
                                     <label for="street-address" class="block
-                                        text-sm font-bold text-gray-700">Địa chỉ</label>
-                                    <input
-                                        type="text"
-                                        name="street-address"
-                                        id="street-address"
-                                        value={{infor.address}}
-                                        autocomplete="street-address"
-                                        class="w-full px-4 py-2 text-sm border
-                                        rounded-md focus:border-blue-400
-                                        focus:outline-none focus:ring-1
-                                        focus:ring-blue-600">
+                                     text-sm font-bold text-gray-700">Địa chỉ</label>
+                                    <input type="text" name="street-address" id="street-address"
+                                        formControlName="address" autocomplete="street-address" class="w-full px-4 py-2 text-sm border
+                                     rounded-md focus:border-blue-400
+                                     focus:outline-none focus:ring-1
+                                     focus:ring-blue-600">
                                 </div>
 
                             </div>
                         </div>
                         <div class="px-4 py-1 bg-gray-50 text-right sm:px-6">
-                            <button type="submit" class="inline-flex
-                                justify-center py-1 px-4 border
-                                border-transparent shadow-sm text-sm font-medium
-                                rounded-md text-white bg-indigo-600
-                                hover:bg-indigo-700 focus:outline-none
-                                focus:ring-2 focus:ring-offset-2
-                                focus:ring-indigo-500">
-                                Save
+                            <button (click)="saveUserPersonalInform()" type="submit" class="inline-flex
+                             justify-center py-1 px-4 border
+                             border-transparent shadow-sm text-sm font-medium
+                             rounded-md text-white bg-indigo-600
+                             hover:bg-indigo-700 focus:outline-none
+                             focus:ring-2 focus:ring-offset-2
+                             focus:ring-indigo-500">
+                                Lưu
                             </button>
                         </div>
                     </div>
@@ -272,13 +228,12 @@
             </div>
         </div>
     </div>
-
-    <div class="hidden sm:block" aria-hidden="true">
+    <div class="hidden sm:block" aria-hidden="true" *ngIf="role == 'EMPLOYEE'">
         <div class="py-5">
             <div class="border-t border-gray-200"></div>
         </div>
     </div>
-    <div class="mt-10 sm:mt-0">
+    <div class="mt-10 sm:mt-0" *ngIf="role == 'EMPLOYEE'">
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
@@ -291,87 +246,50 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2 pb-5">
-                <form action="#" method="POST">
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                            <fieldset>
-                                <legend class="text-base font-medium
-                                    text-gray-900">Kinh nghiệm</legend>
-                                <div class="mt-4 space-y-4">
-                                    <div class="flex items-start">
-                                        <div class="flex items-center h-5">
-                                            <input
-                                                id="comments"
-                                                name="comments"
-                                                type="checkbox"
-                                                class="focus:ring-indigo-500 h-4
-                                                w-4 text-indigo-600
-                                                border-gray-300 rounded">
-                                        </div>
-                                        <div class="ml-3 text-sm">
-                                            <label for="comments"
-                                                class="font-medium
-                                                text-gray-700">Tổng vệ sinh</label>
-                                            <p class="text-gray-500">Bao gồm các
-                                                công việc như lau chùi nhà, quét
-                                                rác, dọn phòng,..</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="flex items-center h-5">
-                                            <input
-                                                id="candidates"
-                                                name="candidates"
-                                                type="checkbox"
-                                                class="focus:ring-indigo-500 h-4
-                                                w-4 text-indigo-600
-                                                border-gray-300 rounded">
-                                        </div>
-                                        <div class="ml-3 text-sm">
-                                            <label for="candidates"
-                                                class="font-medium
-                                                text-gray-700">Lau kính</label>
-                                            <p class="text-gray-500">Bao gồm các
-                                                công việc như lau kính, cửa
-                                                sổ,...</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="flex items-center h-5">
-                                            <input
-                                                id="offers"
-                                                name="offers"
-                                                type="checkbox"
-                                                class="focus:ring-indigo-500 h-4
-                                                w-4 text-indigo-600
-                                                border-gray-300 rounded">
-                                        </div>
-                                        <div class="ml-3 text-sm">
-                                            <label for="offers"
-                                                class="font-medium
-                                                text-gray-700">Dọn vườn</label>
-                                            <p class="text-gray-500">Bao gồm các
-                                                công việc như cắt cỏ, tưới cây,
-                                                chăm sóc cây vườn</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
 
+                <ul role="list" class="border
+                        border-gray-200 rounded-md divide-y
+                        divide-gray-200" *ngIf="experiences?.length">
+                    <li class="pl-3 pr-4 py-3 flex
+                            items-center justify-between
+                            text-sm" *ngFor="let item of experiences">
+                        <div class="w-0 flex-1 flex
+                                items-center">
+                            <mat-icon>add</mat-icon>
+                            <span class="ml-2 flex-1
+                                    w-0 truncate">
+                                {{item.serviceName}}
+                            </span>
                         </div>
-                        <div class="px-4 py-1 bg-gray-50 text-right sm:px-6">
-                            <button type="submit" class="inline-flex
-                                justify-center py-1 px-4 border
-                                border-transparent shadow-sm text-sm font-medium
-                                rounded-md text-white bg-indigo-600
-                                hover:bg-indigo-700 focus:outline-none
-                                focus:ring-2 focus:ring-offset-2
-                                focus:ring-indigo-500">
-                                Save
-                            </button>
+                        <div class="ml-4
+                                flex-shrink-0">
+                            <ul class="flex items-center gap-x-1" *ngFor="let star of stars">
+                                <li *ngIf="stars.indexOf(star) < item.level">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-300" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                    </svg>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="bg-red-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
+                    role="alert" *ngIf="!experiences?.length">
+                    <div class="flex">
+                        <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                            </svg></div>
+                        <div>
+                            <p class="font-bold">Không tìm thấy dữ liệu</p>
+                            <p class="text-sm">Nhân viên chưa đánh giá kinh nghiệm bản thân theo từng dịch vụ</p>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

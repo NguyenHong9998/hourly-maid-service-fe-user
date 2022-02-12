@@ -36,13 +36,13 @@
                                         <label class="inline-flex items-center
                                          pt-3">
                                             <input type="radio" class="form-radio" [checked]="role ==
-                                             'MANAGER'" name="accountType" value="personal" disabled = "role == 'ADMIN">
+                                             'MANAGER'" name="accountType" value="personal" disabled = "role == 'ADMIN" (change)="onRoleChange($event)" value="Quản lý">
                                             <span class="ml-2">Quản lý</span>
                                         </label>
                                         <label class="inline-flex items-center
                                          ml-6">
                                             <input type="radio" class="form-radio" [checked]="role ===
-                                             'EMPLOYEE'" name="accountType" value="busines" disabled = "role == 'ADMIN'">
+                                             'EMPLOYEE'" name="accountType"  disabled = "role == 'ADMIN'" (change)="onRoleChange($event)" value="Nhân viên">
                                             <span class="ml-2">Nhân viên</span>
                                         </label>
 

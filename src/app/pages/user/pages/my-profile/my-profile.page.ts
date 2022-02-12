@@ -176,8 +176,8 @@ export class MyProfilePage {
       this.router.navigate(['/', root, signIn]);
       window.location.reload();
     })
-
-
-
+  }
+  onRoleChange(event : any){
+    this.role = event.target.value;
   }
 }

@@ -7,18 +7,18 @@
 
 <div class="relative flex items-top justify-center n bg-white
     sm:items-center sm:pt-0" mat-dialog-content>
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-4">
         <div class="overflow-hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 mt-3">
-                <div>
-                    <div class="flex items-center mt-2 text-gray-600">
+            <div class="grid grid-cols-3 md:grid-cols-2 mt-3">
+                <div class="col-span-1">
+                    <div class=" items-center mt-2 text-gray-600" >
 
-                        <div class="ml-4 text-md tracking-wide
-                            font-semibold w-40">
+                        <div class=" text-md tracking-wide
+                            font-semibold w-40" >
                             <div class="mt-1 justify-center px-6
                                 pt-5 pb-6 border-2 border-gray-300
                                 border-dashed rounded-md col-span-2
-                                ..." *ngIf="infor.avatar==null">
+                                ..." *ngIf="avatar==null" >
                                 <svg class="mx-auto h-12 w-12
                                     text-gray-400" stroke="currentColor"
                                     fill="none" viewBox="0 0 48 48"
@@ -37,7 +37,7 @@
                                     </path>
                                 </svg>
                                 <div class="flex text-sm
-                                    text-gray-600">
+                                    text-gray-600" >
                                     <label for="file-upload"
                                         class="relative
                                         cursor-pointer bg-white
@@ -47,8 +47,8 @@
                                         focus-within:outline-none
                                         focus-within:ring-2
                                         focus-within:ring-offset-2
-                                        focus-within:ring-indigo-500">
-                                        <span>Upload avatar</span>
+                                        focus-within:ring-indigo-500 ml-3">
+                                        <span class="text-sm">Tải ảnh lên</span>
                                         <input #fileInput
                                             id="file-upload"
                                             name="file-upload"
@@ -65,17 +65,17 @@
                             <div class="mt-1 justify-center
                                 border-2 border-gray-300
                                 border-dashed rounded-md col-span-2
-                                ..." *ngIf="infor.avatar!=null || avatar ==
+                                ..." *ngIf="avatar!=null || avatar ==
                                 ''">
                                 <img
                                     id="banner"
-                                    [src]="infor.avatar"
+                                    [src]="avatar"
                                     alt="User avatar">
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex ml-12 mt-3">
+                    <div class="flex ml-11 mt-3">
 
                         <div class="grow-0 h-14 ...">
                             <button class="bg-transparent hover:bg-blue-500
@@ -88,7 +88,7 @@
                     </div>
                 </div>
 
-                <form>
+                <form [formGroup]="employeeForm">
                     <div class="flex flex-col">
 
                         <input type="name" name="name" id="name"
@@ -96,9 +96,9 @@
                             py-2 px-3 rounded-lg bg-white
                             dark:bg-gray-800 border
                             border-gray-400 dark:border-gray-700
-                            text-gray-800
+                            text-gray-800 text-sm
                             focus:border-indigo-500
-                            focus:outline-none">
+                            focus:outline-none" formControlName="name">
                     </div>
 
                     <div class="flex flex-col mt-2">
@@ -106,28 +106,28 @@
                             id="email" placeholder="Email"
                             class="w-100 mt-2 py-2 px-3
                             rounded-lg bg-white dark:bg-gray-800
-                            border border-gray-400
+                            border border-gray-400 text-sm
                             dark:border-gray-700 text-gray-800
                             focus:border-indigo-500
-                            focus:outline-none">
+                            focus:outline-none" formControlName="email">
                     </div>
 
                     <div class="flex flex-col mt-2">
                         <input type="tel" name="tel" id="tel"
                             placeholder="Số điện thoại"
-                            class="w-100 mt-2 py-2 px-3
+                            class="w-100 mt-2 py-2 px-3 text-sm
                             rounded-lg bg-white dark:bg-gray-800
                             border border-gray-400
                             dark:border-gray-700 text-gray-800
                             focus:border-indigo-500
-                            focus:outline-none">
+                            focus:outline-none" formControlName="phone">
                     </div>
                     <div class="flex flex-col mt-2">
                         <mat-form-field appearance="fill">
                             <mat-label>Chức vụ</mat-label>
-                            <mat-select [(ngModel)]="selectedValue" name="role">
+                            <mat-select [(value)]="selectedType" name="role" >
                                 <mat-option *ngFor="let role of roles"
-                                    [value]="role.value">
+                                    [value]="role.viewValue">
                                     {{role.viewValue}}
                                 </mat-option>
                             </mat-select>
@@ -139,7 +139,7 @@
     </div>
 </div>
 <div class="hidden sm:block" aria-hidden="true">
-    <div class="py-5">
+    <div >
         <div class="border-t border-gray-200"></div>
     </div>
 </div>
@@ -148,7 +148,7 @@
         text-blue-700
         font-semibold hover:text-white py-2 px-4 border
         border-blue-500
-        hover:border-transparent rounded" id="saveButton">
+        hover:border-transparent rounded" id="saveButton" (click) ="onCreateEmployee()">
         Lưu
     </button>
     <button mat-button (click)="onNoClick()" class="bg-white

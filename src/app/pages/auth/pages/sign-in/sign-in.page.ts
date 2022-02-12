@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ROUTER_UTILS } from '@core/utils/router.utils';
 import { AuthService } from '@pages/auth/services/auth.service';
+import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 import { ShareService } from '@pages/auth/services/share.service';
 import { TokenStorageService } from '@pages/auth/services/token-storage.service';
 
@@ -27,6 +28,7 @@ export class SignInPage {
     private authService: AuthService,
     private shareService: ShareService,
     private tokenStorageService: TokenStorageService,
+    public customSnackbarService: CustomSnackbarService
 
   ) {
     this.returnUrl = this.activatedRoute.snapshot.queryParamMap.get('returnUrl') || `${ROUTER_UTILS.config.base.home}`;
@@ -47,6 +49,7 @@ export class SignInPage {
         this.username = this.tokenStorageService.getUser().username;
         this.roles = this.tokenStorageService.getUser().roles;
         this.loginForm.reset();
+        this.customSnackbarService.success("Đăng nhập thành công")
         this.router.navigateByUrl(this.returnUrl);
         this.shareService.sendClickEvent();
       },

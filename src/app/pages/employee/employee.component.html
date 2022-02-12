@@ -1,27 +1,32 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="px-4 pt-6 sm:px-6 flex flex-col md:flex-row">
-    <div class="h-32 md:h-auto md:w-1/2">
-        <h2 class="text-lg font-extrabold text-3xl text-gray-900">
+<div class="mb-4 mt-6 sm:px-6 flex flex-col md:flex-row">
+    <div class="md:w-1/2">
+        <h2 class="text-lg font-extrabold text-3xl text-gray-900 mb-0">
             Danh sách Nhân viên
         </h2>
     </div>
-    <div class="h-32 md:h-auto md:w-2/3">
+    <div class="flex h-32 md:h-auto md:w-2/3 gap-2">
         <a href="/employee/list" matTooltip="Tải lại trang" mat-stroked-button class="btn-white btn-square bg-white">
             <mat-icon>sync</mat-icon>
         </a>
         <button id="addButton" matTooltip="Thêm mới nhân viên" mat-stroked-button
-            class="btn-white btn-square bg-white ml-3.5" (click)="openDialogCreateEmployee()">
+            class="btn-white btn-square bg-white ml-3" (click)="openDialogCreateEmployee()">
             <mat-icon>person_add</mat-icon>
         </button>
         <button matTooltip="Xóa nhân viên" [disabled]="!selection.hasValue()" mat-stroked-button
-            class="btn-white btn-square bg-white ml-3.5">
+            class="btn-white btn-square bg-white ml-3">
             <mat-icon>delete_outline</mat-icon>
         </button>
+        <mat-button-toggle-group [(ngModel)]="status" (change)="onFilter()">
+            <mat-button-toggle value="Quản lý">Quản lý</mat-button-toggle>
+            <mat-button-toggle value="Nhân viên">Nhân viên</mat-button-toggle>
+            <mat-button-toggle value="Tất cả" >Tất cả</mat-button-toggle>
+        </mat-button-toggle-group>
     </div>
-    <div class="flex justify-center h-2/4">
+    <div class="flex justify-center h-2/4 ml-4">
         <div class="flex border-2 rounded">
-            <input type="text" class="px-4 py-2 w-80" placeholder="Search...">
-            <button class="flex items-center justify-center px-4 border-l
+            <input type="text" class="px-4 py-2 w-80" placeholder="Search..." [formControl]="keySearch" (keyup.enter)="onSearch()">
+            <button (click) = "onSearch()" class="flex items-center justify-center px-4 border-l
                 hover:bg-gray-300 focus:outline-none focus:ring-2
                 focus:ring-offset-2 focus:ring-indigo-500">
                 <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +88,7 @@
         <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
             element">
             <div class="text-sm text-gray-900">{{element.email}}</div>
-            <div class="text-sm text-gray-500 pt-1">{{element.verify}}</div>
+            <div class="text-sm text-gray-500 pt-1">{{element.phone}}</div>
         </td>
     </ng-container>
 
@@ -151,5 +156,5 @@
     </tr>
 </table>
 
-<mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" aria-label="Chọn trang">
+<mat-paginator (page)="onPaging($event)" [length]="totalRow" [pageSizeOptions]="arrayPageSize" showFirstLastButtons>
 </mat-paginator>

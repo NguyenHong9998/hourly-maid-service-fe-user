@@ -23,7 +23,7 @@
                     <label class="inline-flex items-center
                             pt-3">
                         <input type="radio" class="form-radio" [checked]="employee.status ==
-                                'Hoạt động'" name="accountType" value="personal">
+                                'Hoạt động'" name="accountType" value="Hoạt động" (change)="checkCheckBoxvalue($event)">
                         <span class="ml-2 px-2 inline-flex
                         text-xs
                         leading-5 font-semibold rounded-full
@@ -32,7 +32,7 @@
                     <label class="inline-flex items-center
                             ml-6 pt-3">
                         <input type="radio" class="form-radio" [checked]="employee.status ===
-                                'Tạm khoá'" name="accountType" value="busines">
+                                'Tạm khoá'" name="accountType" value="Tạm khoá" (change)="checkCheckBoxvalue($event)">
                         <span class="ml-2 px-2 inline-flex text-xs
                         leading-5 font-semibold rounded-full
                         bg-red-200 text-green-800">Tạm khoá</span>
@@ -66,7 +66,7 @@
         Lưu
     </button> -->
 
-    <button mat-raised-button color="accent" [disabled]="!confirm.checked" id="saveButton">Lưu</button>
+    <button mat-raised-button color="accent" [disabled]="!confirm.checked" id="saveButton" (click) = "onChangeStatus()">Lưu</button>
 
     <button mat-button (click)="onNoClick()" class="bg-white
             hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4
