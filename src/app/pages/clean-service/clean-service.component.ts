@@ -1,12 +1,17 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Sort } from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogCreateServiceComponent } from '@components/dialog-create-service/dialog-create-service.component';
 import { DialogEditServiceComponent } from '@components/dialog-edit-service/dialog-edit-service.component';
 import { DialogListDiscountServiceComponent } from '@components/dialog-list-discount-service/dialog-list-discount-service.component';
 import { DialogListEmployeeServiceComponent } from '@components/dialog-list-employee-service/dialog-list-employee-service.component';
+import { environment } from '@env/environment';
+import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 import { CleanServiceListDomain } from './clean-service-list.domain';
 
 @Component({
@@ -15,44 +20,125 @@ import { CleanServiceListDomain } from './clean-service-list.domain';
   styleUrls: ['./clean-service.component.scss']
 })
 export class CleanServiceComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   displayedColumns: string[] = ['select', 'name', 'price', 'note', 'createDate', 'detail'];
-  dataSource = new MatTableDataSource<CleanServiceListDomain>(this.getServices());
   selection = new SelectionModel<any>(true, []);
+
+  dataSource!: MatTableDataSource<CleanServiceListDomain>;
+  notifyList: Array<CleanServiceListDomain> = [];
+
+  totalRow: number = 10;
+  isLoading !: boolean;
+  keySearch = new FormControl('');
+  arrayPageSize = [10, 20, 30];
+  sortObj!: Sort;
+  mapPageToken = new Map();
+  status!: string;
+  offset !: number;
+
+  pageSize = this.arrayPageSize[0];
+
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog, public http: HttpClient, public customSnackbarService: CustomSnackbarService,
   ) {
   }
 
   ngOnInit(): void {
+    this.offset = 0;
+
+    this.getListService();
   }
 
-  getServices(): Array<CleanServiceListDomain> {
+  
 
-    const peoples = Array<CleanServiceListDomain>();
-    for (let i = 1; i <= 10; i++) {
-      const domain = new CleanServiceListDomain(123, i, "Tổng vệ sinh", "https://vesinhcongnghiepbluesky.com.vn/wp-content/uploads/2016/07/DICH-VU-CHUYEN-NGHIEP.png", "200,000", "Bao gồm các việc,....",
+  getListService() {
 
-        "2021-12-12");
-      peoples.push(domain);
+    this.isLoading = true;
+
+    let params = new HttpParams()
+      .set('offset', this.offset)
+      .set('limit', this.pageSize)
+      .set('status', this.status ? this.status : '')
+      .set('value_search', this.keySearch.value)
+      .set('column_sort', this.sortObj && this.sortObj.direction ? this.sortObj.active.toUpperCase() : '')
+      .set('type_sort', this.sortObj ? this.sortObj.direction.toUpperCase() : '');
+
+
+    this.http.get(environment.apiUrl + "/service", { params: params })
+      .subscribe((res: any) => {
+        this.totalRow = res.total_rows;
+        this._prepareNotifyList(res.data);
+        this.isLoading = false;
+      }
+      );
+
+
+  }
+  _prepareNotifyList(data: any) {
+    if (data) {
+      const result = Array<CleanServiceListDomain>();
+      for (let i = 0; i < data.length; i++) {
+        const id = data[i].id;
+        const position = i;
+        const name = data[i].name;
+        const note = data[i].note;
+        const banner = data[i].banner;
+        const price = data[i].price;
+        const createDate = data[i].create_date;
+        const domain = new CleanServiceListDomain(id, position, name, banner, price, note, createDate);
+
+        result.push(domain);
+      }
+      this.notifyList = result;
+      this.dataSource = new MatTableDataSource<CleanServiceListDomain>(this.notifyList);
     }
-
-    return peoples;
   }
+
+  onPaging(event: PageEvent) {
+    this.selection.clear();
+    if (event.pageSize !== this.pageSize) {
+      this.mapPageToken = new Map();
+      this.mapPageToken.set(1, 0);
+      this.paginator.pageIndex = 0;
+      event.pageIndex = 0;
+    }
+    this.pageSize = event.pageSize;
+    this.offset = event.pageIndex + 1;
+    this.getListService();
+
+  }
+
+  onSearch() {
+    this.clearSort();
+    this.selection.clear();
+    this.getListService();
+  }
+
+  clearSort() {
+    this.sort.sort({ id: '', start: 'asc', disableClear: false });
+    this.sortObj = {
+        active: '',
+        direction: '',
+    };
+    this.paginator.pageIndex = 0;
+}
+
+
+
   sortData(sort: Sort) {
-    if (!sort.active || sort.direction === '') {
-      console.log(sort.active);
-      return;
-    }
+    this.sortObj = sort;
+    this.paginator.pageIndex = 0;
+    this.selection.clear();
+    this.getListService();
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -61,8 +147,6 @@ export class CleanServiceComponent implements OnInit {
 
     this.selection.select(...this.dataSource.data);
   }
-
-
 
   openDialogListEmployee(serviceId: string, serviceName: string) {
     const data = { serviceId, serviceName };
@@ -77,7 +161,7 @@ export class CleanServiceComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogCreateServiceComponent);
 
     dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
+      this.getListService();
     });
   }
 
@@ -86,7 +170,7 @@ export class CleanServiceComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogEditServiceComponent, { data });
 
     dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
+      this.getListService();
     });
   }
 

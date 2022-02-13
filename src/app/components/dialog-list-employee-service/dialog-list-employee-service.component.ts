@@ -1,9 +1,23 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Sort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ListServiceEmployeeListDomain } from './list-service-employee.domain';
+import { environment } from '@env/environment';
 
+export class EmployeeService {
+  avatar: string;
+  name: string;
+  level: number;
+
+  constructor(avatar: string,
+    name: string,
+    level: number) {
+    this.avatar = avatar;
+    this.name = name;
+    this.level = level;
+  }
+}
 @Component({
   selector: 'app-dialog-list-employee-service',
   templateUrl: './dialog-list-employee-service.component.html',
@@ -11,33 +25,45 @@ import { ListServiceEmployeeListDomain } from './list-service-employee.domain';
 })
 export class DialogListEmployeeServiceComponent implements OnInit {
   displayedColumns: string[] = ['name', 'level'];
-  dataSource: any;
   service_name: string = "";
   stars: number[] = [1, 2, 3, 4, 5];
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  sortObj!: Sort;
+  dataSource!: MatTableDataSource<EmployeeService>;
+  employeeList: Array<EmployeeService> = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public http: HttpClient) {
     this.service_name = data.serviceName;
-    console.log(this.service_name);
-    // this.dataSource.data = this.getListItemsEmloyeeServices();
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<ListServiceEmployeeListDomain>(this.getListItemsEmloyeeServices());
+    this.getListItemsEmloyeeServices();
   }
+
   sortData(sort: Sort) {
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
+    
+    this.sortObj = sort;
+    this.getListItemsEmloyeeServices();
+
   }
-  getListItemsEmloyeeServices(): Array<ListServiceEmployeeListDomain> {
-    const employee = Array<ListServiceEmployeeListDomain>();
-    for (let i = 1; i <= 10; i++) {
-      const domain = new ListServiceEmployeeListDomain(123, i,
-        "Nguyen Thi A", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-        4);
-      employee.push(domain);
-    }
-    return employee;
+
+  getListItemsEmloyeeServices() {
+    const employee = Array<EmployeeService>();
+    let params = new HttpParams()
+      .set('column_sort', this.sortObj && this.sortObj.direction ? this.sortObj.active.toUpperCase() : '')
+      .set('type_sort', this.sortObj ? this.sortObj.direction.toUpperCase() : '');
+    this.http.get(environment.apiUrl + "/service/" + this.data.serviceId + "/employee", { params: params }).subscribe(data => {
+      const list = (data as any).data;
+      for (let i = 0; i < list.length; i++) {
+        const avatar = list[i].userAvatar;
+        const name = list[i].userName;
+        const level = list[i].level;
+
+        employee.push(new EmployeeService(avatar, name, level));
+      }
+
+      this.dataSource = new MatTableDataSource<EmployeeService>(this.employeeList);
+    })
   }
 }

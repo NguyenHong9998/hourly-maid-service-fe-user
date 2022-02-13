@@ -1,5 +1,5 @@
 <div class="border-b-orange-600" id="title">
-    <h1 mat-dialog-title class="text-center">Thêm mới dịch vụ </h1>
+    <h1 mat-dialog-title class="text-center">Thông tin dịch vụ </h1>
 </div>
 <div class="hidden sm:block" aria-hidden="true">
     <div class="border-t border-gray-200"></div>
@@ -11,7 +11,7 @@
         <div>
 
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form action="#" method="POST">
+                <form [formGroup]="serviceForm">
                     <div class="shadow sm:rounded-md sm:overflow-hidden">
                         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div class="grid grid-cols-3 gap-6">
@@ -31,7 +31,7 @@
                                             rounded-md focus:border-blue-400
                                             focus:outline-none focus:ring-1
                                             focus:ring-blue-600"
-                                            value= {{entity.name}}>
+                                            formControlName="name">
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                             rounded-md focus:border-blue-400
                                             focus:outline-none focus:ring-1
                                             focus:ring-blue-600"
-                                            value= {{entity.price}}>
+                                            formControlName="price">
                                     </div>
                                     <p class="mt-2 text-xs text-red-500
                                         text-right">
@@ -72,7 +72,7 @@
                                         class="shadow-sm focus:ring-indigo-500
                                         focus:border-indigo-500 mt-1 block px-4 py-2
                                         w-full sm:text-sm border border-gray-300
-                                        rounded-md" value= {{entity.note}}></textarea>
+                                        rounded-md" formControlName="note"></textarea>
                                 </div>
 
                             </div>
@@ -86,7 +86,7 @@
                                     <div class="mt-1 justify-center px-6
                                         pt-5 pb-6 border-2 border-gray-300
                                         border-dashed rounded-md col-span-2
-                                        ..." *ngIf="entity.banner==null">
+                                        ..." *ngIf="banner==null">
                                         <svg class="mx-auto h-12 w-12
                                             text-gray-400" stroke="currentColor"
                                             fill="none" viewBox="0 0 48 48"
@@ -115,7 +115,7 @@
                                                 focus-within:outline-none
                                                 focus-within:ring-2
                                                 focus-within:ring-offset-2
-                                                focus-within:ring-indigo-500">
+                                                focus-within:ring-indigo-500 ml-10">
                                                 <span>Nhấn để upload banner</span>
                                                 <input #fileInput
                                                     id="file-upload"
@@ -134,10 +134,10 @@
                                     <div class="mt-1 justify-center
                                         border-2 border-gray-300
                                         border-dashed rounded-md col-span-2
-                                        ..." *ngIf="entity.banner!=null">
+                                        ..." *ngIf="banner!=null">
                                         <img
                                             id="banner"
-                                            [src]="entity.banner"
+                                            [src]="banner"
                                             alt="User avatar">
                                     </div>
 
@@ -173,7 +173,7 @@
     </div>
 </div>
 <div mat-dialog-actions class="flex flex-row-reverse">
-    <button class="bg-transparent hover:bg-blue-500 text-blue-700
+    <button (click) = "onEditService()" class="bg-transparent hover:bg-blue-500 text-blue-700
         font-semibold hover:text-white py-2 px-4 border
         border-blue-500
         hover:border-transparent rounded" id="saveButton">

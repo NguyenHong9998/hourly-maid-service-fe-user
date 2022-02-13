@@ -59,7 +59,7 @@ export class DialogCreateEmployeeComponent implements OnInit {
     let avatar = this.avatar as string;
     const formData = new FormData();
     formData.append('file', this.file);
-    if (!avatar.startsWith('http')) {
+    if (avatar && !avatar.startsWith('http')) {
       this.http.post(environment.apiUrl + "/cloud/upload-avatar", formData).subscribe(data => {
         console.log(data);
         this.avatar = (data as any).data;

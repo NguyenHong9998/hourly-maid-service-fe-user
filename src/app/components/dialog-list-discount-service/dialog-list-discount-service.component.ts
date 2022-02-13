@@ -1,7 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Sort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { environment } from '@env/environment';
 import { ListDiscountServiceDomain } from './list-discount-service.domain';
 
 @Component({
@@ -11,41 +13,44 @@ import { ListDiscountServiceDomain } from './list-discount-service.domain';
 })
 export class DialogListDiscountServiceComponent implements OnInit {
   displayedColumns: string[] = ['name', 'start', 'end', 'percent', 'status'];
-  dataSource: any;
   service_name: string = "";
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+
+  stars: number[] = [1, 2, 3, 4, 5];
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  sortObj!: Sort;
+  dataSource!: MatTableDataSource<ListDiscountServiceDomain>;
+  discountList: Array<ListDiscountServiceDomain> = [];
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public http: HttpClient) {
     this.service_name = data.serviceName;
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<ListDiscountServiceDomain>(this.getListItemsDiscountServices());
+    this.getListItemsDiscountServices();
   }
-  sortData(sort: Sort) {
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
-  }
-  getListItemsDiscountServices(): Array<ListDiscountServiceDomain> {
-    const discounts = Array<ListDiscountServiceDomain>();
-    for (let i = 1; i <= 10; i++) {
-      const domain = new ListDiscountServiceDomain(i,
-        i,
-        'Khuyến mãi dịp tết',
-        'https://thegioidohoacom.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2019/01/10040532/201807120816_banner-bai-viet-ctkm-hung-tuy-1511235823.jpg',
-        '20%',
-        '2021-12-12 00:00',
-        '2021-15-12 00:00', 'Đang diễn ra');
-      discounts.push(domain);
-    }
 
-    const domain2 = new ListDiscountServiceDomain(11,
-      11,
-      'Khuyến mãi dịp tết',
-      'https://thegioidohoacom.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2019/01/10040532/201807120816_banner-bai-viet-ctkm-hung-tuy-1511235823.jpg',
-      '20%',
-      '2021-12-12 00:00',
-      '2021-15-12 00:00', 'Kết thúc');
-    discounts.push(domain2)
-    return discounts;
+  sortData(sort: Sort) {
+    this.sortObj = sort;
+    this.getListItemsDiscountServices();
+  }
+
+  getListItemsDiscountServices() {
+    const array = new Array<ListDiscountServiceDomain>();
+    this.http.get(environment.apiUrl + "/service/" + this.data.serviceId + "/discount").subscribe(res => {
+      const data = (res as any).data;
+      for (let i = 0; i < data.length; i++) {
+        const discount_name = data[i].name;
+        const banner = data[i].banner;
+        const percentage = data[i].percent;
+        const date_start = data[i].start_date;
+        const date_end = data[i].end_date;
+        const status = data[i].status;
+
+        const item = new ListDiscountServiceDomain(0, 0, discount_name, banner, percentage, date_start, date_end, status);
+        array.push(item);
+
+      }
+      this.dataSource = new MatTableDataSource<ListDiscountServiceDomain>(this.discountList);
+    })
   }
 }

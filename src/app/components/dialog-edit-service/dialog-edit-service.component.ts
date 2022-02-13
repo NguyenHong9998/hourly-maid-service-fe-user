@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EditServiceDomain } from './edit-service.domain';
+import { environment } from '@env/environment';
+import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 
 @Component({
   selector: 'app-dialog-edit-service',
@@ -10,23 +13,32 @@ import { EditServiceDomain } from './edit-service.domain';
 export class DialogEditServiceComponent implements OnInit {
   serviceName: string;
   serviceId: string;
-  entity: EditServiceDomain;
+
+
+  serviceForm = new FormGroup({
+    name: new FormControl(''),
+    price: new FormControl(''),
+    note: new FormControl('')
+  })
+
   constructor(public dialogRef: MatDialogRef<DialogEditServiceComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public http: HttpClient, public customSnackbarService: CustomSnackbarService
+
   ) {
     this.serviceName = data.serviceName;
     this.serviceId = data.serviceId;
-    this.entity = this.getData(this.serviceId);
   }
 
   ngOnInit(): void {
+    this.getData(this.data.serviceId);
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   file!: File;
-  avatar!: string | ArrayBuffer;
+  banner!: string | ArrayBuffer;
 
 
   onFileChange(event: any) {
@@ -34,20 +46,38 @@ export class DialogEditServiceComponent implements OnInit {
     if (this.file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        this.entity.banner = reader.result as string;
+        this.banner = reader.result as string;
       };
       reader.readAsDataURL(event.target.files[0]);
     } else {
-      this.entity.banner = this.entity.banner;
+      this.banner = this.banner;
     }
   }
 
   onRemoveAvatar() {
-    this.entity.banner = null as any;
+    this.banner = null as any;
     this.file = null as any;
   }
+
   getData(serviceId: string) {
-    const domain = new EditServiceDomain(123, "Tổng vệ sinh", "https://vesinhcongnghiepbluesky.com.vn/wp-content/uploads/2016/07/DICH-VU-CHUYEN-NGHIEP.png", "200000", "Bao gồm các việc,....");
-    return domain;
+    this.http.get(environment.apiUrl + "/service/" + serviceId).subscribe(data => {
+      this.serviceForm.get('name')?.setValue((data as any).data.name);
+      this.serviceForm.get('note')?.setValue((data as any).data.note);
+      this.serviceForm.get('price')?.setValue((data as any).data.price);
+      this.banner = (data as any).data.banner;
+    })
+  }
+  onEditService() {
+    const data = {
+      name: this.serviceForm.get('name')?.value,
+      note: this.serviceForm.get('note')?.value,
+      price: this.serviceForm.get('price')?.value,
+      banner: this.banner
+    }
+    this.http.put(environment.apiUrl + "/service/" + this.data.serviceId, data).subscribe(data => {
+      this.customSnackbarService.success("Cập nhật thành công")
+      this.dialogRef.close();
+    })
+
   }
 }
