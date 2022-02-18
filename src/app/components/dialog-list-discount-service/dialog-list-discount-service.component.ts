@@ -48,9 +48,8 @@ export class DialogListDiscountServiceComponent implements OnInit {
 
         const item = new ListDiscountServiceDomain(0, 0, discount_name, banner, percentage, date_start, date_end, status);
         array.push(item);
-
       }
-      this.dataSource = new MatTableDataSource<ListDiscountServiceDomain>(this.discountList);
+      this.dataSource = new MatTableDataSource<ListDiscountServiceDomain>(array);
     })
   }
 }

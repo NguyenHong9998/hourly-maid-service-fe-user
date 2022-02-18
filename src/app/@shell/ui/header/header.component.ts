@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ROUTER_UTILS } from '@core/utils/router.utils';
+import { environment } from '@env/environment';
 import { AuthService } from '@pages/auth/services/auth.service';
 import { ShareService } from '@pages/auth/services/share.service';
 import { TokenStorageService } from '@pages/auth/services/token-storage.service';
@@ -14,7 +16,7 @@ export class HeaderComponent implements OnInit {
   activeIndex: number = 1;
   isLoggedIn: boolean = false;
   currentUser = "";
-  avatar = "";
+  avatar !: string;
   userRole = "";
   path = ROUTER_UTILS.config;
 
@@ -23,7 +25,7 @@ export class HeaderComponent implements OnInit {
     private shareService: ShareService,
     private tokenStorageService: TokenStorageService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef, private http: HttpClient
   ) {
     this.shareService.getClickEvent().subscribe(() => {
       this.loadHeader();
@@ -55,8 +57,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/', root, signUp]);
   }
 
-  onClickProfile() : void {
-    const {root, profile} = ROUTER_UTILS.config.user;
+  onClickProfile(): void {
+    const { root, profile } = ROUTER_UTILS.config.user;
     this.router.navigate(['/', root, profile]);
   }
 
@@ -68,6 +70,12 @@ export class HeaderComponent implements OnInit {
   loadHeader(): void {
     if (this.tokenStorageService.getToken()) {
       this.currentUser = this.tokenStorageService.getUser().username;
+
+      this.http.get(environment.apiUrl + "/user/common-inform").subscribe(data => {
+        let avatar = (data as any).data.avatar;
+        console.log("Avatarrrrr: " + avatar);
+        this.avatar = avatar;
+      })
     }
     var indexActive = this.tokenStorageService.getActiveIndexHeader();
     this.activeIndex = indexActive;
@@ -78,4 +86,7 @@ export class HeaderComponent implements OnInit {
       this.currentUser = this.tokenStorageService.getUser().full_name;
     }
   }
+
+
+
 }

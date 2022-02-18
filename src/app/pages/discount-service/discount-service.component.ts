@@ -1,10 +1,14 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Sort } from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogCreateDiscountServiceComponent } from '@components/dialog-create-discount-service/dialog-create-discount-service.component';
 import { DialogEditDiscountServiceComponent } from '@components/dialog-edit-discount-service/dialog-edit-discount-service.component';
+import { environment } from '@env/environment';
 import { DiscountServiceListDomain } from './discount-service.domain';
 
 @Component({
@@ -14,37 +18,107 @@ import { DiscountServiceListDomain } from './discount-service.domain';
 })
 export class DiscountServiceComponent implements OnInit {
     displayedColumns: string[] = ['select', 'name', 'start', 'end', 'status', 'num_service', 'detail'];
-    dataSource = new MatTableDataSource<DiscountServiceListDomain>(this.getDiscountServices());
     selection = new SelectionModel<any>(true, []);
-    constructor(
-        private dialog: MatDialog
-    ) {
+
+    @ViewChild(MatSort, { static: true }) sort!: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+    dataSource!: MatTableDataSource<DiscountServiceListDomain>;
+    discountList: Array<DiscountServiceListDomain> = [];
+
+    totalRow: number = 10;
+    isLoading !: boolean;
+    keySearch = new FormControl('');
+    arrayPageSize = [10, 20, 30];
+    sortObj!: Sort;
+    mapPageToken = new Map();
+    status!: string;
+    offset !: number;
+
+    pageSize = this.arrayPageSize[0];
+    constructor(private dialog: MatDialog, public http: HttpClient) {
     }
 
     ngOnInit(): void {
+        this.offset = 0;
+        this.getDiscountServices();
     }
 
-    getDiscountServices(): Array<DiscountServiceListDomain> {
 
-        const discounts = Array<DiscountServiceListDomain>();
-        for (let i = 1; i <= 10; i++) {
-            const domain = new DiscountServiceListDomain(i,
-                i,
-                'Khuyến mãi dịp tết',
-                'Khuyến mãi áp dụng dịp tết mang lại nhà sạch cho bạn',
-                'https://thegioidohoacom.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2019/01/10040532/201807120816_banner-bai-viet-ctkm-hung-tuy-1511235823.jpg',
-                '2021-12-12 00:00',
-                '2021-15-12 00:00', 'Đang diễn ra', 2);
-            discounts.push(domain);
+    getDiscountServices() {
+
+        this.isLoading = true;
+
+        let params = new HttpParams()
+            .set('offset', this.offset)
+            .set('limit', this.pageSize)
+            .set('status', this.status ? this.status : '')
+            .set('value_search', this.keySearch.value)
+            .set('column_sort', this.sortObj && this.sortObj.direction ? this.sortObj.active.toUpperCase() : '')
+            .set('type_sort', this.sortObj ? this.sortObj.direction.toUpperCase() : '');
+
+        this.http.get(environment.apiUrl + "/discount", { params: params })
+            .subscribe((res: any) => {
+                this.totalRow = res.total_rows;
+                this._prepareNotifyList(res.data);
+                this.isLoading = false;
+            }
+            );
+    }
+    _prepareNotifyList(data: any) {
+        if (data) {
+            const result = Array<DiscountServiceListDomain>();
+            for (let i = 0; i < data.length; i++) {
+                const id = data[i].id;
+                const position = i;
+                const title = data[i].title;
+                const startDate = data[i].start_time; 
+                const endDate = data[i].end_time;
+                const status = data[i].public;
+                const numService = data[i].number_service;
+                const banner = data[i].banner;
+                const domain = new DiscountServiceListDomain(id, position, title, "", banner, startDate, endDate, status, numService);
+
+                result.push(domain);
+            }
+            this.discountList = result;
+            console.log(this.discountList);
+            this.dataSource = new MatTableDataSource<DiscountServiceListDomain>(this.discountList);
         }
-
-        return discounts;
     }
+
+    onPaging(event: PageEvent) {
+        this.selection.clear();
+        if (event.pageSize !== this.pageSize) {
+            this.mapPageToken = new Map();
+            this.mapPageToken.set(1, 0);
+            this.paginator.pageIndex = 0;
+            event.pageIndex = 0;
+        }
+        this.pageSize = event.pageSize;
+        this.offset = event.pageIndex + 1;
+        this.getDiscountServices();
+    }
+
+    onSearch() {
+        this.clearSort();
+        this.selection.clear();
+        this.getDiscountServices();
+    }
+
+    clearSort() {
+        this.sort.sort({ id: '', start: 'asc', disableClear: false });
+        this.sortObj = {
+            active: '',
+            direction: '',
+        };
+        this.paginator.pageIndex = 0;
+    }
+
     sortData(sort: Sort) {
-        if (!sort.active || sort.direction === '') {
-            console.log(sort.active);
-            return;
-        }
+        this.sortObj = sort;
+        this.paginator.pageIndex = 0;
+        this.selection.clear();
+        this.getDiscountServices();
     }
 
     isAllSelected() {
@@ -66,7 +140,7 @@ export class DiscountServiceComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogCreateDiscountServiceComponent);
 
         dialogRef.afterClosed().subscribe(() => {
-            console.log('The dialog was closed');
+            this.getDiscountServices();
         });
     }
 
@@ -75,9 +149,10 @@ export class DiscountServiceComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogEditDiscountServiceComponent, { data });
 
         dialogRef.afterClosed().subscribe(() => {
-            console.log('The dialog was closed');
+            this.getDiscountServices();
         });
     }
+
 
     openDialogGetListService(discountId: string, discountName: string) {
 

@@ -1,8 +1,22 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { environment } from '@env/environment';
+import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
+import { format } from 'date-fns';
 import { ListSelectServiceDomain } from './service-list-domain';
 
+export class ServiceDiscount {
+  name: string;
+  percentage: string;
+
+  constructor(serviceName: string,
+    percent: string) {
+    this.name = serviceName;
+    this.percentage = percent;
+  }
+}
 
 @Component({
   selector: 'app-dialog-create-discount-service',
@@ -13,15 +27,25 @@ export class DialogCreateDiscountServiceComponent implements OnInit {
   exampleForm: FormGroup | any;
   totalSum: number = 0;
   myFormValueChanges$: any;
-  discount: any = {
-    startDate: new FormControl(new Date()),
+  formArray: FormArray | any;
+  // discount: any = {
+  //   startDate: new FormControl(new Date()),
+  // }
+
+  discountForm = new FormGroup({
+    name: new FormControl(''),
+    note: new FormControl(''),
+    start: new FormControl(new Date()),
+    end: new FormControl(new Date())
+  })
+
+  services !: Array<ListSelectServiceDomain>;
+  constructor(public dialogRef: MatDialogRef<DialogCreateDiscountServiceComponent>, public http: HttpClient, public customSnackbarService: CustomSnackbarService,
+    private formBuilder: FormBuilder) {
   }
-  services = this.getListServices();
-  constructor(public dialogRef: MatDialogRef<DialogCreateDiscountServiceComponent>,
-    private formBuilder: FormBuilder,
-  ) { }
 
   ngOnInit(): void {
+    this.getListService();
     this.exampleForm = this.formBuilder.group({
       units: this.formBuilder.array([
         this.getUnit(),
@@ -34,41 +58,35 @@ export class DialogCreateDiscountServiceComponent implements OnInit {
   }
 
   file!: File;
-  avatar!: string | ArrayBuffer;
+  banner!: string | ArrayBuffer;
 
 
   onFileChange(event: any) {
-    console.log("Change avatar");
     this.file = event.target.files[0] || null;
     if (this.file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        this.avatar = reader.result as string;
+        this.banner = reader.result as string;
       };
       reader.readAsDataURL(event.target.files[0]);
     } else {
-      this.avatar = this.avatar;
+      this.banner = this.banner;
     }
   }
 
   onRemoveAvatar() {
-    this.avatar = null as any;
+    this.banner = null as any;
     this.file = null as any;
   }
+
   ngOnDestroy(): void {
     this.myFormValueChanges$.unsubscribe();
   }
 
-  /**
-   * Save form data
-   */
   save(model: any, isValid: boolean, e: any) {
     e.preventDefault();
   }
 
-  /**
-   * Create form unit
-   */
   private getUnit() {
     return this.formBuilder.group({
       unitName: [''],
@@ -77,43 +95,134 @@ export class DialogCreateDiscountServiceComponent implements OnInit {
     });
   }
 
-  /**
-   * Add new unit row into form
-   */
   addUnit() {
     const control = <FormArray>this.exampleForm.controls['units'];
     control.push(this.getUnit());
   }
 
-  /**
-   * Remove unit row from form on click delete button
-   */
   removeUnit(i: number) {
     const control = <FormArray>this.exampleForm.controls['units'];
+    let prevElement = this.services.find(x => x.name === control.at(i)?.get('unitName')?.value);
+    if (prevElement) {
+      prevElement.isSelect = false;
+    }
     control.removeAt(i);
   }
 
-  /**
-   * This is one of the way how clear units fields.
-   */
   clearAllUnits() {
     const control = <FormArray>this.exampleForm.controls['units'];
     while (control.length) {
       control.removeAt(control.length - 1);
     }
     control.clearValidators();
+    this.services = this.services.map(item => {
+      item.isSelect = false;
+      return item;
+    })
     control.push(this.getUnit());
   }
 
-  getListServices(): Array<ListSelectServiceDomain> {
-    const service = Array<ListSelectServiceDomain>();
-    for (let i = 1; i <= 10; i++) {
-      const domain = new ListSelectServiceDomain(i,
-        "Tổng vệ sinh", "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-        false);
-      service.push(domain);
+  onSave() {
+    const startTime = format(this.discountForm.get('start')?.value, "yyyy-MM-dd HH:mm:ss");
+    const endTime = format(this.discountForm.get('end')?.value, "yyyy-MM-dd HH:mm:ss");
+    const name = this.discountForm.get('name')?.value;
+    const note = this.discountForm.get('note')?.value;
+
+    const array = new Array<ServiceDiscount>();
+    const control = <FormArray>this.exampleForm.controls['units'];
+
+    for (let i = 0; i < control.length; i++) {
+      const serviceName = control.at(i)?.get('unitName')?.value;
+      const percent = control.at(i)?.get('unitPercent')?.value;
+      const item = new ServiceDiscount(serviceName, percent);
+      array.push(item);
     }
-    return service;
+
+    let banner = this.banner as string;
+    const formData = new FormData();
+    formData.append('file', this.file);
+    if (banner && !banner.startsWith('http')) {
+      this.http.post(environment.apiUrl + "/cloud/upload-avatar", formData).subscribe(data => {
+        console.log(data);
+        this.banner = (data as any).data;
+        let body = {
+          banner: this.banner,
+          service_list: array,
+          start_time: startTime,
+          end_time: endTime,
+          note: note,
+          title: name,
+        }
+        this.http.post(environment.apiUrl + "/discount", body).subscribe(data => {
+          this.customSnackbarService.success("Tạo mới chương trình giảm giá thành công!");
+          this.dialogRef.close();
+
+        })
+      })
+    } else {
+      let body = {
+        banner: this.banner,
+        service_list: array,
+        start_time: startTime,
+        end_time: endTime,
+        note: note,
+        title: name,
+      }
+      this.http.post(environment.apiUrl + "/discount", body).subscribe(data => {
+        this.customSnackbarService.success("Tạo mới chương trình giảm giá thành công!");
+        this.dialogRef.close();
+      })
+    }
+
+  }
+
+
+  getListService() {
+
+    let params = new HttpParams()
+      .set('offset', 0)
+      .set('limit', 1000)
+      .set('status', '')
+      .set('value_search', '')
+      .set('column_sort', '')
+      .set('type_sort', '');
+
+    this.http.get(environment.apiUrl + "/service", { params: params })
+      .subscribe((res: any) => {
+        this._prepareNotifyList(res.data);
+      }
+      );
+
+  }
+
+  _prepareNotifyList(data: any) {
+    if (data) {
+      const result = Array<ListSelectServiceDomain>();
+      for (let i = 0; i < data.length; i++) {
+        const id = data[i].id;
+        const name = data[i].name;
+        const banner = data[i].banner;
+        const domain = new ListSelectServiceDomain(id, name, banner, false);
+
+        result.push(domain);
+      }
+      this.services = result;
+      console.log(this.services);
+    }
+  }
+
+  assignValue(i: any, item: ListSelectServiceDomain) {
+    const control = <FormArray>this.exampleForm.controls['units'];
+    let prevElement = this.services.find(x => x.name === control.at(i)?.get('unitName')?.value);
+    if (prevElement) {
+      prevElement.isSelect = false;
+    }
+
+    control.at(i)?.get('unitName')?.setValue(item.name);
+    let element = this.services.find(x => x.id === item.id);
+    if (element) {
+      element.isSelect = true;
+    }
   }
 
 }

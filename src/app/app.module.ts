@@ -5,7 +5,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ShareModule } from '@components/component.module';
 import { AuthModule } from '@pages/auth/auth.module';
-import { CalendarModule } from '@pages/calendar/calendar.module';
+import { CalendarsModule } from '@pages/calendar/calendar.module';
 import { CleanServiceModule } from '@pages/clean-service/clean-service.module';
 import { DiscountServiceModule } from '@pages/discount-service/discount-service.module';
 import { EmployeeModule } from '@pages/employee/employee.module';
@@ -35,7 +35,7 @@ import { MaterialExampleModule } from './material.module';
     DiscountServiceModule,
     TaskModule,
     NotifyModule,
-    CalendarModule
+    CalendarsModule
   ],
   bootstrap: [AppComponent],
 })

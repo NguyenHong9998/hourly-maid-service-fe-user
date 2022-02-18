@@ -94,7 +94,9 @@ const modules = [
     MatFormFieldModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    MatDatepickerModule,        
+    MatNativeDateModule,        
 ];
 @NgModule({
     imports: [

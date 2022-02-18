@@ -1,19 +1,19 @@
 /** No CSS for this example */
-.mat-calendar-body-cell.selected
-{
-  background-color:rgb(71, 236, 98)!important;
-  border-radius: 50%
-}
+// .mat-calendar-body-cell.selected
+// {
+//   background-color:rgb(71, 236, 98)!important;
+//   border-radius: 50%
+// }
 
-.mat-calendar-body-cell.current
-{
-  background-color:rgb(230, 39, 48)!important;
-  border-radius: 50%
-}
-.drop-calendar
-{
-  width:30rem
-}
+// .mat-calendar-body-cell.current
+// {
+//   background-color:rgb(230, 39, 48)!important;
+//   border-radius: 50%
+// }
+// .drop-calendar
+// {
+//   width:30rem
+// }
 
 ::ng-deep .mat-paginator {
   margin-bottom: 1cm;
@@ -35,3 +35,23 @@ table {
 margin-left: 0.3cm;
 }
 
+// .e-highlightweekend span
+//  {
+//   border: 1px solid #e3165b !important;
+//   border-radius: 50% !important;
+//   padding: 2px;
+// }
+.example-custom-date--orange-class {
+  background: orange ;
+  border-radius: 100%;
+  padding : 2px;
+}
+
+.example-custom-date--red-class {
+  background: red !important;
+  border-radius: 100%;
+}
+
+#noteCalendar { 
+  background: orange;
+}

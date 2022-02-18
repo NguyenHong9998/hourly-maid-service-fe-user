@@ -74,7 +74,7 @@ const APP_ROUTES: Routes = [
   {
     path: ROUTER_UTILS.config.calendar.root,
     loadChildren: async () =>
-      (await import('@pages/calendar/calendar.module')).CalendarModule,
+      (await import('@pages/calendar/calendar.module')).CalendarsModule,
     canLoad: [AuthGuard],
   },
   {

@@ -1,17 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialExampleModule } from 'src/app/material.module';
-import { CalendarComponent } from './calendar.component';
+import { CalendarsComponent, HighlightedDatesComponent } from './calendar.component';
 import { CalendarRouting } from './calendar.routing';
+
 
 
 
 @NgModule({
   declarations: [
-    CalendarComponent
+    HighlightedDatesComponent, CalendarsComponent, 
   ],
   imports: [
-    CommonModule, CalendarRouting, MaterialExampleModule
-  ]
+    CommonModule, CalendarRouting, MaterialExampleModule, FormsModule, ReactiveFormsModule
+  
+  ], 
+  providers: []
+
 })
-export class CalendarModule { }
+export class CalendarsModule { }

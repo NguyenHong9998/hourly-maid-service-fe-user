@@ -32,8 +32,8 @@
     </div>
     <div class="flex justify-center h-2/4">
         <div class="flex border-2 rounded">
-            <input type="text" class="px-4 py-2 w-80" placeholder="Search...">
-            <button class="flex items-center justify-center px-4 border-l
+            <input type="text" class="px-4 py-2 w-80" placeholder="Tìm kiếm...." [formControl]="keySearch" (keyup.enter)="onSearch()">
+            <button (click) = "onSearch()" class="flex items-center justify-center px-4 border-l
                 hover:bg-gray-300 focus:outline-none focus:ring-2
                 focus:ring-offset-2 focus:ring-indigo-500">
                 <svg
@@ -71,13 +71,13 @@
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
             text-xs text-gray-900
-            uppercase tracking-wider" mat-sort-header="name"> Tên chương trình
+            uppercase tracking-wider" mat-sort-header="title"> Tên chương trình
         </th>
         <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
             element">
             <div class="flex items-center">
                 <div class="flex-shrink-0 h-10 w-10">
-                    <img class="h-10 w-10 rounded-full"
+                    <img class="h-10 w-10 "
                         [src]="element.banner"
                         alt="">
                 </div>
@@ -95,7 +95,7 @@
     <ng-container matColumnDef="start">
         <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
             text-xs text-gray-900
-            uppercase tracking-wider" mat-sort-header="email"> Ngày bắt đầu
+            uppercase tracking-wider" mat-sort-header="start_time"> Ngày bắt đầu
         </th>
         <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
             element">
@@ -106,7 +106,7 @@
     <ng-container matColumnDef="end">
         <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left
             text-xs text-gray-900
-            uppercase tracking-wider" mat-sort-header="end"> Ngày kết thúc
+            uppercase tracking-wider" mat-sort-header="end_time"> Ngày kết thúc
         </th>
         <td class="px-6 py-4 whitespace-nowrap" mat-cell *matCellDef="let
             element">
@@ -163,6 +163,5 @@
     </tr>
 </table>
 
-<mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]"
-    aria-label="Chọn trang">
+<mat-paginator (page)="onPaging($event)" [length]="totalRow" [pageSizeOptions]="arrayPageSize" showFirstLastButtons>
 </mat-paginator>

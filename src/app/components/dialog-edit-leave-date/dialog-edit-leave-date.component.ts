@@ -1,43 +1,21 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Employee, LeaveDate } from '@components/dialog-create-leave-date/dialog-create-leave-date.component';
 import { environment } from '@env/environment';
 import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 import { addDays, compareAsc, format } from 'date-fns';
-export class LeaveDate {
-  id: number;
-  date: string;
-  start: string;
-  end: string
-  constructor(id: number, date: string,
-    start: string, end: string) {
-    this.date = date;
-    this.start = start;
-    this.end = end;
-    this.id = id;
-  }
-};
 
-export class Employee {
-  id: number;
-  name: string;
-  avatar: string;
-
-  constructor(id: number, name: string, avatar: string) {
-    this.id = id;
-    this.name = name;
-    this.avatar = avatar;
-  }
-}
 @Component({
-  selector: 'app-dialog-create-leave-date',
-  templateUrl: './dialog-create-leave-date.component.html',
-  styleUrls: ['./dialog-create-leave-date.component.scss']
+  selector: 'app-dialog-edit-leave-date',
+  templateUrl: './dialog-edit-leave-date.component.html',
+  styleUrls: ['./dialog-edit-leave-date.component.scss']
 })
-export class DialogCreateLeaveDateComponent implements OnInit {
+export class DialogEditLeaveDateComponent implements OnInit {
+
   selectedValue: any;
   exampleForm: FormGroup | any;
   displayedColumns: string[] = ['date', 'morning', 'afternoon', 'delete'];
@@ -46,14 +24,14 @@ export class DialogCreateLeaveDateComponent implements OnInit {
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
   });
-  row: any;
+  row!: any;
   note = '';
 
   userAvatar !: string;
   userName !: string;
 
-  constructor(public dialogRef: MatDialogRef<DialogCreateLeaveDateComponent>, private formBuilder: FormBuilder,
-    private http: HttpClient, private customSnackBar: CustomSnackbarService
+  constructor(public dialogRef: MatDialogRef<DialogEditLeaveDateComponent>, private formBuilder: FormBuilder,
+    private http: HttpClient, private customSnackBar: CustomSnackbarService, @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.row = this.getListLeaveDate(this.range.controls.start.value, this.range.controls.end.value);
     this.dataSource = new MatTableDataSource<LeaveDate>(this.row);
@@ -75,14 +53,15 @@ export class DialogCreateLeaveDateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLisEmployees();
-    this.range.get('end')?.valueChanges.subscribe(res => {
-      var start = this.range.get('start')?.value;
-      var end = res;
-      if (start != null && end != null) {
-        this.row = this.getListLeaveDate(start, end);
-        this.dataSource = new MatTableDataSource<LeaveDate>(this.row);
-      }
-    })
+    this.getLeaveDateInform();
+    // this.range.get('end')?.valueChanges.subscribe(res => {
+    //   var start = this.range.get('start')?.value;
+    //   var end = res;
+    //   if (start != null && end != null) {
+    //     this.row = this.getListLeaveDate(start, end);
+    //     this.dataSource = new MatTableDataSource<LeaveDate>(this.row);
+    //   }
+    // })
 
   }
 
@@ -145,6 +124,30 @@ export class DialogCreateLeaveDateComponent implements OnInit {
     }
   }
 
+
+  setAssessmentLevel(leaveDate: any, value: any) {
+    var leaveDate = this.row[this.row.indexOf(leaveDate)];
+    leaveDate.level = value;
+
+  }
+
+  getLeaveDateInform() {
+    const array = new Array<any>();
+    this.http.get(environment.apiUrl + "/leave-date/" + this.data.leaveDateId).subscribe((data: any) => {
+      console.log(data);
+      this.selectedValue = data.data.user_id;
+      this.userName = data.data.username;
+      this.userAvatar = data.data.avatar;
+      const date = new Date(data.data.leave_domains[0].date);
+      this.range.get('start')?.setValue(date);
+      this.range.get('end')?.setValue(date);
+      array.push(new LeaveDate(0, format(date, "dd-MM-yyyy"), data.data.leave_domains[0].start, data.data.leave_domains[0].end));
+      this.row = array;
+      this.dataSource = new MatTableDataSource<LeaveDate>(this.row);
+      this.note = data.data.note;
+
+    })
+  }
   onChangeStart(element: any, id: any) {
     const item = this.row.find((x: LeaveDate) => x.id == id);
     item.start = element;
@@ -152,11 +155,6 @@ export class DialogCreateLeaveDateComponent implements OnInit {
   onChangeEnd(element: any, id: any) {
     const item = this.row.find((x: LeaveDate) => x.id == id);
     item.end = element;
-  }
-  setAssessmentLevel(leaveDate: any, value: any) {
-    var leaveDate = this.row[this.row.indexOf(leaveDate)];
-    leaveDate.level = value;
-
   }
   saveLeaveDate() {
     console.log(this.row);
@@ -178,8 +176,8 @@ export class DialogCreateLeaveDateComponent implements OnInit {
       leave_domains: array
     }
 
-    this.http.post(environment.apiUrl + "/leave-date", data).subscribe(data => {
-      this.customSnackBar.success("Tạo mới thành công");
+    this.http.put(environment.apiUrl + "/leave-date/" + this.data.leaveDateId, data).subscribe(data => {
+      this.customSnackBar.success("Cập nhật thành công");
       this.dialogRef.close();
     })
 
@@ -203,7 +201,7 @@ export class DialogCreateLeaveDateComponent implements OnInit {
   }
 
   selectEmployee(event: any) {
-    const selectEmpl = this.employees.find( epl => epl.id == event.value);
+    const selectEmpl = this.employees.find(epl => epl.id == event.value);
     this.userAvatar = selectEmpl?.avatar as any;
     console.log(this.userAvatar);
     this.userName = selectEmpl?.name as any;
