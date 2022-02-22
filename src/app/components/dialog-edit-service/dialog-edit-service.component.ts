@@ -18,7 +18,9 @@ export class DialogEditServiceComponent implements OnInit {
   serviceForm = new FormGroup({
     name: new FormControl(''),
     price: new FormControl(''),
-    note: new FormControl('')
+    note: new FormControl(''),
+    advantage: new FormControl(''),
+    introduce: new FormControl('')
   })
 
   constructor(public dialogRef: MatDialogRef<DialogEditServiceComponent>,
@@ -64,6 +66,8 @@ export class DialogEditServiceComponent implements OnInit {
       this.serviceForm.get('name')?.setValue((data as any).data.name);
       this.serviceForm.get('note')?.setValue((data as any).data.note);
       this.serviceForm.get('price')?.setValue((data as any).data.price);
+      this.serviceForm.get('introduce')?.setValue((data as any).data.introduces);
+      this.serviceForm.get('advantage')?.setValue((data as any).data.advantage);
       this.banner = (data as any).data.banner;
     })
   }
@@ -72,6 +76,8 @@ export class DialogEditServiceComponent implements OnInit {
       name: this.serviceForm.get('name')?.value,
       note: this.serviceForm.get('note')?.value,
       price: this.serviceForm.get('price')?.value,
+      advantage : this.serviceForm.get('advantage')?.value,
+      introduces : this.serviceForm.get('introduce')?.value,
       banner: this.banner
     }
     this.http.put(environment.apiUrl + "/service/" + this.data.serviceId, data).subscribe(data => {

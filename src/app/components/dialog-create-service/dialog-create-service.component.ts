@@ -15,7 +15,9 @@ export class DialogCreateServiceComponent implements OnInit {
   serviceForm = new FormGroup({
     name: new FormControl(''),
     price: new FormControl(''),
-    note: new FormControl('')
+    note: new FormControl(''),
+    advantage :  new FormControl(''),
+    introduce : new FormControl('')
   })
 
   constructor(public dialogRef: MatDialogRef<DialogCreateServiceComponent>,
@@ -75,7 +77,9 @@ export class DialogCreateServiceComponent implements OnInit {
         banner: this.banner,
         name: this.serviceForm.get('name')?.value,
         note: this.serviceForm.get('note')?.value,
-        price: this.serviceForm.get('price')?.value
+        price: this.serviceForm.get('price')?.value,
+        introduces : this.serviceForm.get('introduce')?.value,
+        advantage : this.serviceForm.get('advantage')?.value
       }
       this.http.post(environment.apiUrl + "/service", body).subscribe(data => {
         this.customSnackbarService.success("Tạo mới dịch vụ thành công!");
