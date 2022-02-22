@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DialogChangeStatusDiscountComponent } from '@components/dialog-change-status-discount/dialog-change-status-discount.component';
 import { DialogCreateDiscountServiceComponent } from '@components/dialog-create-discount-service/dialog-create-discount-service.component';
 import { DialogEditDiscountServiceComponent } from '@components/dialog-edit-discount-service/dialog-edit-discount-service.component';
 import { environment } from '@env/environment';
@@ -71,7 +72,7 @@ export class DiscountServiceComponent implements OnInit {
                 const id = data[i].id;
                 const position = i;
                 const title = data[i].title;
-                const startDate = data[i].start_time; 
+                const startDate = data[i].start_time;
                 const endDate = data[i].end_time;
                 const status = data[i].public;
                 const numService = data[i].number_service;
@@ -144,7 +145,7 @@ export class DiscountServiceComponent implements OnInit {
         });
     }
 
-    openDialogEditDiscounrService(discountId: string, discountName: string) {
+    openDialogEditDiscounrService(discountId: string, discountName: string, discountStatus : string) {
         const data = { discountId, discountName };
         const dialogRef = this.dialog.open(DialogEditDiscountServiceComponent, { data });
 
@@ -156,5 +157,22 @@ export class DiscountServiceComponent implements OnInit {
 
     openDialogGetListService(discountId: string, discountName: string) {
 
+    }
+
+    openChangeStatusDiscount(discountId: any, discountStatus: any, startDate: string, endDate: string) {
+        const startTime = new Date(startDate);
+        const endTime = new Date(endDate);
+        const isChange = endTime.getTime() > new Date().getTime() && startTime.getTime() <= new Date().getTime();
+        const isCome = startTime.getTime() > new Date().getTime();
+        const data = { discountId, discountStatus, isChange, isCome };
+
+        if (discountStatus != 'Đang diễn ra') {
+            const dialogRef = this.dialog.open(DialogChangeStatusDiscountComponent, { data });
+            dialogRef.afterClosed().subscribe((data: any) => {
+                if (data.isChange) {
+                    this.getDiscountServices();
+                }
+            })
+        }
     }
 }

@@ -22,6 +22,9 @@ import { DialogListEmployeeServiceComponent } from './dialog-list-employee-servi
 import { DialogTaskDetailComponent } from './dialog-task-detail/dialog-task-detail.component';
 import { SnackBarComponent } from "./snack-bar/snack-bar.component";
 import { DialogEditLeaveDateComponent } from './dialog-edit-leave-date/dialog-edit-leave-date.component';
+import { DialogChangeStatusDiscountComponent } from './dialog-change-status-discount/dialog-change-status-discount.component';
+import { DialogCancelTaskComponent } from './dialog-cancel-task/dialog-cancel-task.component';
+import { DialogDoneTaskComponent } from './dialog-done-task/dialog-done-task.component';
 
 
 @NgModule({
@@ -44,6 +47,9 @@ import { DialogEditLeaveDateComponent } from './dialog-edit-leave-date/dialog-ed
         DialogConfirmBlockEmployeeComponent,
         DialogChangeStatusNotifyComponent,
         DialogEditLeaveDateComponent,
+        DialogChangeStatusDiscountComponent,
+        DialogCancelTaskComponent,
+        DialogDoneTaskComponent,
     ],
     imports: [
         MatSnackBarModule,

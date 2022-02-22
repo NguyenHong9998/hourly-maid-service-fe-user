@@ -20,13 +20,14 @@
         <mat-button-toggle-group [(ngModel)]="status" (change)="onFilter()">
             <mat-button-toggle value="Quản lý">Quản lý</mat-button-toggle>
             <mat-button-toggle value="Nhân viên">Nhân viên</mat-button-toggle>
-            <mat-button-toggle value="Tất cả" >Tất cả</mat-button-toggle>
+            <mat-button-toggle value="Tất cả">Tất cả</mat-button-toggle>
         </mat-button-toggle-group>
     </div>
     <div class="flex justify-center h-2/4 ml-4">
         <div class="flex border-2 rounded">
-            <input type="text" class="px-4 py-2 w-80" placeholder="Search..." [formControl]="keySearch" (keyup.enter)="onSearch()">
-            <button (click) = "onSearch()" class="flex items-center justify-center px-4 border-l
+            <input type="text" class="px-4 py-2 w-80" placeholder="Search..." [formControl]="keySearch"
+                (keyup.enter)="onSearch()">
+            <button (click)="onSearch()" class="flex items-center justify-center px-4 border-l
                 hover:bg-gray-300 focus:outline-none focus:ring-2
                 focus:ring-offset-2 focus:ring-indigo-500">
                 <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
@@ -104,10 +105,8 @@
                 leading-5 font-semibold rounded-full
                 bg-green-100 text-green-800' : 'px-2 inline-flex text-xs
                 leading-5 font-semibold rounded-full
-                bg-red-200 text-green-800' }}"
-                (click) = "openDialogBlockEmployee(element.id,
-                element.name, element.avatar, element.status)"
-                >
+                bg-red-200 text-green-800' }}" (click)="openDialogBlockEmployee(element.id,
+                element.name, element.avatar, element.status)">
                 {{element.status}}
             </span>
         </td>
@@ -130,7 +129,7 @@
             text-xs text-gray-900
             uppercase tracking-wider">Chi tiết</th>
         <td mat-cell *matCellDef="let element">
-            
+
             <button mat-icon-button [matMenuTriggerFor]="editMenu" #menuTrigger="matMenuTrigger"
                 (click)="menuTrigger.openMenu()" (mouseenter)="menuTrigger.openMenu()">
                 <mat-icon class="white-icon">edit</mat-icon>
@@ -146,7 +145,7 @@
                     element.name)">
                         Xem phản hồi người dùng
                     </a>
-                    
+
                 </span>
             </mat-menu>
         </td>
@@ -156,5 +155,6 @@
     </tr>
 </table>
 
-<mat-paginator (page)="onPaging($event)" [length]="totalRow" [pageSizeOptions]="arrayPageSize" [showFirstLastButtons]="true">
+<mat-paginator (page)="onPaging($event)" [length]="totalRow" [pageSizeOptions]="arrayPageSize"
+    [showFirstLastButtons]="true">
 </mat-paginator>

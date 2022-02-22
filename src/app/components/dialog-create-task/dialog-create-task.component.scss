@@ -21,3 +21,35 @@
 #saveButton {
     margin-left: 0.3cm;
 }
+
+.mat-dialog-content {
+    width: 780px;
+}
+
+#in {
+    background-color: rgb(232, 240, 254);
+}
+
+table {
+    width: 100%;
+}
+
+  
+.mat-cell {
+    padding: 0 12px;
+}
+.mat-header-cell{
+    padding: 0 12px;
+}
+.mat-column-filler {
+    padding: 0 12px;
+    text-align: center;
+}
+
+.mat-elevation-z8{
+     box-shadow : none;
+}
+
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}

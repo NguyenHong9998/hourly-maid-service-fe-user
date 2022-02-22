@@ -17,3 +17,7 @@ table {
 #addButton {
     margin-left: 15px;
 }
+
+mat-list-option[aria-selected="true"] {
+    background: rgba(0, 139, 139, 0.7);
+  }

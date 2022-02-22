@@ -5,161 +5,243 @@
 <div class="hidden sm:block" aria-hidden="true">
     <div class="border-t border-gray-200"></div>
 </div>
-<mat-dialog-content class="mat-typography">
-    <div class="border-t border-gray-200">
-        <dl>
-            <div class="bg-gray-50 px-4 py-5 sm:grid
-                sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium
-                    text-gray-500">
-                    Tên khách hàng
-                </dt>
-                <dd class="mt-1 text-sm text-gray-900
-                    sm:mt-0 sm:col-span-2">
-                    {{task_detail.user_name}}
-                </dd>
-            </div>
-            <div class="bg-white px-4 py-5 sm:grid
-                sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium
-                    text-gray-500">
-                    Số điện thoại
-                </dt>
-                <dd class="mt-1 text-sm text-gray-900
-                    sm:mt-0 sm:col-span-2">
-                    {{task_detail.user_phone}}
-                </dd>
-            </div>
-            <div class="bg-gray-50 px-4 py-5 sm:grid
-                sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium
-                    text-gray-500">
-                    Địa chỉ làm việc
-                </dt>
-                <dd class="mt-1 text-sm text-gray-900
-                    sm:mt-0 sm:col-span-2">
-                    {{task_detail.address.address}} -
-                    {{task_detail.address.type.name}}
-                </dd>
-            </div>
-            <div class="bg-white px-4 py-5 sm:grid
-                sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium
-                    text-gray-500">
-                    Thời gian
-                </dt>
-                <dd class="mt-1 text-sm text-gray-900
-                    sm:mt-0 sm:col-span-2">
-                    <span>
-                        Bắt đầu : {{task_detail.startTime}}
-                    </span>
-                    <br>
-                    <br>
-                    <span>
-                        Kết thúc :
-                        {{task_detail.endTime}}
-                    </span>
-                </dd>
-            </div>
-            <div class="bg-gray-50 px-4 py-5 sm:grid
-                sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium
-                    text-gray-500">
-                    Ghi chú
-                </dt>
-                <dd class="mt-1 text-sm text-gray-900
-                    sm:mt-0 sm:col-span-2">
-                    {{task_detail.note}}
-                </dd>
-            </div>
+<div *ngIf="isLoading">
+    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-arrow-clockwise animate-spin w-24 h-24" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+      </svg>
+</div>
+<mat-dialog-content class="mat-typography" *ngIf="!isLoading">
+    <div class="border-t border-gray-200  py-5" >
+        <form>
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
+                <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                    <div class="grid grid-cols-2 gap-10">
+                        <div>
+                            <label for="name" class="block text-sm
+                                font-bold ">Tên khách hàng</label>
+                            <input type="text" name="name" id="in" autocomplete="address-level1" class="w-full px-4 py-2 text-sm border
+                                rounded-md focus:border-blue-400
+                                focus:outline-none focus:ring-1
+                                focus:ring-blue-600" [(ngModel)]="customerName" required disabled>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm
+                                font-bold ">SĐT khách hàng</label>
+                            <input type="text" name="phone" id="in" autocomplete="address-level1" class="w-full px-4 py-2 text-sm border
+                                rounded-md focus:border-blue-400
+                                focus:outline-none focus:ring-1
+                                focus:ring-blue-600" [(ngModel)]="customerPhone" required disabled>
+                        </div>
 
-            <div class="bg-white px-4 py-5 sm:grid
-                sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium
-                    text-gray-500">
+                    </div>
+                    <div class="flex ">
+
+                        <div class=" w-full">
+                            <label for="email" class="block text-sm
+                                font-bold">Email</label>
+                            <input type="text" name="email" id="in" class="w-full px-4 py-2 text-sm border
+                                rounded-md focus:border-blue-400
+                                focus:outline-none focus:ring-1
+                                focus:ring-blue-600" [(ngModel)]="email" disabled>
+                        </div>
+                    </div>
+                    <div class="flex ">
+                        <div class=" w-full">
+                            <label for="phone" class="block text-sm
+                                font-bold">Địa điểm làm việc</label>
+                            <input type="text" name="address" id="in" class="w-full px-4 py-2 text-sm border
+                                rounded-md focus:border-blue-400
+                                focus:outline-none focus:ring-1
+                                focus:ring-blue-600" [(ngModel)]="address">
+                        </div>
+
+                    </div>
+                    <div class="">
+                        <label for="phone" class="block text-sm
+                            font-bold ">Ghi chú</label>
+                        <textarea id="in" name="note" class="shadow-sm focus:ring-indigo-500
+                            focus:border-indigo-500 mt-1 block
+                            w-full sm:text-sm border border-gray-300 py-2 px-3
+                            rounded-md" placeholder="- Phòng bếp: rửa bát, lau kĩ mặt bếp"
+                            [(ngModel)]="note"></textarea>
+                    </div>
+                </div>
+
+                <div class="px-4 py-1 bg-gray-50 text-right sm:px-6 flex ">
+
+                    <button type="submit" class="inline-flex
+                        justify-center py-1 px-4 border
+                        border-transparent shadow-sm text-sm font-medium
+                        rounded-md text-white bg-indigo-600
+                        hover:bg-indigo-700 focus:outline-none
+                        focus:ring-2 focus:ring-offset-2
+                        focus:ring-indigo-500">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="pt-7">
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
+                <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                    <div class="flex">
+                        <div>
+                            <label for="phone" class="block text-sm
+                                font-bold ">Lịch làm việc</label>
+                            <div class="flex">
+                                <div>
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Ngày làm</mat-label>
+                                        <input matInput [matDatepicker]="picker" [formControl]="date" [min]="minDate">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="pl-4 pt-3">
+                                    <button mat-raised-button (click)="picker.open()" class="pl-5" disabled>Chọn ngày
+                                        làm</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="pl-10">
+                            <label class="block text-sm font-bold pb-3">Số lượng nhân viên</label>
+                            <input [(ngModel)]="numberOfemployee" name="numberOfemployee" type="number" id="in" class="w-full px-4 py-2 text-sm border
+                                            rounded-md focus:border-blue-400
+                                            focus:outline-none focus:ring-1
+                                            focus:ring-blue-600" disabled>
+                        </div>
+                    </div>
+                    <label for="phone" class="block text-sm
+                    font-bold ">Thời giam làm việc</label>
+                    <div class="grid grid-cols-2 gap-10">
+                        <div class="text-center">
+                            <span>Thời gian bắt
+                                đầu</span>
+                            <div class="md-form">
+                                <input type="time" id="input" class="form-control" mdbInput [(ngModel)]="startTime"
+                                    name="startTime" disabled />
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <span>Thời gian kết thúc</span>
+                            <div class="md-form">
+                                <input type="time" id="input" class="form-control" mdbInput [(ngModel)]="endTime"
+                                    name="endTime" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <dt class="text-sm font-medium">
                     Dịch vụ sử dụng
                 </dt>
-                <dd class="mt-1 text-sm text-gray-900
-                    sm:mt-0 sm:col-span-2">
-                    <ul role="list" class="border
-                        border-gray-200 rounded-md divide-y
-                        divide-gray-200">
-                        <li class="pl-3 pr-4 py-3 flex
-                            items-center justify-between
-                            text-sm" *ngFor="let item of task_detail.service">
-                            <div class="w-0 flex-1 flex
-                                items-center">
-                                <span class="ml-2 flex-1
-                                    w-0 truncate">
-                                    {{item.name}}
-                                </span>
-                            </div>
-                            <div class="ml-4
-                                flex-shrink-0">
-                                <span>{{item.price}}</span>
-                            </div>
-                        </li>
+            </div>
+            <div class="bg-white px-4 ">
+                <span class="text-xs italic">(Bảng giá được tính trên mỗi nhân viên và áp dụng chương trình
+                    giảm giá
+                    tốt
+                    nhất)</span>
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="service">
+                        <th mat-header-cell *matHeaderCellDef> Dịch vụ </th>
+                        <td mat-cell *matCellDef="let item"> {{item.serviceName}} </td>
+                    </ng-container>
 
+                    <ng-container matColumnDef="service_price">
+                        <th mat-header-cell *matHeaderCellDef> Giá dịch vụ </th>
+                        <td mat-cell *matCellDef="let item"> {{item.servicePrice}} </td>
+                    </ng-container>
 
-                        <li class="pl-3 pr-4 py-3 flex
-                            items-center justify-between
-                            text-sm">
-                            <div class="w-0 flex-1 flex
-                                items-center">
+                    <ng-container matColumnDef="hours">
+                        <th mat-header-cell *matHeaderCellDef> Số giờ </th>
+                        <td mat-cell *matCellDef="let item"> {{item.hours}} </td>
+                    </ng-container>
 
-                                <span class="ml-2
-                                    flex-1 w-0
-                                    truncate font-bold">
-                                    Tổng cộng:
-                                </span>
-                            </div>
-                            <div class="ml-4
-                                flex-shrink-0">
-                                <span *ngIf="task_detail.is_paid"
-                                    class="italic">
-                                    (Đã thanh
-                                    toán)</span>
-                                <span class="font-bold">
-                                    {{task_detail.total_money}}
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                </dd>
+                    <ng-container matColumnDef="discount">
+                        <th mat-header-cell *matHeaderCellDef> Chương trình giảm </th>
+                        <td mat-cell *matCellDef="let item"> {{item.discountAply}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="percent">
+                        <th mat-header-cell *matHeaderCellDef> Phần trăm giảm </th>
+                        <td mat-cell *matCellDef="let item"> {{item.percentAply}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef> Thành giá </th>
+                        <td mat-cell *matCellDef="let item"> {{item.price}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                </table>
             </div>
 
-            <div class="bg-gray-50 px-4 py-5 sm:grid
-                sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium
-                    text-gray-500">
-                    Nhân viên thực hiện
+            <div class="bg-white px-4 py-5 sm:grid
+                                            sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium">
+                    Tổng số nhân viên: {{numberOfemployee}}
                 </dt>
-                <dd class="mt-1 text-sm text-gray-900
-                    sm:mt-0 sm:col-span-2">
-                    <ul role="list" class="border
-                        border-gray-200 rounded-md divide-y
-                        divide-gray-200">
-                        <li class="pl-3 pr-4 py-3 flex
-                            items-center justify-between
-                            text-sm" *ngFor="let item of task_detail.employees">
-                            <div class="w-0 flex-1 flex
-                                items-center">
-                                <span class="ml-2 flex-1
-                                    w-0 truncate">
-                                    {{item.name}}
-                                </span>
-                            </div>
-                            <div class="ml-4
-                                flex-shrink-0">
-                                <span>{{item.phone}}</span>
-                            </div>
-                        </li>
-                    </ul>
+                <dd>
+                    <span>Tổng cộng: </span> <strong class="font-bold">{{getTotalMoney()}} (VNĐ)</strong>
                 </dd>
             </div>
 
+        </div>
 
-        </dl>
+    </div>
+
+
+    <div class="pt-5">
+        <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <label for="phone" class="block text-sm
+                font-bold  pb-3">Nhân viên thực hiện</label>
+                <mat-form-field>
+                    <mat-select placeholder="Nhân viên" [formControl]="employee" [(value)]="selectedEmployee" multiple >
+                        <mat-option *ngFor="let topping of employeeList" [value]="topping" [disabled]="isOptionDisabled(topping)">{{topping.employeeName}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="grid grid-cols-2 gap-5">
+                    <div *ngFor="let item of selectedEmployee">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                                <img class="h-10 w-10 rounded-full" [src]="item.employeeAvatar" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium
+                                text-gray-900">
+                                    {{item.employeeName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-4 py-1 bg-gray-50 text-right sm:px-6 flex ">
+                <button type="submit" class="inline-flex
+                        justify-center py-1 px-4 border
+                        border-transparent shadow-sm text-sm font-medium
+                        rounded-md text-white bg-indigo-600
+                        hover:bg-indigo-700 focus:outline-none
+                        focus:ring-2 focus:ring-offset-2
+                        focus:ring-indigo-500" (click) ="onAssignListEmployee()" >
+                    Lưu
+                </button>
+            </div>
+        </div>
     </div>
 </mat-dialog-content>
 

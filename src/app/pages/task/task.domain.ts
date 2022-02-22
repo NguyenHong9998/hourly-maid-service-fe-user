@@ -1,34 +1,29 @@
 export class TaskListDomain {
     id: number;
-    position: number;
-    user_name: string;
-    user_avatar: string;
+    userName: string;
+    userAvatar: string;
     address: string;
-    type_address: string;
-    startDate: string;
-    status: string;
-    price: number;
+    workDate: string;
+    startTime: string;
+    endTime: string;
+    status : string;
 
     constructor(id: number,
-        position: number,
-        user_name: string,
-        user_avatar: string,
+        userName: string,
+        userAvatar: string,
         address: string,
-        type_address: string,
-        startDate: string,
-        price: number,
-        status: string,) {
-
+        workDate: string,
+        startTime: string,
+        endTime: string,
+        status : string) {
         this.id = id;
-        this.position = position;
-        this.user_name = user_name;
+        this.userAvatar = userAvatar;
+        this.userName = userName;
         this.address = address;
-        this.type_address = type_address;
-        this.startDate = startDate;
-        this.price = price;
+        this.workDate = workDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.status = status;
-        this.user_avatar = user_avatar;
-
     }
 
 }

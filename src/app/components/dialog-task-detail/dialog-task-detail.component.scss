@@ -1,3 +1,29 @@
 ::ng-deep .mat-dialog-content {
     max-width: 20cm;
 }
+
+#in {
+    background-color: rgb(232, 240, 254);
+}
+
+
+table {
+    width: 100%;
+}
+
+  
+.mat-cell {
+    padding: 0 12px;
+}
+.mat-header-cell{
+    padding: 0 12px;
+}
+.mat-column-filler {
+    padding: 0 12px;
+    text-align: center;
+}
+
+.mat-elevation-z8{
+     box-shadow : none;
+}
+

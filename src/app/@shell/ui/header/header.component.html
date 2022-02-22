@@ -8,55 +8,55 @@
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="/" aria-current="page" [ngClass]="(activeIndex ==1 )? 'bg-gray-900
+                            <a (click)="onClickHomePage()" aria-current="page" [ngClass]="(activeIndex ==1 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
                                 font-medium'" (click)="setActiveNumber(1)">Trang
                                 chủ</a>
-                            <a href="/employee/list" [ngClass]="(activeIndex ==2 )? 'bg-gray-900
+                            <a  (click) = "onClickEmployee()" [ngClass]="(activeIndex ==2 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(2)">Nhân
+                                font-medium'" >Nhân
                                 viên</a>
-                            <a href="/service/list" [ngClass]="(activeIndex == 3 )? 'bg-gray-900
+                            <a (click) = "onClickService()" [ngClass]="(activeIndex == 3 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(3)">Dịch
+                                font-medium'" >Dịch
                                 vụ</a>
-                            <a href="/discount/list" [ngClass]="(activeIndex == 4 )? 'bg-gray-900
+                            <a (click) = "onCLickDiscount()" [ngClass]="(activeIndex == 4 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(4)">Chương
+                                font-medium'" >Chương
                                 trình</a>
-                            <a href="/task/list" [ngClass]="(activeIndex == 5 )? 'bg-gray-900
+                            <a  (click) = "onCLickTask()" [ngClass]="(activeIndex == 5 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(5)">Công
+                                font-medium'" >Công
                                 việc</a>
-                            <a href="/calendar/list" [ngClass]="(activeIndex == 6 )? 'bg-gray-900
+                            <a (click) = "onClickLeaveDate()" [ngClass]="(activeIndex == 6 )? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(6)">Lịch
+                                font-medium'" >Lịch
                                 làm</a>
                             
-                            <a href="/notify/list" [ngClass]="(activeIndex == 7)? 'bg-gray-900
+                            <a (click) = "onClickNotify()" [ngClass]="(activeIndex == 7)? 'bg-gray-900
                                 text-white px-3 py-2
                                 rounded-md text-sm font-medium' : 'text-gray-300
                                 hover:bg-gray-700
                                 hover:text-white px-3 py-2 rounded-md text-sm
-                                font-medium'" (click)="setActiveNumber(7)">Thông
+                                font-medium'" >Thông
                                 báo</a>
                         </div>
                     </div>

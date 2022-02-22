@@ -1,0 +1,33 @@
+<div class="border-b-orange-600" id="title">
+    <h1 mat-dialog-title class="text-center">Hoàn thành công việc
+    </h1>
+</div>
+<div class="hidden sm:block pb-5" aria-hidden="true">
+    <div class="border-t border-gray-200"></div>
+</div>
+
+<div mat-dialog-content>
+    <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+        <div class="flex">
+            <mat-icon>info</mat-icon>
+            <p class="font-bold ml-2">Cảnh báo thay đổi</p>
+        </div>
+        <p class="text-sm pt-2">Trước khi đánh dấu công việc hoàn thành, hãy đảm bảo khách hàng đã thanh toán đủ tiền
+            cho nhân viên. </p>
+    </div>
+</div>
+
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+</div>
+<div mat-dialog-actions class="flex flex-row-reverse">
+    <button mat-raised-button color="accent" id="saveButton" (click)="onChangeStatus()">Thay đổi</button>
+
+    <button mat-button (click)="onNoClick()" class="bg-white
+            hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4
+            border
+            border-gray-400 rounded shadow">Thoát</button>
+
+</div>

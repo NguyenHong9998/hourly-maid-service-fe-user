@@ -128,7 +128,7 @@
                 leading-5 font-semibold rounded-full
                 bg-green-100 text-green-800' : 'px-2 inline-flex text-xs
                 leading-5 font-semibold rounded-full
-                bg-red-200 text-green-800' }}">
+                bg-red-200 text-green-800' }}" (click) = "openChangeStatusDiscount(element.id, element.status, element.startDate, element.endDate)">
                 {{element.status}}
             </span>
         </td>
@@ -152,7 +152,7 @@
             <button
                 mat-icon-button
                 (click)="openDialogEditDiscounrService(element.id,
-                element.name)">
+                element.name, element.status)">
                 <mat-icon class="white-icon">edit</mat-icon>
             </button>
 
