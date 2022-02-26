@@ -169,6 +169,7 @@ export class NotifyComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogEditNotifyComponent, { data });
 
         dialogRef.afterClosed().subscribe(() => {
+            this.getListNotify();
         });
 
     }

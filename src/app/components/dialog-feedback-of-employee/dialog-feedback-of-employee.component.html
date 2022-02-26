@@ -32,28 +32,21 @@
     <div class="w-full px-4 pb-4">
         <h3 class="font-medium tracking-tight">Góp ý nhân viên</h3>
         <div *ngIf="feedback?.length">
-            <div *ngFor="let item of feedback">
-                <div class="flex">
-                    <div class="w-12 h-12 mt-1">
-                        <img class="inline object-cover w-full h-full rounded-full" src="item.avatarUser"
-                            alt="Profile image" />
+            <div class="my-10">
+                <div class="flex text-sm  space-x-4" *ngFor="let item of feedback">
+                    <div class="flex-none py-5">
+                        <img [src]="item.avatarUser" alt="" class="w-10 h-10 bg-gray-100 rounded-full">
                     </div>
-                    <div class="ml-3 flex-1">
-                        <div class="flex">
-                            <span>{{item.username}}</span>
-                            <div class="ml-40" *ngFor="let star of stars">
-                                <mat-icon class="star" *ngIf="stars.indexOf(star) < item.voteNum">star</mat-icon>
-                                <mat-icon class="star" *ngIf="stars.indexOf(star) >= item.voteNum">star</mat-icon>
-
-                            </div>
+                    <div class="flex-1 py-5">
+                        <h5 class="font-medium text-gray-900">{{item.username}}</h5>
+                        <p><time datetime="2021-07-16" class="text-gray-500">{{item.createDate}}</time></p>
+                        <div class="flex items-center space-x-5">
+                            <app-star-rating [rating]="item.voteNum" [starCount]="starCount"></app-star-rating>
                         </div>
-                        <div>
-                            <p class="py-1 text-sm text-gray-700">{{item.content}}</p>
+                        <div class="mt-4 prose prose-sm max-w-none ">
+                            <p>{{item.content}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="hidden sm:block pt-1" aria-hidden="true">
-                    <div class="border-t border-gray-200"></div>
                 </div>
             </div>
         </div>

@@ -24,6 +24,11 @@ export class TokenStorageService {
 
   }
 
+  public saveRoleLocal(role : any){
+    localStorage.removeItem(StorageItem.Role);
+    localStorage.setItem(StorageItem.Role, role);
+  }
+
   public saveTokenSession(token: string) {
     sessionStorage.removeItem(StorageItem.Auth);
     sessionStorage.setItem(StorageItem.Auth, token);

@@ -36,10 +36,13 @@ export class SignInPage {
 
   oncLickSignIn() {
     this.authService.login(this.loginForm.value).subscribe(
-      data => {
+      (data : any) => {
+        console.log(data);
         if (this.loginForm.value.remember_me) {
+          
           this.tokenStorageService.saveTokenLocal(data.data.access_token);
           this.tokenStorageService.saveUserLocal(data.data);
+          this.tokenStorageService.saveRoleLocal(data.data.roles[0].name)
         } else {
           this.tokenStorageService.saveTokenSession(data.data.access_token);
           this.tokenStorageService.saveUserLocal(data.data);
@@ -49,9 +52,14 @@ export class SignInPage {
         this.username = this.tokenStorageService.getUser().username;
         this.roles = this.tokenStorageService.getUser().roles;
         this.loginForm.reset();
-        this.customSnackbarService.success("Đăng nhập thành công")
-        this.router.navigateByUrl(this.returnUrl);
-        this.shareService.sendClickEvent();
+        if(data.data.roles[0].name == 'USER'){
+          this.customSnackbarService.warning("Email hoặc mật khẩu không đúng")
+        }else{
+          this.customSnackbarService.success("Đăng nhập thành công")
+          this.router.navigateByUrl(this.returnUrl);
+          this.shareService.sendClickEvent();
+        }
+       
       },
     );
 

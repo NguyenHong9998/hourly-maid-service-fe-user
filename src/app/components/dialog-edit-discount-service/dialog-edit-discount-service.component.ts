@@ -47,7 +47,6 @@ export class DialogEditDiscountServiceComponent implements OnInit {
 
     this.getListService();
 
-    this.getDiscountInform();
   }
 
   onNoClick(): void {
@@ -166,11 +165,12 @@ export class DialogEditDiscountServiceComponent implements OnInit {
         const name = data[i].name;
         const banner = data[i].banner;
         const domain = new ListSelectServiceDomain(id, name, banner, false);
-
         result.push(domain);
       }
       this.services = result;
+      this.getDiscountInform();
     }
+
   }
 
   getDiscountInform() {
