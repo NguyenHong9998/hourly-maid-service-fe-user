@@ -42,26 +42,27 @@ export class DialogListEmployeeServiceComponent implements OnInit {
   }
 
   sortData(sort: Sort) {
-    
+
     this.sortObj = sort;
     this.getListItemsEmloyeeServices();
 
   }
 
   getListItemsEmloyeeServices() {
-    const employee = Array<EmployeeService>();
+    const employee = new Array<EmployeeService>();
     let params = new HttpParams()
       .set('column_sort', this.sortObj && this.sortObj.direction ? this.sortObj.active.toUpperCase() : '')
       .set('type_sort', this.sortObj ? this.sortObj.direction.toUpperCase() : '');
     this.http.get(environment.apiUrl + "/service/" + this.data.serviceId + "/employee", { params: params }).subscribe(data => {
       const list = (data as any).data;
       for (let i = 0; i < list.length; i++) {
-        const avatar = list[i].userAvatar;
-        const name = list[i].userName;
+        const avatar = list[i].user_avatar;
+        const name = list[i].user_name;
         const level = list[i].level;
 
         employee.push(new EmployeeService(avatar, name, level));
       }
+      this.employeeList = employee;
 
       this.dataSource = new MatTableDataSource<EmployeeService>(this.employeeList);
     })

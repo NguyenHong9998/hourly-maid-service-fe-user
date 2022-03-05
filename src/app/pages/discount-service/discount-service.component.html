@@ -22,13 +22,13 @@
             <mat-icon>playlist_add</mat-icon>
         </button>
 
-        <button
+        <!-- <button
             matTooltip="Xóa dịch vụ"
             [disabled]="!selection.hasValue()"
             mat-stroked-button
             id="deleteButton"
             class="btn-white btn-square bg-white ml-3.5">
-            <mat-icon>delete_outline</mat-icon> </button>
+            <mat-icon>delete_outline</mat-icon> </button> -->
     </div>
     <div class="flex justify-center h-2/4">
         <div class="flex border-2 rounded">
@@ -53,7 +53,7 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
     (matSortChange)="sortData($event)">
 
-    <ng-container matColumnDef="select">
+    <!-- <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? masterToggle() : null"
                 [checked]="selection.hasValue() && isAllSelected()"
@@ -66,7 +66,7 @@
                 [checked]="selection.isSelected(row)">
             </mat-checkbox>
         </td>
-    </ng-container>
+    </ng-container> -->
 
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left

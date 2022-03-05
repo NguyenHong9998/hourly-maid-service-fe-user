@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="px-4 py-1 bg-gray-50 text-right sm:px-6 flex ">
+                <!-- <div class="px-4 py-1 bg-gray-50 text-right sm:px-6 flex ">
 
                     <button type="submit" class="inline-flex
                         justify-center py-1 px-4 border
@@ -79,7 +79,7 @@
                         focus:ring-indigo-500">
                         Lưu
                     </button>
-                </div>
+                </div> -->
             </div>
         </form>
 
@@ -107,13 +107,13 @@
                             </div>
                         </div>
 
-                        <div class="pl-10">
+                        <!-- <div class="pl-10">
                             <label class="block text-sm font-bold pb-3">Số lượng nhân viên</label>
                             <input [(ngModel)]="numberOfemployee" name="numberOfemployee" type="number" id="in" class="w-full px-4 py-2 text-sm border
                                             rounded-md focus:border-blue-400
                                             focus:outline-none focus:ring-1
                                             focus:ring-blue-600" disabled>
-                        </div>
+                        </div> -->
                     </div>
                     <label for="phone" class="block text-sm
                     font-bold ">Thời giam làm việc</label>
@@ -188,7 +188,7 @@
                 </table>
             </div>
 
-            <div class="bg-white px-4 py-5 sm:grid
+            <!-- <div class="bg-white px-4 py-5 sm:grid
                                             sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium">
                     Tổng số nhân viên: {{numberOfemployee}}
@@ -196,7 +196,7 @@
                 <dd>
                     <span>Tổng cộng: </span> <strong class="font-bold">{{getTotalMoney()}} (VNĐ)</strong>
                 </dd>
-            </div>
+            </div> -->
 
         </div>
 
@@ -210,7 +210,7 @@
                 font-bold  pb-3">Nhân viên thực hiện</label>
                 <mat-form-field>
                     <mat-select placeholder="Nhân viên" [formControl]="employee" [(value)]="selectedEmployee" multiple >
-                        <mat-option *ngFor="let topping of employeeList" [value]="topping" [disabled]="isOptionDisabled(topping)">{{topping.employeeName}} 
+                        <mat-option *ngFor="let topping of employeeList" [value]="topping" [disabled]="isOptionDisabled(topping)" >{{topping.employeeName}} 
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

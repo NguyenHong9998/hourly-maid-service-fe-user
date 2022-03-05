@@ -26,6 +26,7 @@ import { DialogChangeStatusDiscountComponent } from './dialog-change-status-disc
 import { DialogCancelTaskComponent } from './dialog-cancel-task/dialog-cancel-task.component';
 import { DialogDoneTaskComponent } from './dialog-done-task/dialog-done-task.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
+import { DialogChangeStatusServiceComponent } from './dialog-change-status-service/dialog-change-status-service.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
         DialogCancelTaskComponent,
         DialogDoneTaskComponent,
         StarRatingComponent,
+        DialogChangeStatusServiceComponent,
     ],
     imports: [
         MatSnackBarModule,
