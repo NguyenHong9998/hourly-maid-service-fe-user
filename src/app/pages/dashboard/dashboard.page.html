@@ -221,7 +221,7 @@
         <div class="pt-5
          box-content f-d-col">
           <h4>Nhân viên có mức đánh giá cao nhất</h4>
-          <div class="grid grid-cols-2 gap-5" *ngIf="max_user.avatar">
+          <div class="grid grid-cols-2 gap-5" *ngIf="max_user?.avatar">
             <div class="flex items-center">
               <div class="flex-shrink-0 h-10 w-10">
                 <img class="h-10 w-10 rounded-full" [src]="max_user?.avatar" alt="">
@@ -244,7 +244,7 @@
       <div class="box box-1 bg-white pl-5">
         <div class="pt-5 box-content f-d-col">
           <h4>Nhân viên có mức đánh giá thấp nhất</h4>
-          <div class="grid grid-cols-2 gap-5" *ngIf="min_user.avatar">
+          <div class="grid grid-cols-2 gap-5" *ngIf="min_user?.avatar">
             <div class="flex items-center">
               <div class="flex-shrink-0 h-10 w-10">
                 <img class="h-10 w-10 rounded-full" [src]="min_user?.avatar" alt="">
@@ -285,7 +285,7 @@
                 </mat-form-field>
 
                 <div class="pt-2 pl-5">
-                  <button
+                  <button (click) = "getUserOverviewDetail()"
                     class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                     Xác nhận
                   </button>
