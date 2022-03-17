@@ -5,8 +5,10 @@
   "scripts": {
     "postinstall": "npx husky install",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
+    "start-dev": "ng serve",
     "build": "ng build",
+    "heroku-postbuild": "ng build --prod",
     "build:stats": "ng build --stats-json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
