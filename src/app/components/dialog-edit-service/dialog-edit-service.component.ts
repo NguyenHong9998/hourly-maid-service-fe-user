@@ -72,18 +72,39 @@ export class DialogEditServiceComponent implements OnInit {
     })
   }
   onEditService() {
-    const data = {
-      name: this.serviceForm.get('name')?.value,
-      note: this.serviceForm.get('note')?.value,
-      price: this.serviceForm.get('price')?.value,
-      advantage : this.serviceForm.get('advantage')?.value,
-      introduces : this.serviceForm.get('introduce')?.value,
-      banner: this.banner
+    const formData = new FormData();
+    formData.append('file', this.file);
+
+    if (!(this.banner as string).startsWith('http')) {
+      this.http.post(environment.apiUrl + "/cloud/upload-avatar", formData).subscribe(data => {
+        this.banner = (data as any).data;
+        let body = {
+          name: this.serviceForm.get('name')?.value,
+          note: this.serviceForm.get('note')?.value,
+          price: this.serviceForm.get('price')?.value,
+          advantage : this.serviceForm.get('advantage')?.value,
+          introduces : this.serviceForm.get('introduce')?.value,
+          banner: this.banner
+        }
+        this.http.put(environment.apiUrl + "/service/" + this.data.serviceId, body).subscribe(data => {
+          this.customSnackbarService.success("Cập nhật thành công")
+          this.dialogRef.close();
+        })
+      })
+    } else {
+      const data = {
+        name: this.serviceForm.get('name')?.value,
+        note: this.serviceForm.get('note')?.value,
+        price: this.serviceForm.get('price')?.value,
+        advantage : this.serviceForm.get('advantage')?.value,
+        introduces : this.serviceForm.get('introduce')?.value,
+        banner: this.banner
+      }
+      this.http.put(environment.apiUrl + "/service/" + this.data.serviceId, data).subscribe(data => {
+        this.customSnackbarService.success("Cập nhật thành công")
+        this.dialogRef.close();
+      })
     }
-    this.http.put(environment.apiUrl + "/service/" + this.data.serviceId, data).subscribe(data => {
-      this.customSnackbarService.success("Cập nhật thành công")
-      this.dialogRef.close();
-    })
 
   }
 }
