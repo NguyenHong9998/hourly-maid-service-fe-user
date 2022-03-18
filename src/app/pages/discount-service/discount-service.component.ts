@@ -146,8 +146,8 @@ export class DiscountServiceComponent implements OnInit {
         });
     }
 
-    openDialogEditDiscounrService(discountId: string, discountName: string, numberService : string) {
-        const data = { discountId, discountName , numberService};
+    openDialogEditDiscounrService(discountId: string, discountName: string, numberService : string, status : string) {
+        const data = { discountId, discountName , numberService, status};
         const dialogRef = this.dialog.open(DialogEditDiscountServiceComponent, { data });
 
         dialogRef.afterClosed().subscribe(() => {

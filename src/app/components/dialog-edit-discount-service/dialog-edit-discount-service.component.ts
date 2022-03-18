@@ -29,12 +29,14 @@ export class DialogEditDiscountServiceComponent implements OnInit {
     start: new FormControl(new Date()),
     end: new FormControl(new Date())
   })
-  status !: boolean;
+  status : boolean = false;
 
 
   constructor(public dialogRef: MatDialogRef<DialogEditDiscountServiceComponent>,
     private formBuilder: FormBuilder, public http: HttpClient, @Inject(MAT_DIALOG_DATA) public data: any, public customSnackbarService: CustomSnackbarService) {
-      this.status = data.numberService > 0;
+      console.log(data.status);
+      this.status = data.numberService > 0 ? true : false;
+      console.log("xxxx: " +this.status);
   }
 
   ngOnInit(): void {
