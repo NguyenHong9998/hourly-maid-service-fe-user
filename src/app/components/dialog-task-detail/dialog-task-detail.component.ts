@@ -10,6 +10,17 @@ import { environment } from '@env/environment';
 import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 import { format } from 'date-fns';
 
+export class TaskProgress {
+  status: string;
+  time: string;
+  index: number;
+
+  constructor(index: number, status: string, time: string) {
+    this.status = status;
+    this.time = time;
+    this.index = index;
+  }
+}
 export class Employee {
   id !: number;
   employeeAvatar !: string;
@@ -67,6 +78,7 @@ export class DialogTaskDetailComponent implements OnInit {
   selectedEmployee!: Employee;
   totalMoney !: number;
   displayedColumns: string[] = ['service', 'service_price', 'hours', 'discount', 'percent', 'price'];
+  progress !: Array<any>;
 
   status !: string;
   constructor(public dialogRef: MatDialogRef<DialogTaskDetailComponent>,
@@ -156,7 +168,13 @@ export class DialogTaskDetailComponent implements OnInit {
       this.selectedEmployee = employeesList[0];
 
       this.getListEmployee();
-
+      const progressList = new Array<TaskProgress>();
+      for (let i = 0; i < data.data.progress.length; i++) {
+        const status = data.data.progress[i].status;
+        const time = data.data.progress[i].time;
+        progressList.push(new TaskProgress(i, status, time == null ? "" : time));
+      }
+      this.progress = progressList;
     })
   }
 
