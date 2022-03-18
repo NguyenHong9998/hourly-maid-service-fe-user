@@ -6,13 +6,14 @@
     <div class="border-t border-gray-200"></div>
 </div>
 <div *ngIf="isLoading">
-    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-arrow-clockwise animate-spin w-24 h-24" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-      </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-clockwise animate-spin w-24 h-24"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+    </svg>
 </div>
 <mat-dialog-content class="mat-typography" *ngIf="!isLoading">
-    <div class="border-t border-gray-200  py-5" >
+    <div class="border-t border-gray-200  py-5">
         <form>
             <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -208,26 +209,91 @@
             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                 <label for="phone" class="block text-sm
                 font-bold  pb-3">Nhân viên thực hiện</label>
-                <mat-form-field>
-                    <mat-select placeholder="Nhân viên" [formControl]="employee" [(value)]="selectedEmployee" multiple >
-                        <mat-option *ngFor="let topping of employeeList" [value]="topping" [disabled]="isOptionDisabled(topping)" >{{topping.employeeName}} 
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <div class="grid grid-cols-2 gap-5">
-                    <div *ngFor="let item of selectedEmployee">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 h-10 w-10">
-                                <img class="h-10 w-10 rounded-full" [src]="item.employeeAvatar" alt="">
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium
-                                text-gray-900">
-                                    {{item.employeeName}}
+
+                <button [matMenuTriggerFor]="employeeMenu" #menuTrigger="matMenuTrigger"
+                    (click)="menuTrigger.openMenu()" (mouseenter)="menuTrigger.openMenu()"
+                    class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    Chọn nhân viên
+                </button>
+                <mat-menu #employeeMenu="matMenu" yPosition="above" [overlapTrigger]="true">
+                    <span>
+                        <div class="flow-root px-3 ">
+                            <div class="grid grid-cols-3 gap-8">
+                                <div class=" flex items-center">
+                                    <span>Nhân viên</span>
+                                </div>
+                                <div class=" flex items-center ml-6">
+                                    <span>Mức kinh nghiệm</span>
+                                </div>
+                                <div class="justify-items-center">
+                                    <span>Số công việc</span>
                                 </div>
                             </div>
                         </div>
+                    </span>
+                    <div class="pt-3" *ngFor="let item of employeeList">
+                        <span>
+                            <button (click)="assignValue(item)" [disabled]="selectedEmployee && item.id == selectedEmployee.id">
+                                <div
+                                    class="{{selectedEmployee && item.id == selectedEmployee.id ? 'flow-root px-3 bg-gray-100' : 'flow-root px-3' }}">
+                                    <div class="grid grid-cols-3 gap-8">
+                                        <div class="mt-1 flex items-center">
+                                            <img [src]="item.employeeAvatar" alt="Emily Selman."
+                                                class="h-12 w-12 rounded-full">
+                                            <div class="ml-4 mt-3">
+                                                <h4 class="text-sm font-bold text-gray-900">{{item.employeeName}}</h4>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="flex items-center space-x-3">
+                                            <app-star-rating [rating]="item.numStar" [starCount]="5"></app-star-rating>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <div class="ml-10"><span>{{item.numTask}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        </span>
                     </div>
+                </mat-menu>
+                <div *ngIf="selectedEmployee">
+                    <span>
+                        <div class="flow-root px-3 ">
+                            <div class="grid grid-cols-2 gap-8">
+                                <div class=" flex items-center">
+                                    <span>Nhân viên</span>
+                                </div>
+                                <div class=" flex items-center ml-6">
+                                    <span>Mức kinh nghiệm</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </span>
+                    <div class="pt-3">
+                        <span>
+                            <div class="flow-root px-3 ">
+                                <div class="grid grid-cols-2 gap-8">
+                                    <div class="mt-1 flex items-center">
+                                        <img [src]="selectedEmployee.employeeAvatar" alt="Emily Selman."
+                                            class="h-12 w-12 rounded-full">
+                                        <div class="ml-4 mt-3">
+                                            <h4 class="text-sm font-bold text-gray-900">
+                                                {{selectedEmployee.employeeName}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3 ml-7">
+                                        <app-star-rating [rating]="selectedEmployee.numStar" [starCount]="5">
+                                        </app-star-rating>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+
                 </div>
             </div>
             <div class="px-4 py-1 bg-gray-50 text-right sm:px-6 flex ">
@@ -237,7 +303,7 @@
                         rounded-md text-white bg-indigo-600
                         hover:bg-indigo-700 focus:outline-none
                         focus:ring-2 focus:ring-offset-2
-                        focus:ring-indigo-500" (click) ="onAssignListEmployee()" >
+                        focus:ring-indigo-500" (click)="onAssignListEmployee()">
                     Lưu
                 </button>
             </div>

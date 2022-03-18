@@ -10,6 +10,7 @@ import { DialogChangeStatusDiscountComponent } from '@components/dialog-change-s
 import { DialogCreateDiscountServiceComponent } from '@components/dialog-create-discount-service/dialog-create-discount-service.component';
 import { DialogEditDiscountServiceComponent } from '@components/dialog-edit-discount-service/dialog-edit-discount-service.component';
 import { environment } from '@env/environment';
+import { CustomSnackbarService } from '@pages/auth/services/custom-snackbar.service';
 import { DiscountServiceListDomain } from './discount-service.domain';
 
 @Component({
@@ -18,7 +19,7 @@ import { DiscountServiceListDomain } from './discount-service.domain';
     styleUrls: ['./discount-service.component.scss'],
 })
 export class DiscountServiceComponent implements OnInit {
-    displayedColumns: string[] = ['name', 'start', 'end', 'status', 'num_service', 'detail'];
+    displayedColumns: string[] = ['select','name', 'start', 'end', 'status', 'num_service', 'detail'];
     selection = new SelectionModel<any>(true, []);
 
     @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -36,7 +37,7 @@ export class DiscountServiceComponent implements OnInit {
     offset !: number;
 
     pageSize = this.arrayPageSize[0];
-    constructor(private dialog: MatDialog, public http: HttpClient) {
+    constructor(private dialog: MatDialog, public http: HttpClient, public customSnackbarService : CustomSnackbarService) {
     }
 
     ngOnInit(): void {
@@ -124,7 +125,7 @@ export class DiscountServiceComponent implements OnInit {
 
     isAllSelected() {
         const numSelected = this.selection.selected.length;
-        const numRows = this.dataSource.data.length;
+        const numRows = this.dataSource.data.filter(x => x.numberService == 0).length;
         return numSelected === numRows;
     }
 
@@ -134,7 +135,7 @@ export class DiscountServiceComponent implements OnInit {
             return;
         }
 
-        this.selection.select(...this.dataSource.data);
+        this.selection.select(...this.dataSource.data.filter(x => x.numberService == 0));
     }
 
     openDialogCreateDiscountService() {
@@ -145,8 +146,8 @@ export class DiscountServiceComponent implements OnInit {
         });
     }
 
-    openDialogEditDiscounrService(discountId: string, discountName: string, discountStatus : string) {
-        const data = { discountId, discountName };
+    openDialogEditDiscounrService(discountId: string, discountName: string, numberService : string) {
+        const data = { discountId, discountName , numberService};
         const dialogRef = this.dialog.open(DialogEditDiscountServiceComponent, { data });
 
         dialogRef.afterClosed().subscribe(() => {
@@ -174,5 +175,17 @@ export class DiscountServiceComponent implements OnInit {
                 }
             })
         }
+    }
+
+    deleteDiscount(){
+        const body = {
+            ids: this.selection.selected.map((item) => item.id)
+        };
+        this.http.post(environment.apiUrl + "/discount/delete", body).subscribe(data => {
+            this.customSnackbarService.success("Xoá chương trình ưu đãi thành công");
+            this.selection.clear();
+            this.getDiscountServices();
+        }
+        )
     }
 }

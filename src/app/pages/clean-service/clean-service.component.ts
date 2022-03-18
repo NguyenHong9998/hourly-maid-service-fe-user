@@ -83,7 +83,7 @@ export class CleanServiceComponent implements OnInit {
         const id = data[i].id;
         const position = i;
         const name = data[i].name;
-        const note = data[i].note;
+        const note = data[i].note.length >=50 ? data[i].note.substring(0, 49) + "..." : data[i].note;
         const banner = data[i].banner;
         const price = data[i].price;
         const createDate = data[i].create_date;
@@ -192,4 +192,5 @@ export class CleanServiceComponent implements OnInit {
       this.getListService();
     })
   }
+
 }

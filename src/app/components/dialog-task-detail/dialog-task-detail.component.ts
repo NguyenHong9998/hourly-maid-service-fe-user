@@ -16,17 +16,21 @@ export class Employee {
   employeeName !: string;
   employeeEmail !: string;
   employeePhone !: string;
+  numStar !: number;
+  numTask !: number;
 
   constructor(id: number,
     employeeAvatar: string,
     employeeName: string,
     employeeEmail: string,
-    employeePhone: string) {
+    employeePhone: string, numStar: number, numTask: number) {
     this.id = id;
     this.employeeAvatar = employeeAvatar;
     this.employeeName = employeeName;
     this.employeeEmail = employeeEmail;
     this.employeePhone = employeePhone;
+    this.numStar = numStar;
+    this.numTask = numTask;
   }
 
 
@@ -60,7 +64,7 @@ export class DialogTaskDetailComponent implements OnInit {
   priceList: Array<PriceList> = [];
   numberOfemployee: number = 1;
   employeeList: Array<Employee> = [];
-  selectedEmployee: any = [];
+  selectedEmployee!: Employee;
   totalMoney !: number;
   displayedColumns: string[] = ['service', 'service_price', 'hours', 'discount', 'percent', 'price'];
 
@@ -145,9 +149,11 @@ export class DialogTaskDetailComponent implements OnInit {
         const employeeName = list[i].full_name;
         const employeeEmail = list[i].email;
         const employeePhone = list[i].phone;
-        employeesList.push(new Employee(id, employeeAvatar, employeeName, employeeEmail, employeePhone))
+        const numStar = list[i].num_star;
+        const numTask = list[i].num_task;
+        employeesList.push(new Employee(id, employeeAvatar, employeeName, employeeEmail, employeePhone, numStar, numTask))
       }
-      this.selectedEmployee = employeesList;
+      this.selectedEmployee = employeesList[0];
 
       this.getListEmployee();
 
@@ -177,21 +183,25 @@ export class DialogTaskDetailComponent implements OnInit {
         const employeeName = list[i].full_name;
         const employeeEmail = list[i].email;
         const employeePhone = list[i].phone;
-        employeesList.push(new Employee(id, employeeAvatar, employeeName, employeeEmail, employeePhone))
+        const numStar = list[i].num_star;
+        const numTask = list[i].num_task;
+        employeesList.push(new Employee(id, employeeAvatar, employeeName, employeeEmail, employeePhone, numStar, numTask))
       }
       this.employeeList = employeesList;
       console.log(this.employeeList);
     })
   }
 
-  isOptionDisabled(opt: any) {
-    return this.selectedEmployee.length >= 1 && !this.selectedEmployee.find((el: any) => el.id == opt.id)
-  }
+  // isOptionDisabled(opt: any) {
+  //   return this.selectedEmployee.length >= 1 && !this.selectedEmployee.find((el: any) => el.id == opt.id)
+  // }
 
   onAssignListEmployee() {
-    const employeeIds = this.selectedEmployee.map((x: any) => x.id);
+    const employeeIds = this.selectedEmployee.id;
+    var array = [];
+    array.push(employeeIds);
     const body = {
-      ids: employeeIds,
+      ids: array,
       task_id: this.data.taskId
     }
     this.http.put(environment.apiUrl + "/task/assign", body).subscribe((data: any) => {
@@ -210,5 +220,9 @@ export class DialogTaskDetailComponent implements OnInit {
     })
   }
 
-
+  assignValue(item: any) {
+    console.log(item);
+    this.selectedEmployee =item;
+    
+  }
 }

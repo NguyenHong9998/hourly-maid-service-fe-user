@@ -56,7 +56,7 @@ export class DialogCreateTaskComponent implements OnInit {
   priceList: Array<PriceList> = [];
   numberOfemployee: number = 1;
 
-  availableEmployee: boolean = false;
+  availableEmployee: boolean = true;
 
   totalMoney !: number;
 
@@ -181,9 +181,13 @@ export class DialogCreateTaskComponent implements OnInit {
     this.http.get(environment.apiUrl + "/client/check", { params: params }).subscribe((data: any) => {
       if (!data.data) {
         this.isExistClient = false;
+        this.customerName = '';
+        this.customerPhone = '';
         this.disableNext = true;
       } else {
         this.isExistClient = true;
+        this.customerName = data.data.full_name;
+        this.customerPhone = data.data.phone;
         this.disableNext = false;
       }
     })
@@ -196,27 +200,25 @@ export class DialogCreateTaskComponent implements OnInit {
   }
 
   onChangeEnd() {
-    const start = format(new Date(), "yyyy-MM-dd") + " " + this.startTime + ":00";
-    const end = format(new Date(), "yyyy-MM-dd") + " " + this.endTime + ":00";
+    const start = format(this.date.value, "yyyy-MM-dd") + " " + this.startTime + ":00";
+    const end = format(this.date.value, "yyyy-MM-dd") + " " + this.endTime + ":00";
     const newDate = format(new Date(), "yyyy-MM-dd") + " 00:00:00";
-    console.log(new Date(start).getTime() - new Date(newDate).getTime() <= 360000)
-    console.log(new Date(end).getTime() - new Date(start).getTime() <= 360000)
     if (new Date(start).getTime() - new Date(newDate).getTime() >= 360000 && new Date(end).getTime() - new Date(start).getTime() >= 360000) {
       this.validTime = false;
     } else {
       this.validTime = true;
     }
-
   }
 
   isOptionDisabled(opt: any) {
     return this.selectedService.length >= 1 && !this.selectedService.find((el: any) => el.id == opt.id)
   }
 
-  onChange(event: any) {
+  onChange() {
+    this.onChangeEnd();
     const start = format(this.date.value, "yyyy-MM-dd") + " " + this.startTime + ":00";
     const end = format(this.date.value, "yyyy-MM-dd") + " " + this.endTime + ":00";
-    const serviceId = event.value.id;
+    const serviceId = this.selectedService[0].id;
     let params = new HttpParams()
       .set('start_time', start)
       .set('end_time', end)
@@ -266,8 +268,8 @@ export class DialogCreateTaskComponent implements OnInit {
   }
 
   onCreateTask() {
-    const start = format(new Date(), "yyyy-MM-dd") + " " + this.startTime + ":00";
-    const end = format(new Date(), "yyyy-MM-dd") + " " + this.endTime + ":00";
+    const start = format(this.date.value, "yyyy-MM-dd") + " " + this.startTime + ":00";
+    const end = format(this.date.value, "yyyy-MM-dd") + " " + this.endTime + ":00";
     const serviceIds = this.selectedService.map((x: any) => x.id);
     const body = {
       email: this.email,
@@ -277,7 +279,8 @@ export class DialogCreateTaskComponent implements OnInit {
       service_id: serviceIds,
       start_time: start,
       end_time: end,
-      num_of_employee: this.numberOfemployee
+      num_of_employee: this.numberOfemployee,
+      note : this.note
     }
     this.http.post(environment.apiUrl + "/task", body).subscribe((data) => {
       this.snackbar.success("Tạo mới thành công");

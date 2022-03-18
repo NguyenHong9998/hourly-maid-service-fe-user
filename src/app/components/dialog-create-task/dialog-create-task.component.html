@@ -94,7 +94,7 @@
                                 <div>
                                     <mat-form-field class="example-full-width" appearance="fill">
                                         <mat-label>Ngày làm</mat-label>
-                                        <input matInput [matDatepicker]="picker" [formControl]="date" [min]="minDate">
+                                        <input matInput [matDatepicker]="picker" [formControl]="date" [min]="minDate" (dateChange)="onChange()">
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
                                 </div>
@@ -123,14 +123,14 @@
                                     đầu</span>
                                 <div class="md-form">
                                     <input type="time" id="input" class="form-control" mdbInput [(ngModel)]="startTime"
-                                        name="startTime" (change)="onChangeEnd()" />
+                                        name="startTime" (change)="onChange()" />
                                 </div>
                             </div>
                             <div class="text-center">
                                 <span>Thời gian kết thúc</span>
                                 <div class="md-form">
                                     <input type="time" id="input" class="form-control" mdbInput [(ngModel)]="endTime"
-                                        name="endTime" (change)="onChangeEnd()" />
+                                        name="endTime" (change)="onChange()" />
                                 </div>
                             </div>
                         </div>
@@ -145,22 +145,24 @@
 
                     </div>
 
-                    <div class="pt-7">
-                        <label for="phone" class="block text-sm
+                    <div class="pt-7 grid grid-cols-2 gap-5">
+                        <div>
+                            <label for="phone" class="block text-sm
                             font-bold  pb-3">Chọn dịch vụ</label>
-                        <mat-form-field>
-                            <mat-select placeholder="Dịch vụ" [formControl]="service" [(value)]="selectedService"
-                                (selectionChange)="onChange($event)" multiple>
-                                <mat-option *ngFor="let topping of serviceList" [value]="topping"
-                                    [disabled]="isOptionDisabled(topping)">{{topping.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <div class="grid grid-cols-2 gap-5">
+                            <mat-form-field>
+                                <mat-select placeholder="Dịch vụ" [formControl]="service" [(value)]="selectedService"
+                                    (selectionChange)="onChange()" multiple>
+                                    <mat-option *ngFor="let topping of serviceList" [value]="topping"
+                                        [disabled]="isOptionDisabled(topping)">{{topping.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="pt-10">
                             <div *ngFor="let item of selectedService">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <img class="h-10 w-10 rounded-full" [src]="item.banner" alt="">
+                                        <img class="h-10 w-10 " [src]="item.banner" alt="">
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium
@@ -176,9 +178,8 @@
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert"
                         *ngIf="!selectedService?.length">
                         <span class="block sm:inline text-xs"> Hãy chọn ít nhất một dịch vụ</span>
-
                     </div>
-                    <div class="rounded-md bg-yellow-50 p-4" *ngIf="availableEmployee">
+                    <div class="rounded-md bg-yellow-50 p-4" *ngIf="!availableEmployee">
                         <div class="flex">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg"
@@ -190,12 +191,11 @@
                             </div>
                             <div class="ml-3">
                                 <h3 class="text-sm font-medium text-yellow-800">
-                                    Attention needed
+                                    Không tìm thấy nhân viên
                                 </h3>
-                                <div class="mt-2 text-sm text-yellow-700">
+                                <div class="text-sm text-yellow-700">
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum
-                                        similique veniam quo totam eius aperiam dolorum.
+                                        Không có nhân viên nào phù hợp với dịch vụ và thời gian đã chọn.
                                     </p>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
 
                 <div class="pt-10">
                     <button class="w-full h-full" mat-raised-button color="primary" (click)="onNext()"
-                        [disabled]="disableNext || !selectedService?.length || validTime">Tiếp tục </button>
+                        [disabled]="disableNext || !selectedService?.length || validTime || !availableEmployee">Tiếp tục </button>
                 </div>
             </mat-step>
             <mat-step>

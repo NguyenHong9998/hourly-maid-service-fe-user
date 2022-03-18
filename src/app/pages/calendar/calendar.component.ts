@@ -148,7 +148,7 @@ export class CalendarsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.getListLeaveDate();
       this.getListDateHasLeaveDate();
-
+      window.location.reload();
     });
   }
 
@@ -192,6 +192,7 @@ export class CalendarsComponent implements OnInit {
       this.selection.clear();
       this.getListDateHasLeaveDate();
       this.getListLeaveDate();
+      window.location.reload();
     })
   }
 
