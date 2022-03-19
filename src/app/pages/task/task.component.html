@@ -68,7 +68,7 @@
                 </th>
                 <td mat-cell *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
+                        [checked]="selection.isSelected(row)" [disabled] = "row.status == 'Đã tạo' || row.status =='Đã giao NV'">
                     </mat-checkbox>
                 </td>
             </ng-container>

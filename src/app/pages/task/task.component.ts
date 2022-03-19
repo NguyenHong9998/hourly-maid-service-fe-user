@@ -85,7 +85,7 @@ export class TaskComponent implements OnInit {
 
     isAllSelected() {
         const numSelected = this.selection.selected.length;
-        const numRows = this.dataSource.data.length;
+        const numRows = this.dataSource.data.filter(x => x.status == 'Đã huỷ' || x.status == 'Hoàn thành').length;
         return numSelected === numRows;
     }
 
@@ -95,7 +95,7 @@ export class TaskComponent implements OnInit {
             return;
         }
 
-        this.selection.select(...this.dataSource.data);
+        this.selection.select(...this.dataSource.data.filter(x => x.status == 'Đã huỷ' || x.status == 'Hoàn thành'));
     }
 
     openDialogCreateTask() {
@@ -135,7 +135,15 @@ export class TaskComponent implements OnInit {
         this.paginator.pageIndex = 0;
     }
     deleteTask() {
-
+        const body = {
+            ids: this.selection.selected.map((item) => item.id)
+        };
+        this.http.post(environment.apiUrl + "/task/delete", body).subscribe(data => {
+            this.snakbar.success("Xoá công việc thành công");
+            this.selection.clear();
+            this.getListTasks();
+        }
+        )
     }
 
     getListTasks() {
